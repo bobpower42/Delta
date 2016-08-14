@@ -18,6 +18,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
+import beads.UGen;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.data.XML;
@@ -35,10 +36,14 @@ public class World2D {
 	ArrayList<Particle> parts;
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
+	// HashMap<Contact, CollisionSound> collisionSound;
 	long lastFrameTimer;
 	float frameRate;
+	UGen out;
 
-	World2D(float _frameRate) {
+	World2D(float _frameRate, UGen _out) {
+		// collisionSound=new HashMap<Contact, CollisionSound>();
+		out = _out;
 		frameRate = _frameRate;
 		world = new World(new Vec2(0, -9.8f));
 		particles = new World(new Vec2(0, -9.8f));
@@ -61,23 +66,34 @@ public class World2D {
 
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
+				float totalImpulse = impulse.normalImpulses[0];
+				// float totalTangent = impulse.tangentImpulses[0];
+
 				Fixture fA = contact.getFixtureA();
 				Fixture fB = contact.getFixtureB();
 				Container cA = (Container) fA.getUserData();
 				Container cB = (Container) fB.getUserData();
-				if (cA.type.equals("player") && cB.data.equals("bounce")
-						|| cB.type.equals("player") && cA.data.equals("bounce")) {
-					float totalImpulse = 0;
-					for (int i = 0; i < impulse.count; i++) {
-						totalImpulse += impulse.normalImpulses[i];
-					}
-					WorldManifold worldManifold = new WorldManifold();
-					contact.getWorldManifold(worldManifold);
-					Vec2 worldPoint = worldManifold.points[0];
-					generateBounceParticles(worldPoint, totalImpulse);
-
+				Container cP = null, cO = null;
+				if (cA.type.equals("player")) {
+					cP = cA;
+					cO = cB;
+				} else if (cB.type.equals("player")) {
+					cP = cB;
+					cO = cA;
 				}
-
+				if (cP != null) {
+					Player tp=(Player)cP;
+					if (cO.data.equals("solid") || cO.data.equals("player")) {
+						tp.sound.addMetalImpulse(totalImpulse);
+					} else if (cO.data.equals("bounce")) {
+						tp.sound.addMetalImpulse(totalImpulse);
+						tp.sound.addBounceImpulse(totalImpulse);
+						WorldManifold worldManifold = new WorldManifold();
+						contact.getWorldManifold(worldManifold);
+						Vec2 worldPoint = worldManifold.points[0];
+						generateBounceParticles(worldPoint, totalImpulse);
+					}
+				}
 			}
 
 			@Override
@@ -250,7 +266,7 @@ public class World2D {
 
 	public void addContact(Contact _contact) {
 		contacts.add(_contact);
-		//_contact.
+		// _contact.
 		Fixture fA = _contact.getFixtureA();
 		Fixture fB = _contact.getFixtureB();
 		Container cA = (Container) fA.getUserData();
@@ -276,6 +292,7 @@ public class World2D {
 				p.finish();
 			} else {
 				p.addHitContact(_contact);
+
 			}
 		}
 
@@ -283,6 +300,7 @@ public class World2D {
 
 	public void remContact(Contact _contact) {
 		contacts.remove(_contact);
+
 		Fixture fA = _contact.getFixtureA();
 		Fixture fB = _contact.getFixtureB();
 		Container cA = (Container) fA.getUserData();

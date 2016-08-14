@@ -100,5 +100,9 @@ public class PlayerInput {
 		//xc.vibrateRight(val);
 		
 	}
+	public void release(){
+		xc.vibrate(0, 0);
+		xc.release();
+	}
 
 }

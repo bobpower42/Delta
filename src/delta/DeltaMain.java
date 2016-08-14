@@ -30,8 +30,7 @@ public class DeltaMain extends PApplet {
 	Viewport vp, vp2;
 	AudioContext ac;
 	Gain master;
-	Plug out;
-	public PShader vcr;
+	Plug out;	
 	long frameTimer;
 	int frameCounter = 0;
 	float fps = 0;
@@ -73,13 +72,13 @@ public class DeltaMain extends PApplet {
 		//HihatNoise hh=new HihatNoise(ac,540f,0.05f);
 		//out.addInput(hh);
 		//hh.start();
-		String shaderFolder = System.getProperty("user.dir") + "\\data";
-		vcr = loadShader(shaderFolder + "\\vcr.glsl");
+		//String shaderFolder = System.getProperty("user.dir") + "\\data";
+		//vcr = loadShader(shaderFolder + "\\vcr.glsl");
 		
 
 		noCursor();
 		frameRate(frameRate);
-		world = new World2D(frameRate);
+		world = new World2D(frameRate, out);
 		world.setScale(50f);
 		packFolder = System.getProperty("user.dir") + "\\packs";
 		File folder = new File(packFolder);
@@ -116,8 +115,7 @@ public class DeltaMain extends PApplet {
 			world.step();
 			//long gameStep=System.nanoTime()-startFrame;			
 			vp.update();
-			vp2.update();
-			noSmooth();
+			vp2.update();			
 			image(vp.pg, vp.pos.x, vp.pos.y);
 			image(vp2.pg, vp2.pos.x, vp2.pos.y);
 			//long viewportDraw=System.nanoTime()-startFrame-gameStep;
@@ -152,7 +150,7 @@ public class DeltaMain extends PApplet {
 
 	public void exit() {
 		for (PlayerInput pi : p) {
-			pi.xc.release();
+			pi.release();
 		}
 		ac.stop();
 		ac = null;

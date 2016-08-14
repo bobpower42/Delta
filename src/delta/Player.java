@@ -39,7 +39,7 @@ public class Player extends Container {
 	float curA, oldCurA;
 	AudioContext ac;
 	Plug out;
-	RocketSynth rocket;
+	PlayerSound sound;
 	
 
 	Player(World2D _world, PlayerInput _input, int _index) {
@@ -95,7 +95,7 @@ public class Player extends Container {
 	void connectAudio(AudioContext _ac, Plug _out) {
 		ac = _ac;
 		out = _out;
-		rocket = new RocketSynth(ac, out);
+		sound = new PlayerSound(ac, out);
 	}
 
 	public void addBoostContact(Contact _contact) {
@@ -207,7 +207,7 @@ public class Player extends Container {
 			// calculate power
 			float pwr = 0;
 			if (input.butA) {
-				rocket.toggle(1);
+				sound.toggle(1);
 				if (boost.size() == 0) {
 					if (rocketCallback.m_hit) {
 						pwr = 0.1f + ((1 - rocketCallback.m_fraction) * (1 - rocketCallback.m_fraction)) / 2f;
@@ -220,11 +220,11 @@ public class Player extends Container {
 					pwr = 0.9f;
 				}
 			} else {
-				rocket.toggle(0);
+				sound.toggle(0);
 			}
 			pwr *= killFactor;
-			rocket.setPower(pwr);
-			rocket.setVol((float) killFactor / killFactorMax);
+			sound.setPower(pwr);
+			sound.setVol((float) killFactor / killFactorMax);
 			// Generate smoke particles
 			loc = ship.getWorldCenter();
 			if (pwr > 0) {
@@ -276,7 +276,7 @@ public class Player extends Container {
 			boost.clear();
 			kill.clear();
 			hit.clear();
-			rocket.toggle(0);	
+			sound.toggle(0);	
 			Vec2 loc=ship.getPosition();
 			world.world.destroyBody(ship);
 			world.particles.destroyBody(proxy);
