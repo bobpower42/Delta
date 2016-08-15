@@ -16,11 +16,11 @@ import beads.Plug;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-
 public class Player extends Container {
 	World2D world;
 	PlayerInput input;
 	Body ship, proxy;
+	
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
 	ArrayList<Contact> boost;
@@ -40,7 +40,6 @@ public class Player extends Container {
 	AudioContext ac;
 	Plug out;
 	PlayerSound sound;
-	
 
 	Player(World2D _world, PlayerInput _input, int _index) {
 		index = _index;
@@ -62,8 +61,6 @@ public class Player extends Container {
 	public void createShip() {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.DYNAMIC;
-		//Vec2 sp = world.coordPixelsToWorld(world.spawn.v[0].x, world.spawn.v[0].y);
-		// System.out.println("Sx: " + sp.x + " Sy: " + sp.y);
 		bd.position.set(world.coordPixelsToWorld(world.spawn.v[0].x, world.spawn.v[0].y));
 		bd.isBullet();
 
@@ -236,10 +233,12 @@ public class Player extends Container {
 					float wr = world.scalarPixelsToWorld(r);
 					Vec2 thisPartLoc = new Vec2(thisLoc.x + wr * PApplet.cos(curA + rand - PApplet.HALF_PI),
 							thisLoc.y + wr * PApplet.sin(curA + rand - PApplet.HALF_PI));
-					world.parts.add(new SmokeParticle(world, thisPartLoc,
-							new Vec2(-(killFactor * 3) * PApplet.cos(-2 * rand + curA + PApplet.HALF_PI),
-									-(killFactor * 3) * PApplet.sin(-2 * rand + curA + PApplet.HALF_PI)),
-							50 + killFactor * 60f * (float) Math.random(), 2 + 3f * (float) Math.random()));
+					if (world.parts.size() < world.MAXPARTICLES) {
+						world.parts.add(new SmokeParticle(world, thisPartLoc,
+								new Vec2(-(killFactor * 3) * PApplet.cos(-2 * rand + curA + PApplet.HALF_PI),
+										-(killFactor * 3) * PApplet.sin(-2 * rand + curA + PApplet.HALF_PI)),
+								50 + killFactor * 60f * (float) Math.random(), 2 + 3f * (float) Math.random()));
+					}
 				}
 			}
 			oldLoc.x = loc.x;
@@ -276,13 +275,19 @@ public class Player extends Container {
 			boost.clear();
 			kill.clear();
 			hit.clear();
-			sound.toggle(0);	
-			Vec2 loc=ship.getPosition();
-			world.world.destroyBody(ship);
-			world.particles.destroyBody(proxy);
-			for(int i=0;i<40;i++){				
-				world.parts.add(new FinishParticle(world,loc,new Vec2(15f*(float)Math.random(),30f*(float)Math.random()),150+(int)(Math.random()*50),5+(int)(Math.random()*5),World2D.cl[index]));
-				world.parts.add(new FinishParticle(world,loc,new Vec2(15f*(float)Math.random(),30f*(float)Math.random()),150+(int)(Math.random()*50),5+(int)(Math.random()*5),-1));
+			sound.toggle(0);
+			Vec2 loc = ship.getPosition();
+			ship.setActive(false);
+			proxy.setActive(false);			
+			for (int i = 0; i < 40; i++) {
+				if (world.parts.size() < world.MAXPARTICLES) {
+				world.parts.add(new FinishParticle(world, loc,
+						new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
+						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), World2D.cl[index]));
+				world.parts.add(new FinishParticle(world, loc,
+						new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
+						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
+				}
 			}
 			ship = null;
 			proxy = null;

@@ -64,7 +64,7 @@ public class PlayerSound {
 	OnePoleFilter kill_hit_smooth;
 	Clip kill_hit_clip;
 	Gain kill_hit_gain;
-	BiquadFilter kill_hit_HP,kill_hit_LP;
+	BiquadFilter kill_hit_HP, kill_hit_LP;
 
 	// finish hit (more cow bell)
 	WavePlayer finish_hit_1, finish_hit_2;
@@ -74,14 +74,22 @@ public class PlayerSound {
 	Gain finish_hit_gain;
 	BiquadFilter finish_hit_BP;
 
+	// boost friction
+	MetalNoise boost_friction;
+	Glide boost_speed, boost_gain;
+	OnePoleFilter boost_friction_smooth;
+	BiquadFilter boost_friction_BP;
+	Gain boost_friction_gain;
+
 	PlayerSound(AudioContext _ac, Plug _out) {
 
 		ac = _ac;
 		out = _out;
 		global = new Glide(ac, 0, 500);
 		master = new Gain(ac, 1, global);
-		global.setValue(0.8f);
+		global.setValue(1.0f);
 		out.addInput(master);
+		
 		// thrusters
 		wp = new WavePlayer(ac, 0.1f, Buffer.NOISE);
 		wp.setPhase((float) Math.random());
@@ -120,7 +128,7 @@ public class PlayerSound {
 		solid_hit_clip = new Clip(ac);
 		solid_hit_clip.addInput(solid_hit_smooth);
 		solid_hit_gain = new Gain(ac, 1, solid_hit_clip);
-		solid_hit = new WavePlayer(ac, 100f, Buffer.SINE);
+		solid_hit = new WavePlayer(ac, 50f, Buffer.SINE);
 		solid_hit_metal = new MetalNoise(ac, 0.8f);
 		solid_hit_metal.setFrequency(80f);
 		solid_hit_LP = new BiquadFilter(ac, BiquadFilter.LP, 400, 1);
@@ -145,7 +153,7 @@ public class PlayerSound {
 		master.addInput(bounce_hit_LP);
 
 		// kill hit
-		kill_hit_impulse = new Glide(ac, 0, 100);
+		kill_hit_impulse = new Glide(ac, 0, 200);
 		kill_hit_smooth = new OnePoleFilter(ac, 500);
 		kill_hit_smooth.addInput(kill_hit_impulse);
 		kill_hit_clip = new Clip(ac);
@@ -181,18 +189,28 @@ public class PlayerSound {
 		solid_gain = new Glide(ac, 0, 100);
 		solid_friction_smooth = new OnePoleFilter(ac, 500);
 		solid_friction_smooth.addInput(solid_gain);
-		solid_friction = new MetalNoise(ac, 0.8f);
+		solid_friction = new MetalNoise(ac, 0.5f);
 		solid_friction.setFrequency(solid_speed);
-		// solid_friction_mult;
-		solid_friction_LP =new BiquadFilter(ac, BiquadFilter.LP, 600, 1);
-		solid_friction_HP =new BiquadFilter(ac, BiquadFilter.HP, 1800, 1);
-		solid_friction_LP.addInput(solid_friction);	
+		solid_friction_LP = new BiquadFilter(ac, BiquadFilter.LP, 400, 1);
+		solid_friction_HP = new BiquadFilter(ac, BiquadFilter.HP, 1800, 1);
+		solid_friction_LP.addInput(solid_friction);
 		solid_friction_HP.addInput(solid_friction_LP);
-		solid_friction_gain=new Gain(ac,1,solid_friction_smooth);
+		solid_friction_gain = new Gain(ac, 1, solid_friction_smooth);
 		solid_friction_gain.addInput(solid_friction_HP);
 		master.addInput(solid_friction_gain);
-		
-		
+
+		// boost friction
+		boost_speed = new Glide(ac, 0, 100);
+		boost_gain = new Glide(ac, 0, 100);
+		boost_friction_smooth = new OnePoleFilter(ac, 500);
+		boost_friction_smooth.addInput(boost_gain);
+		boost_friction = new MetalNoise(ac, 0.5f);
+		boost_friction.setFrequency(boost_speed);
+		boost_friction_BP = new BiquadFilter(ac, BiquadFilter.BESSEL_LP, boost_speed, 1);
+		boost_friction_BP.addInput(boost_friction);
+		boost_friction_gain = new Gain(ac, 1, boost_friction_smooth);
+		boost_friction_gain.addInput(boost_friction_BP);
+		master.addInput(boost_friction_gain);
 
 	}
 
@@ -221,22 +239,24 @@ public class PlayerSound {
 	public void addSolidImpulse(float _impulse) {
 		float imp = 0;
 		if (_impulse > 0.1 && ship_active) {
-			imp = _impulse / 100f;
+			imp = _impulse / 50f;
 			imp += solid_hit_impulse.getValue();
 			solid_hit_impulse.setValueImmediately(imp);
 			// System.out.println("imp: "+imp);
 		}
 		solid_hit_impulse.setValue(0);
 	}
+
 	public void addSolidFriction(float _friction) {
 		float frS = 0;
-		float frA=0;
+		float frA = 0;
 		if (_friction > 3 && ship_active) {
 			frS = _friction * 10f;
-			frA = 0.05f+_friction/100f;
-			if(frA>0.1)frA=0.1f;
+			frA = 0.2f + _friction / 20f;
+			if (frA > 0.3)
+				frA = 0.3f;
 			solid_speed.setValueImmediately(frS);
-			solid_gain.setValueImmediately(frA);			
+			solid_gain.setValueImmediately(frA);
 		}
 		solid_speed.setValue(0);
 		solid_gain.setValue(0);
@@ -245,7 +265,7 @@ public class PlayerSound {
 	public void addBounceImpulse(float _impulse) {
 		float imp = 0;
 		if (_impulse > 0.1 && ship_active) {
-			imp = _impulse / 50f;
+			imp = _impulse / 20f;
 			bounce_hit_impulse.setValueImmediately(imp);
 			bounce_hit_frequency.setValueImmediately(0);
 			bounce_hit_frequency.setValue(_impulse * 100);
@@ -257,7 +277,7 @@ public class PlayerSound {
 	public void addKillImpulse(float _impulse) {
 		float imp = 0;
 		if (ship_active) {
-			imp = 0.07f + (_impulse / 100f);
+			imp = 0.2f + (_impulse / 20f);
 			// imp += kill_hit_impulse.getValue();
 			kill_hit_impulse.setValueImmediately(imp);
 			// System.out.println("imp: "+imp);
@@ -268,10 +288,27 @@ public class PlayerSound {
 	public void finishImpulse(float _impulse) {
 		if (ship_active) {
 			ship_active = false;
-			float imp = 0.05f + (_impulse / 100f);
+			float imp = 0.1f + (_impulse / 50f);
 			finish_hit_impulse.setValueImmediately(imp);
 			finish_hit_impulse.setValue(0);
 		}
 	}
+
+	public void addBoostFriction(float _friction) {
+		float frS = 0;
+		float frA = 0;
+		if (ship_active) {
+			frS = _friction * 50f;
+			frA = _friction / 100f;
+			if (frA > 0.1)
+				frA = 0.1f;
+			boost_speed.setValue(frS);
+			boost_gain.setValueImmediately(frA);
+		}
+		// boost_speed.setValue(0);
+		boost_gain.setValue(0);
+	}
+
+
 
 }

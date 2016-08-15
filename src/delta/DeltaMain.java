@@ -85,7 +85,7 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "001_rails");
+		world.loadfromXML(pack, "004_towerfall");
 
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
@@ -139,15 +139,17 @@ public class DeltaMain extends PApplet {
 		}
 	}
 
-	public void exit() {
+	public void exit() {		
 		for (PlayerInput pi : p) {
 			pi.release();
 		}
 		ac.stop();
-		ac = null;
+		surface.stopThread();
+		
+		ac = null;		
 		System.out.println("stopping");
+		super.exit();
 		System.exit(0);
-
 	}
 
 }

@@ -36,10 +36,12 @@ public class World2D {
 	ArrayList<Particle> parts;
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
+	ArrayList<Player> doFinish;
 	// HashMap<Contact, CollisionSound> collisionSound;
 	long lastFrameTimer;
 	float frameRate;
 	UGen out;
+	public static int MAXPARTICLES = 200;
 
 	World2D(float _frameRate, UGen _out) {
 		// collisionSound=new HashMap<Contact, CollisionSound>();
@@ -48,6 +50,7 @@ public class World2D {
 		world = new World(new Vec2(0, -9.8f));
 		particles = new World(new Vec2(0, -9.8f));
 		players = new ArrayList<Player>();
+		doFinish=new ArrayList<Player>();
 		contacts = new ArrayList<Contact>();
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
@@ -82,22 +85,21 @@ public class World2D {
 					cO = cA;
 				}
 				if (cP != null) {
-					Player tp=(Player)cP;
+					Player tp = (Player) cP;
 					if (cO.data.equals("solid") || cO.data.equals("player")) {
-						tp.sound.addSolidImpulse(totalImpulse);
+						tp.sound.addSolidImpulse(totalImpulse / 2f);
 					} else if (cO.data.equals("bounce")) {
-						tp.sound.addSolidImpulse(totalImpulse/3f);
+						tp.sound.addSolidImpulse(totalImpulse / 3f);
 						tp.sound.addBounceImpulse(totalImpulse);
 						WorldManifold worldManifold = new WorldManifold();
 						contact.getWorldManifold(worldManifold);
 						Vec2 worldPoint = worldManifold.points[0];
 						generateBounceParticles(worldPoint, totalImpulse);
-					}else if (cO.data.equals("kill")) {
-						tp.sound.addSolidImpulse(totalImpulse/3f);
-						tp.sound.addKillImpulse(totalImpulse);						
-					}else if (cO.data.equals("finish")) {
-						tp.sound.addSolidImpulse(totalImpulse);
-						tp.sound.finishImpulse(totalImpulse);						
+					} else if (cO.data.equals("kill")) {
+						tp.sound.addSolidImpulse(totalImpulse / 3f);
+						tp.sound.addKillImpulse(totalImpulse);
+					} else if (cO.data.equals("finish")) {
+						tp.sound.finishImpulse(totalImpulse);
 					}
 				}
 			}
@@ -179,14 +181,14 @@ public class World2D {
 			Container cB = (Container) fB.getUserData();
 			Body bA = fA.getBody();
 			Body bB = fB.getBody();
-			Container cP=null;
-			Container cO=null;
-			if(cA.type.equals("player")){
-				cP=cA;
-				cO=cB;
-			}else if(cB.type.equals("player")){
-				cP=cB;
-				cO=cA;
+			Container cP = null;
+			Container cO = null;
+			if (cA.type.equals("player")) {
+				cP = cA;
+				cO = cB;
+			} else if (cB.type.equals("player")) {
+				cP = cB;
+				cO = cA;
 			}
 
 			// get the contact point in world coordinates
@@ -201,38 +203,52 @@ public class World2D {
 			float relativeSpeed = (velA.sub(velB)).length();
 			float totalFriction = fA.getFriction() * fB.getFriction();
 			if (cA.data.equals("boost") || cB.data.equals("boost")) {
+				if (cP != null) {
+					Player tp = (Player) cP;
+					tp.sound.addBoostFriction(relativeSpeed);
+				}
 				Vec2 loc = new Vec2(worldPoint.x - vel.x / 400f, worldPoint.y + vel.y / 400f);
 				// System.out.println(relativeSpeed);
 				int t = 3 + (int) (relativeSpeed / 3f);
+
 				for (int i = 0; i < t; i++) {
-					parts.add(new BoostParticle(this, loc,
-							new Vec2(relativeSpeed * ((float) Math.random() * 2f - 1),
-									relativeSpeed * ((float) Math.random() * 2f - 1)),
-							100 + (float) Math.random() * 100f, 10 + (float) Math.random() * 10f));
+					if (parts.size() < MAXPARTICLES) {
+						parts.add(new BoostParticle(this, loc,
+								new Vec2(relativeSpeed * ((float) Math.random() * 2f - 1),
+										relativeSpeed * ((float) Math.random() * 2f - 1)),
+								100 + (float) Math.random() * 100f, 10 + (float) Math.random() * 10f));
+
+					}
 				}
 
 			} else if (cA.data.equals("kill") || cB.data.equals("kill")) {
 				Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
+
 				for (int i = 0; i < 4; i++) {
-					parts.add(new KillParticle(this, loc,
-							new Vec2(25f * ((float) Math.random() * 2f - 1), 25f * ((float) Math.random() * 2f - 1)),
-							300f, 15 + (float) Math.random() * 15f));
+					if (parts.size() < MAXPARTICLES) {
+						parts.add(new KillParticle(this, loc,
+								new Vec2(25f * ((float) Math.random() * 2f - 1),
+										25f * ((float) Math.random() * 2f - 1)),
+								300f, 15 + (float) Math.random() * 15f));
+					}
 				}
 
 			} else {
 				float intensity = relativeSpeed * totalFriction;
-				if(cP!=null){
-					Player tp=(Player)cP;
+				if (cP != null) {
+					Player tp = (Player) cP;
 					tp.sound.addSolidFriction(intensity);
 				}
 				if (intensity > 3) {
 					for (int i = 0; i < 4; i++) {
 
 						Vec2 loc = new Vec2(worldPoint.x - vel.x / 50f, worldPoint.y + vel.y / 50f);
-						parts.add(new SparkParticle(this, loc,
-								new Vec2(relativeSpeed * ((float) Math.random() * 4f - 2),
-										relativeSpeed * ((float) Math.random() * 4f - 2)),
-								100f, 2 + (float) Math.random() * 5f));
+						if (parts.size() < MAXPARTICLES) {
+							parts.add(new SparkParticle(this, loc,
+									new Vec2(relativeSpeed * ((float) Math.random() * 4f - 2),
+											relativeSpeed * ((float) Math.random() * 4f - 2)),
+									100f, 2 + (float) Math.random() * 5f));
+						}
 					}
 				}
 			}
@@ -240,16 +256,21 @@ public class World2D {
 	}
 
 	void generateBounceParticles(Vec2 p, float ti) {
-		int tp = (int) (5 * ti);
+		int tp = (int) (4 * ti);
 		for (int i = 0; i < tp; i++) {
-			parts.add(new BounceParticle(this, p,
-					new Vec2(ti * PApplet.cos(PApplet.TWO_PI * i / (float) tp),
-							ti * PApplet.sin(PApplet.TWO_PI * i / (float) tp)),
-					100f + (float) Math.random() * 100f, 5f + (float) Math.random() * 5f));
+			if (parts.size() < MAXPARTICLES) {
+				parts.add(new BounceParticle(this, p,
+						new Vec2(ti * PApplet.cos(PApplet.TWO_PI * i / (float) tp),
+								ti * PApplet.sin(PApplet.TWO_PI * i / (float) tp)),
+						100f + (float) Math.random() * 100f, 5f + (float) Math.random() * 5f));
+			}
 		}
 	}
 
 	public void update() {
+		for(Player p: doFinish){
+		p.finish();
+		}
 		generateSparks();
 
 		for (Particle p : parts) {
@@ -297,7 +318,7 @@ public class World2D {
 			} else if (cB.data.equals("kill")) {
 				p.addKillContact(_contact);
 			} else if (cB.data.equals("finish")) {
-				p.finish();
+				doFinish.add(p);
 			} else {
 				p.addHitContact(_contact);
 			}
@@ -409,7 +430,7 @@ public class World2D {
 		// if(timeStep>0.05)timeStep=0.05f;
 
 		lastFrameTimer = System.nanoTime();
-		this.step(timeStep, 2, 2);
+		this.step(timeStep, 5, 5);
 		// world.clearForces();
 	}
 
