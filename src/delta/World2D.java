@@ -86,12 +86,18 @@ public class World2D {
 					if (cO.data.equals("solid") || cO.data.equals("player")) {
 						tp.sound.addMetalImpulse(totalImpulse);
 					} else if (cO.data.equals("bounce")) {
-						tp.sound.addMetalImpulse(totalImpulse);
+						tp.sound.addMetalImpulse(totalImpulse/3f);
 						tp.sound.addBounceImpulse(totalImpulse);
 						WorldManifold worldManifold = new WorldManifold();
 						contact.getWorldManifold(worldManifold);
 						Vec2 worldPoint = worldManifold.points[0];
 						generateBounceParticles(worldPoint, totalImpulse);
+					}else if (cO.data.equals("kill")) {
+						tp.sound.addMetalImpulse(totalImpulse/3f);
+						tp.sound.addKillImpulse(totalImpulse);						
+					}else if (cO.data.equals("finish")) {
+						tp.sound.addMetalImpulse(totalImpulse);
+						tp.sound.finishImpulse(totalImpulse);						
 					}
 				}
 			}
@@ -198,7 +204,7 @@ public class World2D {
 
 			} else if (cA.data.equals("kill") || cB.data.equals("kill")) {
 				Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 4; i++) {
 					parts.add(new KillParticle(this, loc,
 							new Vec2(25f * ((float) Math.random() * 2f - 1), 25f * ((float) Math.random() * 2f - 1)),
 							300f, 15 + (float) Math.random() * 15f));

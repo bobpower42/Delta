@@ -233,7 +233,7 @@ class KillParticle extends Particle {
 		body.createFixture(fd);
 		// body.setLinearDamping(0.0f);
 		body.setLinearVelocity(vel);
-		body.setGravityScale(0.0f);
+		body.setGravityScale(0.5f);
 		dead = false;
 	}
 
@@ -297,7 +297,7 @@ class FinishParticle extends Particle {
 		pG.rectMode(PConstants.CORNERS);
 		pG.fill(cl);
 		pG.noStroke();
-		float sz = (life / 40f);
+		float sz = (life / 20f);
 		pG.rect(pp.x - sz, pp.y - sz, pp.x + sz, pp.y + sz);
 
 	}
