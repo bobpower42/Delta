@@ -52,10 +52,8 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D);
-		smooth(1);
-		// selectInput("file","loadFile");
-		//PImage icon=loadImage("icon.png");
-		//surface.setIcon(icon);
+		smooth(2);
+
 		
 	}
 
@@ -69,13 +67,6 @@ public class DeltaMain extends PApplet {
 		master.addInput(out);
 		ac.out.addInput(master);
 		ac.start();
-		//HihatNoise hh=new HihatNoise(ac,540f,0.05f);
-		//out.addInput(hh);
-		//hh.start();
-		//String shaderFolder = System.getProperty("user.dir") + "\\data";
-		//vcr = loadShader(shaderFolder + "\\vcr.glsl");
-		
-
 		noCursor();
 		frameRate(frameRate);
 		world = new World2D(frameRate, out);

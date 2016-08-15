@@ -84,19 +84,19 @@ public class World2D {
 				if (cP != null) {
 					Player tp=(Player)cP;
 					if (cO.data.equals("solid") || cO.data.equals("player")) {
-						tp.sound.addMetalImpulse(totalImpulse);
+						tp.sound.addSolidImpulse(totalImpulse);
 					} else if (cO.data.equals("bounce")) {
-						tp.sound.addMetalImpulse(totalImpulse/3f);
+						tp.sound.addSolidImpulse(totalImpulse/3f);
 						tp.sound.addBounceImpulse(totalImpulse);
 						WorldManifold worldManifold = new WorldManifold();
 						contact.getWorldManifold(worldManifold);
 						Vec2 worldPoint = worldManifold.points[0];
 						generateBounceParticles(worldPoint, totalImpulse);
 					}else if (cO.data.equals("kill")) {
-						tp.sound.addMetalImpulse(totalImpulse/3f);
+						tp.sound.addSolidImpulse(totalImpulse/3f);
 						tp.sound.addKillImpulse(totalImpulse);						
 					}else if (cO.data.equals("finish")) {
-						tp.sound.addMetalImpulse(totalImpulse);
+						tp.sound.addSolidImpulse(totalImpulse);
 						tp.sound.finishImpulse(totalImpulse);						
 					}
 				}
@@ -179,6 +179,15 @@ public class World2D {
 			Container cB = (Container) fB.getUserData();
 			Body bA = fA.getBody();
 			Body bB = fB.getBody();
+			Container cP=null;
+			Container cO=null;
+			if(cA.type.equals("player")){
+				cP=cA;
+				cO=cB;
+			}else if(cB.type.equals("player")){
+				cP=cB;
+				cO=cA;
+			}
 
 			// get the contact point in world coordinates
 			WorldManifold worldManifold = new WorldManifold();
@@ -212,6 +221,10 @@ public class World2D {
 
 			} else {
 				float intensity = relativeSpeed * totalFriction;
+				if(cP!=null){
+					Player tp=(Player)cP;
+					tp.sound.addSolidFriction(intensity);
+				}
 				if (intensity > 3) {
 					for (int i = 0; i < 4; i++) {
 
