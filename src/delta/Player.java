@@ -20,6 +20,7 @@ public class Player extends Container {
 	World2D world;
 	PlayerInput input;
 	Body ship, proxy;
+	boolean finished;
 	
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
@@ -56,6 +57,7 @@ public class Player extends Container {
 		oldVel = new Vec2(0, 0);
 		oldLoc = new Vec2(0, 0);
 		oldCurA = 0;
+		finished=false;
 	}
 
 	public void createShip() {
@@ -120,7 +122,7 @@ public class Player extends Container {
 	}
 
 	public void update() {
-		if (ship != null) {
+		if (!finished) {
 			// compare the change in velocity since previous frame
 			vel = ship.getLinearVelocity();
 			vel.sub(oldVel);
@@ -253,7 +255,7 @@ public class Player extends Container {
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		if (ship != null) {
+		if (!finished) {
 			Vec2 pos = world.getBodyPixelCoord(ship);
 			float ang = ship.getAngle();
 			// System.out.println("px: "+pos.x+" py: "+pos.y+" ang: "+ang);
@@ -277,7 +279,9 @@ public class Player extends Container {
 			hit.clear();
 			sound.toggle(0);
 			Vec2 loc = ship.getPosition();
+			world.world.destroyBody(ship);
 			ship.setActive(false);
+			world.particles.destroyBody(proxy);
 			proxy.setActive(false);			
 			for (int i = 0; i < 40; i++) {
 				if (world.parts.size() < world.MAXPARTICLES) {
@@ -289,8 +293,9 @@ public class Player extends Container {
 						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
 				}
 			}
-			ship = null;
-			proxy = null;
+			//ship = null;
+			//proxy = null;
+			finished=true;
 		}
 	}
 

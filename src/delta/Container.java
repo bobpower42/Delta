@@ -25,7 +25,7 @@ public abstract class Container {
 	Container parent;
 	int nv;
 	World2D world;
-	boolean isTarget=false;
+	
 
 	Container() {
 		//
@@ -450,16 +450,23 @@ class Layer extends Container {
 		return paralax;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!disable) {
-
-			Vec2 tr = new Vec2(p1.x * (1 - paralax), p1.y * (1 - paralax));
+			Vec2 tr;
+			if(paralax==0){
+			tr = new Vec2(p1.x * (1 - paralax), p1.y * (1 - paralax));
+			}else{
+				tr = new Vec2(p2.x/2f+(p1.x-760) * (1 - paralax), p2.y/2f+(p1.y-540) * (1 - paralax));	
+			}
+			
+			
 			Vec2 tl = new Vec2((int) -tr.x, (int) -tr.y);
 			Vec2 br = new Vec2((int) tl.x + p2.x, (int) tl.y + p2.y);
+			
 			pG.pushMatrix();
 			pG.translate((int) tr.x, (int) tr.y);
 			if (data.equals("game")) {
-				world.draw(pG, tr, br);
+				world.draw(pG, tr, br, vp);
 			}
 			for (Container s : shapes) {
 				s.draw(pG, tl, br);
@@ -501,12 +508,13 @@ class Level extends Container {
 		return (Layer) layer[in];
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		pG.background(bg);
 		// pG.translate(760, 540);
 
 		for (Container l : layer) {
-			l.draw(pG, p1, p2);
+			Layer L=(Layer)l;
+			L.draw(pG, p1, p2, vp);
 
 		}
 	}

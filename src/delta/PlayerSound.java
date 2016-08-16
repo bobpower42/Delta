@@ -26,9 +26,9 @@ public class PlayerSound {
 	Glide toggle, power, vol, kill;
 	Plug out;
 	float rocketGain = 0.1f;
-	float rocketPreFilterBase = 300;
+	float rocketPreFilterBase = 600;
 	float rocketPostFilterBase = 100;
-	float rocketPostFilterMod = 600;
+	float rocketPostFilterMod = 800;
 	float rocketClipLimit = 0.08f;
 
 	// solid hit
@@ -153,8 +153,8 @@ public class PlayerSound {
 		master.addInput(bounce_hit_LP);
 
 		// kill hit
-		kill_hit_impulse = new Glide(ac, 0, 200);
-		kill_hit_smooth = new OnePoleFilter(ac, 500);
+		kill_hit_impulse = new Glide(ac, 0, 100);
+		kill_hit_smooth = new OnePoleFilter(ac, 800);
 		kill_hit_smooth.addInput(kill_hit_impulse);
 		kill_hit_clip = new Clip(ac);
 		kill_hit_clip.addInput(kill_hit_smooth);
@@ -191,8 +191,8 @@ public class PlayerSound {
 		solid_friction_smooth.addInput(solid_gain);
 		solid_friction = new MetalNoise(ac, 0.5f);
 		solid_friction.setFrequency(solid_speed);
-		solid_friction_LP = new BiquadFilter(ac, BiquadFilter.LP, 400, 1);
-		solid_friction_HP = new BiquadFilter(ac, BiquadFilter.HP, 1800, 1);
+		solid_friction_LP = new BiquadFilter(ac, BiquadFilter.LP, 300, 1);
+		solid_friction_HP = new BiquadFilter(ac, BiquadFilter.HP, 600, 1);
 		solid_friction_LP.addInput(solid_friction);
 		solid_friction_HP.addInput(solid_friction_LP);
 		solid_friction_gain = new Gain(ac, 1, solid_friction_smooth);
@@ -200,7 +200,7 @@ public class PlayerSound {
 		master.addInput(solid_friction_gain);
 
 		// boost friction
-		boost_speed = new Glide(ac, 0, 100);
+		boost_speed = new Glide(ac, 0, 500);
 		boost_gain = new Glide(ac, 0, 100);
 		boost_friction_smooth = new OnePoleFilter(ac, 500);
 		boost_friction_smooth.addInput(boost_gain);
@@ -252,7 +252,7 @@ public class PlayerSound {
 		float frA = 0;
 		if (_friction > 3 && ship_active) {
 			frS = _friction * 10f;
-			frA = 0.2f + _friction / 20f;
+			frA = _friction / 30f;
 			if (frA > 0.3)
 				frA = 0.3f;
 			solid_speed.setValueImmediately(frS);
@@ -298,8 +298,8 @@ public class PlayerSound {
 		float frS = 0;
 		float frA = 0;
 		if (ship_active) {
-			frS = _friction * 50f;
-			frA = _friction / 100f;
+			frS = _friction *30f;
+			frA = _friction / 200f;
 			if (frA > 0.1)
 				frA = 0.1f;
 			boost_speed.setValue(frS);

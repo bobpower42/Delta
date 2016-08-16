@@ -262,24 +262,18 @@
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-208.0" y="48.0"/>
-          <vert x="64.0" y="48.0"/>
-          <vert x="64.0" y="80.0"/>
+          <vert x="80.0" y="48.0"/>
+          <vert x="80.0" y="80.0"/>
           <vert x="-208.0" y="80.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="64.0" y="48.0"/>
-          <vert x="96.0" y="16.0"/>
-          <vert x="128.0" y="16.0"/>
-          <vert x="128.0" y="80.0"/>
-          <vert x="64.0" y="80.0"/>
+          <vert x="80.0" y="48.0"/>
+          <vert x="112.0" y="16.0"/>
+          <vert x="144.0" y="16.0"/>
+          <vert x="144.0" y="80.0"/>
+          <vert x="80.0" y="80.0"/>
         </container>
-        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
-          <vert x="96.0" y="16.0"/>
-          <vert x="96.0" y="-528.0"/>
-          <vert x="128.0" y="-528.0"/>
-          <vert x="128.0" y="16.0"/>
-        </container>
-        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-272.0" y="16.0"/>
           <vert x="-272.0" y="-528.0"/>
           <vert x="-240.0" y="-528.0"/>
@@ -295,41 +289,23 @@
           <vert x="-240.0" y="-816.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="96.0" y="-816.0"/>
-          <vert x="128.0" y="-816.0"/>
-          <vert x="128.0" y="-528.0"/>
-          <vert x="96.0" y="-528.0"/>
+          <vert x="112.0" y="-816.0"/>
+          <vert x="144.0" y="-816.0"/>
+          <vert x="144.0" y="-528.0"/>
+          <vert x="112.0" y="-528.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="-64.0" y="-752.0"/>
+          <vert x="-64.0" y="-672.0"/>
           <vert x="-128.0" y="-720.0"/>
           <vert x="-128.0" y="-816.0"/>
           <vert x="0.0" y="-816.0"/>
           <vert x="0.0" y="-720.0"/>
         </container>
-        <container cl="-2667991" closed="true" data="kill" fill="0" type="poly">
-          <vert x="-64.0" y="-752.0"/>
-          <vert x="0.0" y="-720.0"/>
-          <vert x="-64.0" y="-608.0"/>
-          <vert x="-128.0" y="-720.0"/>
-        </container>
-        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
-          <vert x="-128.0" y="-816.0"/>
-          <vert x="-160.0" y="-1200.0"/>
-          <vert x="-96.0" y="-1216.0"/>
-          <vert x="-96.0" y="-816.0"/>
-        </container>
-        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
-          <vert x="-32.0" y="-816.0"/>
-          <vert x="-32.0" y="-1216.0"/>
-          <vert x="32.0" y="-1200.0"/>
-          <vert x="0.0" y="-816.0"/>
-        </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="-96.0" y="-816.0"/>
-          <vert x="-96.0" y="-1216.0"/>
-          <vert x="-32.0" y="-1216.0"/>
-          <vert x="-32.0" y="-816.0"/>
+          <vert x="-128.0" y="-816.0"/>
+          <vert x="-128.0" y="-1216.0"/>
+          <vert x="0.0" y="-1216.0"/>
+          <vert x="0.0" y="-816.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-272.0" y="-816.0"/>
@@ -338,59 +314,27 @@
           <vert x="-240.0" y="-816.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="96.0" y="-816.0"/>
-          <vert x="96.0" y="-1200.0"/>
-          <vert x="128.0" y="-1200.0"/>
-          <vert x="128.0" y="-816.0"/>
-        </container>
-        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
-          <vert x="-144.0" y="-1232.0"/>
-          <vert x="-144.0" y="-1248.0"/>
-          <vert x="16.0" y="-1248.0"/>
-          <vert x="16.0" y="-1232.0"/>
-        </container>
-        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
-          <vert x="-160.0" y="-1376.0"/>
-          <vert x="-240.0" y="-1296.0"/>
-          <vert x="-256.0" y="-1312.0"/>
-          <vert x="-176.0" y="-1392.0"/>
-        </container>
-        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
-          <vert x="96.0" y="-1296.0"/>
-          <vert x="16.0" y="-1376.0"/>
-          <vert x="32.0" y="-1392.0"/>
-          <vert x="112.0" y="-1312.0"/>
+          <vert x="112.0" y="-816.0"/>
+          <vert x="112.0" y="-1200.0"/>
+          <vert x="144.0" y="-1200.0"/>
+          <vert x="144.0" y="-816.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="96.0" y="-1200.0"/>
-          <vert x="96.0" y="-1296.0"/>
-          <vert x="128.0" y="-1328.0"/>
-          <vert x="128.0" y="-1200.0"/>
+          <vert x="112.0" y="-1200.0"/>
+          <vert x="112.0" y="-1328.0"/>
+          <vert x="144.0" y="-1328.0"/>
+          <vert x="144.0" y="-1200.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-272.0" y="-1200.0"/>
           <vert x="-272.0" y="-1328.0"/>
-          <vert x="-240.0" y="-1296.0"/>
+          <vert x="-240.0" y="-1328.0"/>
           <vert x="-240.0" y="-1200.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="128.0" y="-1328.0"/>
-          <vert x="112.0" y="-1312.0"/>
-          <vert x="96.0" y="-1328.0"/>
-          <vert x="96.0" y="-1664.0"/>
-          <vert x="128.0" y="-1664.0"/>
-        </container>
-        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="-256.0" y="-1312.0"/>
-          <vert x="-272.0" y="-1328.0"/>
-          <vert x="-272.0" y="-1664.0"/>
-          <vert x="-240.0" y="-1664.0"/>
-          <vert x="-240.0" y="-1328.0"/>
-        </container>
-        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="32.0" y="-1392.0"/>
-          <vert x="96.0" y="-1456.0"/>
-          <vert x="96.0" y="-1328.0"/>
+          <vert x="48.0" y="-1392.0"/>
+          <vert x="112.0" y="-1456.0"/>
+          <vert x="112.0" y="-1328.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-176.0" y="-1392.0"/>
@@ -398,35 +342,55 @@
           <vert x="-240.0" y="-1456.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="96.0" y="-1664.0"/>
-          <vert x="-64.0" y="-1824.0"/>
-          <vert x="128.0" y="-1824.0"/>
-          <vert x="128.0" y="-1664.0"/>
+          <vert x="112.0" y="-1664.0"/>
+          <vert x="-64.0" y="-1856.0"/>
+          <vert x="144.0" y="-1856.0"/>
+          <vert x="144.0" y="-1664.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
           <vert x="-240.0" y="-1664.0"/>
           <vert x="-272.0" y="-1664.0"/>
-          <vert x="-272.0" y="-1824.0"/>
-          <vert x="-64.0" y="-1824.0"/>
+          <vert x="-272.0" y="-1856.0"/>
+          <vert x="-64.0" y="-1856.0"/>
         </container>
         <container cl="-16777216" data="finish" fill="16" type="circle">
           <vert x="-64.0" y="-1696.0"/>
           <vert x="-64.0" y="-1632.0"/>
         </container>
         <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="-272.0" y="-1840.0"/>
-          <vert x="128.0" y="-1840.0"/>
-          <vert x="128.0" y="-1824.0"/>
-          <vert x="-272.0" y="-1824.0"/>
-        </container>
-        <container data="tr" type="marker">
-          <vert x="-272.0" y="-1840.0"/>
+          <vert x="-272.0" y="-1920.0"/>
+          <vert x="144.0" y="-1920.0"/>
+          <vert x="144.0" y="-1856.0"/>
+          <vert x="-272.0" y="-1856.0"/>
         </container>
         <container data="br" type="marker">
-          <vert x="128.0" y="80.0"/>
+          <vert x="144.0" y="80.0"/>
         </container>
         <container data="tl" type="marker">
-          <vert x="-272.0" y="-1840.0"/>
+          <vert x="-272.0" y="-1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="112.0" y="-528.0"/>
+          <vert x="144.0" y="-528.0"/>
+          <vert x="144.0" y="16.0"/>
+          <vert x="112.0" y="16.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="112.0" y="-1664.0"/>
+          <vert x="144.0" y="-1664.0"/>
+          <vert x="144.0" y="-1328.0"/>
+          <vert x="112.0" y="-1296.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-272.0" y="-1664.0"/>
+          <vert x="-240.0" y="-1664.0"/>
+          <vert x="-240.0" y="-1328.0"/>
+          <vert x="-272.0" y="-1328.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-128.0" y="-1216.0"/>
+          <vert x="-64.0" y="-1264.0"/>
+          <vert x="0.0" y="-1216.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
@@ -883,8 +847,73 @@
         <container data="pu_boost" type="marker">
           <vert x="512.0" y="144.0"/>
         </container>
+        <container data="score" type="marker">
+          <vert x="4288.0" y="-240.0"/>
+        </container>
       </layer>
       <layer data="overlay" disable="true" fade="0.0" paralax="0.0" type="layer"/>
+    </map>
+    <map bg="6" bgcl="-9342607" data="005_paralax" fg="4" fgcl="-1" type="map">
+      <layer data="fixed" fade="0.85" paralax="0.0" type="layer">
+        <container cl="-7960954" data="solid" fill="4" type="circle">
+          <vert x="-288.0" y="-144.0"/>
+          <vert x="-64.0" y="-144.0"/>
+        </container>
+      </layer>
+      <layer data="paralax1" fade="0.7" paralax="0.85" type="layer">
+        <container cl="-6579301" data="solid" fill="4" type="circle">
+          <vert x="-288.0" y="-144.0"/>
+          <vert x="-80.0" y="-160.0"/>
+        </container>
+      </layer>
+      <layer data="paralax2" fade="0.55" paralax="0.7" type="layer">
+        <container cl="-5197648" data="solid" fill="4" type="circle">
+          <vert x="-288.0" y="-144.0"/>
+          <vert x="-96.0" y="-144.0"/>
+        </container>
+      </layer>
+      <layer data="paralax3" fade="0.4" paralax="0.55" type="layer">
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="-288.0" y="-144.0"/>
+          <vert x="-112.0" y="-144.0"/>
+        </container>
+      </layer>
+      <layer data="background" fade="0.25" paralax="0.0" type="layer">
+        <container cl="-2368549" data="solid" fill="4" type="circle">
+          <vert x="-288.0" y="-144.0"/>
+          <vert x="-128.0" y="-144.0"/>
+        </container>
+      </layer>
+      <layer data="game" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-592.0" y="80.0"/>
+          <vert x="16.0" y="80.0"/>
+          <vert x="16.0" y="160.0"/>
+          <vert x="-592.0" y="160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-64.0" y="80.0"/>
+          <vert x="-64.0" y="-368.0"/>
+          <vert x="16.0" y="-368.0"/>
+          <vert x="16.0" y="80.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="16.0" y="-368.0"/>
+          <vert x="-592.0" y="-368.0"/>
+          <vert x="-592.0" y="-448.0"/>
+          <vert x="16.0" y="-448.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-512.0" y="-368.0"/>
+          <vert x="-512.0" y="80.0"/>
+          <vert x="-592.0" y="80.0"/>
+          <vert x="-592.0" y="-368.0"/>
+        </container>
+        <container data="start" type="marker">
+          <vert x="-448.0" y="32.0"/>
+        </container>
+      </layer>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
     </map>
   </maps>
 </pack>

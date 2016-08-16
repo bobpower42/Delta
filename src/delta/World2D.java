@@ -50,7 +50,7 @@ public class World2D {
 		world = new World(new Vec2(0, -9.8f));
 		particles = new World(new Vec2(0, -9.8f));
 		players = new ArrayList<Player>();
-		doFinish=new ArrayList<Player>();
+		doFinish = new ArrayList<Player>();
 		contacts = new ArrayList<Contact>();
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
@@ -202,7 +202,7 @@ public class World2D {
 			Vec2 vel = new Vec2(velA.x + velB.x, velA.y + velB.y);
 			float relativeSpeed = (velA.sub(velB)).length();
 			float totalFriction = fA.getFriction() * fB.getFriction();
-			if (cA.data.equals("boost") || cB.data.equals("boost")) {
+			if (cO.data.equals("boost")) {
 				if (cP != null) {
 					Player tp = (Player) cP;
 					tp.sound.addBoostFriction(relativeSpeed);
@@ -221,7 +221,7 @@ public class World2D {
 					}
 				}
 
-			} else if (cA.data.equals("kill") || cB.data.equals("kill")) {
+			} else if (cO.data.equals("kill")) {
 				Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
 
 				for (int i = 0; i < 4; i++) {
@@ -268,9 +268,10 @@ public class World2D {
 	}
 
 	public void update() {
-		for(Player p: doFinish){
-		p.finish();
+		for (Player p : doFinish) {
+			p.finish();
 		}
+		doFinish.clear();
 		generateSparks();
 
 		for (Particle p : parts) {
@@ -294,45 +295,51 @@ public class World2D {
 
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
+		// draw particles
 		for (Particle p : parts) {
 			p.draw(pG, p1, p2);
 		}
-
+		// draw players not added to viewport
 		for (Player p : players) {
+			if (!vp.target.contains(p)) {
+				p.draw(pG, p1, p2);
+			}
+		}
+		// draw viewport players
+		for (Player p : vp.target) {
 			p.draw(pG, p1, p2);
 		}
 	}
 
 	public void addContact(Contact _contact) {
 		contacts.add(_contact);
-		// _contact.
+
 		Fixture fA = _contact.getFixtureA();
 		Fixture fB = _contact.getFixtureB();
 		Container cA = (Container) fA.getUserData();
 		Container cB = (Container) fB.getUserData();
+		Container cP = null;
+		Container cO = null;
 		if (cA.type.equals("player")) {
-			Player p = (Player) cA;
-			if (cB.data.equals("boost")) {
-				p.addBoostContact(_contact);
-			} else if (cB.data.equals("kill")) {
-				p.addKillContact(_contact);
-			} else if (cB.data.equals("finish")) {
-				doFinish.add(p);
-			} else {
-				p.addHitContact(_contact);
-			}
+			cP = cA;
+			cO = cB;
 		} else if (cB.type.equals("player")) {
-			Player p = (Player) cB;
-			if (cA.data.equals("boost")) {
+			cP = cB;
+			cO = cA;
+		}
+		if (cP != null) {
+			Player p = (Player) cP;
+			if (cO.data.equals("boost")) {
 				p.addBoostContact(_contact);
-			} else if (cA.data.equals("kill")) {
+			} else if (cO.data.equals("kill")) {
 				p.addKillContact(_contact);
-			} else if (cA.data.equals("finish")) {
-				p.finish();
+			} else if (cO.data.equals("finish")) {
+				if(!p.finished){
+				doFinish.add(p);
+				}
 			} else {
 				p.addHitContact(_contact);
-
 			}
 		}
 
@@ -345,26 +352,25 @@ public class World2D {
 		Fixture fB = _contact.getFixtureB();
 		Container cA = (Container) fA.getUserData();
 		Container cB = (Container) fB.getUserData();
+		Container cP = null;
+		Container cO = null;
 		if (cA.type.equals("player")) {
-			Player p = (Player) cA;
-			if (cB.data.equals("boost")) {
-				p.remBoostContact(_contact);
-			} else if (cB.data.equals("kill")) {
-				p.remKillContact(_contact);
-			} else {
-				p.remHitContact(_contact);
-			}
+			cP = cA;
+			cO = cB;
 		} else if (cB.type.equals("player")) {
-			Player p = (Player) cB;
-			if (cA.data.equals("boost")) {
+			cP = cB;
+			cO = cA;
+		}
+		if (cP != null) {
+			Player p = (Player) cP;
+			if (cO.data.equals("boost")) {
 				p.remBoostContact(_contact);
-			} else if (cA.data.equals("kill")) {
+			} else if (cO.data.equals("kill")) {
 				p.remKillContact(_contact);
 			} else {
 				p.remHitContact(_contact);
 			}
 		}
-
 	}
 
 	private void addObject(Container _obj) {
@@ -435,8 +441,12 @@ public class World2D {
 	}
 
 	private void step(float timeStep, int velocityIterations, int positionIterations) {
-		world.step(timeStep, velocityIterations, positionIterations);
-		particles.step(timeStep, velocityIterations, positionIterations);
+		try {
+			world.step(timeStep, velocityIterations, positionIterations);
+			particles.step(timeStep, velocityIterations, positionIterations);
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 	}
 
 	public int getForeground() {

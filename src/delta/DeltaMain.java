@@ -85,7 +85,7 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "004_towerfall");
+		world.loadfromXML(pack, "001_rails");
 
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
@@ -96,6 +96,7 @@ public class DeltaMain extends PApplet {
 		vp = new Viewport(this, world, 0, 0, width, height / 2);
 		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		vp.attachTarget(player);
+		//vp2.attachTarget(player);
 		vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
