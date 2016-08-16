@@ -29,22 +29,23 @@ public class World2D {
 	private float scale;
 	Level map;
 	Layer game;
-	Map<String, Container> obj = new HashMap<String, Container>();
+	Map<String, Object> obj = new HashMap<String, Object>();
 	Container spawn;
+	ArrayList<Instance> kinematics;
 	ArrayList<Player> players;
 	ArrayList<Contact> contacts;
 	ArrayList<Particle> parts;
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
-	ArrayList<Player> doFinish;
-	// HashMap<Contact, CollisionSound> collisionSound;
+	ArrayList<Player> doFinish;	
 	long lastFrameTimer;
 	float frameRate;
 	UGen out;
 	public static int MAXPARTICLES = 200;
+	public static int FRAMES;
 
-	World2D(float _frameRate, UGen _out) {
-		// collisionSound=new HashMap<Contact, CollisionSound>();
+	World2D(float _frameRate, UGen _out) {		
+		FRAMES=-1;
 		out = _out;
 		frameRate = _frameRate;
 		world = new World(new Vec2(0, -9.8f));
@@ -55,6 +56,7 @@ public class World2D {
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
 		partsAdd = new ArrayList<Particle>();
+		kinematics=new ArrayList<Instance>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
 
@@ -164,7 +166,9 @@ public class World2D {
 					spawn = c;
 				}
 			} else if (c.type.equals("instance")) {
-				// todo
+				Instance ic=(Instance)c;
+				ic.build();
+				kinematics.add(ic);
 			}
 		}
 	}
@@ -256,7 +260,7 @@ public class World2D {
 	}
 
 	void generateBounceParticles(Vec2 p, float ti) {
-		int tp = (int) (4 * ti);
+		int tp = (int) (3 * ti);
 		for (int i = 0; i < tp; i++) {
 			if (parts.size() < MAXPARTICLES) {
 				parts.add(new BounceParticle(this, p,
@@ -268,6 +272,9 @@ public class World2D {
 	}
 
 	public void update() {
+		for(Instance k:kinematics){
+			k.update(FRAMES);
+		}
 		for (Player p : doFinish) {
 			p.finish();
 		}
@@ -375,7 +382,7 @@ public class World2D {
 
 	private void addObject(Container _obj) {
 		String od = _obj.getData();
-		obj.put(od, _obj);
+		obj.put(od, (Object)_obj);
 	}
 
 	public void setScale(float scale_) {
@@ -428,16 +435,11 @@ public class World2D {
 	}
 
 	public void step() {
-		update();
-		// float
-		// timeStep=(float)((System.nanoTime()-lastFrameTimer)/1000000000f);
+		FRAMES++;
+		update();		
 		float timeStep = 1 / 50f;
-		// System.out.println(timeStep);
-		// if(timeStep>0.05)timeStep=0.05f;
-
 		lastFrameTimer = System.nanoTime();
 		this.step(timeStep, 5, 5);
-		// world.clearForces();
 	}
 
 	private void step(float timeStep, int velocityIterations, int positionIterations) {

@@ -235,7 +235,7 @@ public class Player extends Container {
 					float wr = world.scalarPixelsToWorld(r);
 					Vec2 thisPartLoc = new Vec2(thisLoc.x + wr * PApplet.cos(curA + rand - PApplet.HALF_PI),
 							thisLoc.y + wr * PApplet.sin(curA + rand - PApplet.HALF_PI));
-					if (world.parts.size() < world.MAXPARTICLES) {
+					if (world.parts.size() < World2D.MAXPARTICLES) {
 						world.parts.add(new SmokeParticle(world, thisPartLoc,
 								new Vec2(-(killFactor * 3) * PApplet.cos(-2 * rand + curA + PApplet.HALF_PI),
 										-(killFactor * 3) * PApplet.sin(-2 * rand + curA + PApplet.HALF_PI)),
@@ -257,8 +257,7 @@ public class Player extends Container {
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
 		if (!finished) {
 			Vec2 pos = world.getBodyPixelCoord(ship);
-			float ang = ship.getAngle();
-			// System.out.println("px: "+pos.x+" py: "+pos.y+" ang: "+ang);
+			float ang = ship.getAngle();			
 			pG.pushMatrix();
 			pG.translate(pos.x, pos.y);
 			pG.rotate(-ang);
@@ -272,7 +271,7 @@ public class Player extends Container {
 	}
 
 	public void finish() {
-		if (ship != null) {
+		if (!finished) {
 			input.vibrateLeft(0);
 			boost.clear();
 			kill.clear();
@@ -284,7 +283,7 @@ public class Player extends Container {
 			world.particles.destroyBody(proxy);
 			proxy.setActive(false);			
 			for (int i = 0; i < 40; i++) {
-				if (world.parts.size() < world.MAXPARTICLES) {
+				if (world.parts.size() < World2D.MAXPARTICLES) {
 				world.parts.add(new FinishParticle(world, loc,
 						new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
 						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), World2D.cl[index]));
@@ -293,8 +292,6 @@ public class Player extends Container {
 						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
 				}
 			}
-			//ship = null;
-			//proxy = null;
 			finished=true;
 		}
 	}

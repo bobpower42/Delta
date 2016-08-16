@@ -48,8 +48,8 @@ public class Viewport {
 			if (count > 0) {
 				track.set(xTotal / count, yTotal / count);
 				// offset to top left corner
-				track.x = -track.x + dim.x / 2f;
-				track.y = -track.y + dim.y / 2f;
+				track.x = -track.x + half.x;
+				track.y = -track.y + half.y;
 			}
 			//camera tracking. 3 steps to give it a more natural look
 			//damp track (follow target)

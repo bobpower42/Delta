@@ -909,8 +909,18 @@
           <vert x="-592.0" y="80.0"/>
           <vert x="-592.0" y="-368.0"/>
         </container>
+        <container data="tl" type="marker">
+          <vert x="-592.0" y="-448.0"/>
+        </container>
+        <container data="br" type="marker">
+          <vert x="16.0" y="160.0"/>
+        </container>
         <container data="start" type="marker">
           <vert x="-448.0" y="32.0"/>
+        </container>
+        <container abt="60" abto="0" at="60" bat="60" bt="60" data="1st obj" rt="120" rto="0" type="instance">
+          <vert x="-272.0" y="0.0"/>
+          <vert x="-176.0" y="0.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>

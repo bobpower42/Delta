@@ -6,6 +6,8 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
 //import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 
@@ -25,7 +27,6 @@ public abstract class Container {
 	Container parent;
 	int nv;
 	World2D world;
-	
 
 	Container() {
 		//
@@ -155,7 +156,7 @@ class Poly extends Container {
 		} else {
 			Vec2[] t = new Vec2[v.length];
 			t[0] = new Vec2(0, 0);
-			//System.out.println(v.length);
+			// System.out.println(v.length);
 			for (int i = 1; i < v.length; i++) {
 				t[i] = new Vec2(v[i].x - v[0].x, v[i].y - v[0].y);
 			}
@@ -219,9 +220,9 @@ class Circle extends Container {
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
 		if (onScreen(p1, p2)) {
-		pG.fill(fill);		
-		pG.noStroke();
-		pG.ellipse(v[0].x, v[0].y, d * 2, d * 2);
+			pG.fill(fill);
+			pG.noStroke();
+			pG.ellipse(v[0].x, v[0].y, d * 2, d * 2);
 		}
 
 	}
@@ -277,7 +278,7 @@ class Marker extends Container {
 	}
 
 	boolean onScreen(Vec2 tl, Vec2 br) {
-		//return false;
+		// return false;
 		if (data.equals("start")) {
 			return false;
 		} else if (data.equals("tl")) {
@@ -323,13 +324,16 @@ class Marker extends Container {
 }
 
 class Instance extends Container {
-	Container obj;
-	Body body;
+	Object obj;
+	Body body, proxy;
+	Vec2 BBtl, BBbr;
 
 	int rT, aT, abT, bT, baT, rTO, abTO, abTotal;
-	float rot;
+	float rot, rotStep;
+	Vec2 loc;
 
 	Instance(World2D _world, XML xml) {
+		
 		world = _world;
 		type = "instance";
 		nv = 0;
@@ -343,8 +347,11 @@ class Instance extends Container {
 		abTO = 0;
 		abTotal = 0;
 		try {
-			if (xml.hasAttribute("data"))
+			if (xml.hasAttribute("data")) {
 				data = xml.getString("data");
+				obj = world.obj.get(data);
+				System.out.println("load: "+data);
+			}
 			if (xml.hasAttribute("rt"))
 				rT = xml.getInt("rt");
 			if (xml.hasAttribute("rto"))
@@ -356,7 +363,7 @@ class Instance extends Container {
 			if (xml.hasAttribute("bt"))
 				bT = xml.getInt("bt");
 			if (xml.hasAttribute("bat"))
-				baT = xml.getInt("ba");
+				baT = xml.getInt("bat");
 			if (xml.hasAttribute("abto"))
 				abTO = xml.getInt("abto");
 			XML[] verts = xml.getChildren("vert");
@@ -365,16 +372,130 @@ class Instance extends Container {
 				v[nv] = new Vec2(vert.getFloat("x"), vert.getFloat("y"));
 				nv++;
 			}
-		} catch (Exception ex) {
-			// println("Parse Error Load Instance");
-			// println(ex);
+			loc = new Vec2(v[0]);
+			rot = 0;
+			if (rT != 0) {
+				rotStep = 6.283185307f / (float) rT;
+			} else {
+				rotStep = 0;
+			}
+
+			// calculate bounding box
+			/*Vec2[] objBB;
+			BBtl = new Vec2();
+			BBbr = new Vec2();
+			if (rT != 0) {
+				objBB = obj.getBoundingBoxWithRotation();
+			} else {
+				objBB = obj.getBoundingBox();
+			}
+			if (nv == 1) {
+				BBtl = objBB[0].add(v[0]);
+				BBbr = objBB[1].add(v[0]);
+			} else {
+				Vec2[] objBBfar = new Vec2[2];
+				objBBfar[0].set(objBB[0].x + v[1].x, objBB[0].y + v[1].y);
+				objBBfar[1].set(objBB[1].x + v[1].x, objBB[1].y + v[1].y);
+				objBB[0].add(v[0]);
+				objBB[1].add(v[0]);
+				BBtl.set(min(objBB[0].x, objBBfar[0].x), min(objBB[0].y, objBBfar[0].y));
+				BBbr.set(max(objBB[1].x, objBBfar[1].x), max(objBB[1].y, objBBfar[1].y));
+			}*/
+
+		} catch (Exception ex) {			
+			System.out.println(ex);
 		}
-		// System.out.println("Instance: "+data);
+
+	}
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+		//if (onScreen(p1, p2)) {
+			if(obj!=null){
+				pG.pushMatrix();
+				pG.translate(loc.x, loc.y);
+				pG.rotate(rot);
+				obj.draw(pG, p1, p2);
+				pG.popMatrix();
+			}				
+		//}
 	}
 
-	boolean onScreen(PVector tl, PVector br) {
-		return true;
+	private float min(float a, float b) {
+		if (a < b)
+			return a;
+		return b;
+	}
 
+	private float max(float a, float b) {
+		if (a > b)
+			return a;
+		return b;
+	}
+
+	public void build() {
+		BodyDef bd = new BodyDef();
+		bd.type = BodyType.KINEMATIC;
+		Vec2 worldLoc=world.coordPixelsToWorld(loc);
+		bd.position.set(world.coordPixelsToWorld(worldLoc));		
+		body = world.world.createBody(bd);
+		proxy = world.particles.createBody(bd);
+		for (Container c : obj.shapes) {
+			if (c.type.equals("poly")) {
+				
+				Poly pc = (Poly) c;
+				FixtureDef fd = pc.getFixtureDef(true);
+				body.createFixture(fd);
+				proxy.createFixture(fd);
+			} else if (c.type.equals("circle")) {
+				Circle cc = (Circle) c;
+				FixtureDef fd = cc.getFixtureDef(true);
+				body.createFixture(fd);
+				proxy.createFixture(fd);
+			}
+		}
+	}
+
+	public void update(int frame) {
+		if (obj != null) {
+			if ((abT != 0 || baT != 0) && nv > 1) {
+				int loop = (abTO + frame) % (aT + abT + bT + baT);
+				if (loop < aT) {
+					loc.set(v[0].x, v[0].y);
+				} else {
+					loop -= aT;
+					if (loop < abT) {
+						float progress = loop / (float) abT;
+						loc.set(v[0].x + (v[1].x - v[0].x) * progress, v[0].y + (v[1].y - v[0].y) * progress);
+					} else {
+						loop -= abT;
+						if (loop < bT) {
+							loc.set(v[1].x, v[1].y);
+						} else {
+							loop -= bT;
+							if (loop < baT) {
+								float progress = loop / (float) baT;
+								loc.set(v[1].x + (v[0].x - v[1].x) * progress, v[1].y + (v[0].y - v[1].y) * progress);
+							}
+						}
+					}
+				}
+			} else {				
+				loc.set(v[0].x, v[0].y);
+			}
+			if (rT != 0) {
+				rot = (rTO + frame) * rotStep;
+			}
+		} else {
+			loc.set(v[0].x, v[0].y);
+		}
+		Vec2 worldLoc=world.coordPixelsToWorld(loc);
+		body.setTransform(worldLoc, -rot);
+		proxy.setTransform(worldLoc, -rot);
+	}
+
+	boolean onScreen(Vec2 tl, Vec2 br) {
+		if (BBtl.x < br.x && BBtl.y < br.y && BBbr.x > tl.x && BBbr.y > tl.y)
+			return true;
+		return false;
 	}
 
 }
@@ -408,6 +529,43 @@ class Object extends Container {
 		for (Container s : shapes) {
 			s.draw(pG, p1, p2);
 		}
+	}
+
+	public Vec2[] getBoundingBox() {
+		Vec2[] out = new Vec2[2];
+		for (Container s : shapes) {
+			for (Vec2 vert : s.v) {
+				if (out[0] == null) {
+					out[0] = vert;
+					out[1] = vert;
+				} else {
+					if (vert.x < out[0].x)
+						out[0].x = vert.x;
+					if (vert.y < out[0].y)
+						out[0].y = vert.y;
+					if (vert.x > out[1].x)
+						out[1].x = vert.x;
+					if (vert.y > out[1].y)
+						out[1].y = vert.y;
+				}
+			}
+		}
+		return out;
+	}
+
+	public Vec2[] getBoundingBoxWithRotation() {
+		Vec2[] out = new Vec2[2];
+		float d = 0;
+		for (Container s : shapes) {
+			for (Vec2 vert : s.v) {
+				float td = vert.length();
+				if (td > d)
+					d = td;
+			}
+		}
+		out[0].set(-d, -d);
+		out[1].set(d, d);
+		return out;
 	}
 }
 
@@ -453,16 +611,15 @@ class Layer extends Container {
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!disable) {
 			Vec2 tr;
-			if(paralax==0){
-			tr = new Vec2(p1.x * (1 - paralax), p1.y * (1 - paralax));
-			}else{
-				tr = new Vec2(p2.x/2f+(p1.x-760) * (1 - paralax), p2.y/2f+(p1.y-540) * (1 - paralax));	
+			if (paralax == 0) {
+				tr = new Vec2(p1.x * (1 - paralax), p1.y * (1 - paralax));
+			} else {
+				tr = new Vec2(p2.x / 2f + (p1.x - 760) * (1 - paralax), p2.y / 2f + (p1.y - 540) * (1 - paralax));
 			}
-			
-			
+
 			Vec2 tl = new Vec2((int) -tr.x, (int) -tr.y);
 			Vec2 br = new Vec2((int) tl.x + p2.x, (int) tl.y + p2.y);
-			
+
 			pG.pushMatrix();
 			pG.translate((int) tr.x, (int) tr.y);
 			if (data.equals("game")) {
@@ -510,12 +667,9 @@ class Level extends Container {
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		pG.background(bg);
-		// pG.translate(760, 540);
-
 		for (Container l : layer) {
-			Layer L=(Layer)l;
+			Layer L = (Layer) l;
 			L.draw(pG, p1, p2, vp);
-
 		}
 	}
 }
