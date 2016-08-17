@@ -8,12 +8,9 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-//import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
-
 import processing.core.PConstants;
 import processing.core.PGraphics;
-import processing.core.PVector;
 import processing.data.XML;
 
 public abstract class Container {
@@ -27,6 +24,7 @@ public abstract class Container {
 	Container parent;
 	int nv;
 	World2D world;
+	boolean check = true;
 
 	Container() {
 		//
@@ -80,6 +78,10 @@ public abstract class Container {
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
 
 	}
+
+	public void noCheck() {
+		check = false;
+	}
 }
 
 class Poly extends Container {
@@ -132,7 +134,7 @@ class Poly extends Container {
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		if (onScreen(p1, p2)) {
+		if (!check || onScreen(p1, p2)) {
 			pG.fill(fill);
 			pG.noStroke();
 			pG.beginShape();
@@ -219,7 +221,7 @@ class Circle extends Container {
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		if (onScreen(p1, p2)) {
+		if (!check || onScreen(p1, p2)) {
 			pG.fill(fill);
 			pG.noStroke();
 			pG.ellipse(v[0].x, v[0].y, d * 2, d * 2);
@@ -333,7 +335,7 @@ class Instance extends Container {
 	Vec2 loc;
 
 	Instance(World2D _world, XML xml) {
-		
+
 		world = _world;
 		type = "instance";
 		nv = 0;
@@ -350,7 +352,6 @@ class Instance extends Container {
 			if (xml.hasAttribute("data")) {
 				data = xml.getString("data");
 				obj = world.obj.get(data);
-				System.out.println("load: "+data);
 			}
 			if (xml.hasAttribute("rt"))
 				rT = xml.getInt("rt");
@@ -381,7 +382,8 @@ class Instance extends Container {
 			}
 
 			// calculate bounding box
-			/*Vec2[] objBB;
+
+			Vec2[] objBB = new Vec2[2];
 			BBtl = new Vec2();
 			BBbr = new Vec2();
 			if (rT != 0) {
@@ -389,34 +391,37 @@ class Instance extends Container {
 			} else {
 				objBB = obj.getBoundingBox();
 			}
+			System.out.println("object BB tl x: " + objBB[0].x + " y: " + objBB[0].y + " br x: " + objBB[1].x + " y: "
+					+ objBB[1].y);
+
 			if (nv == 1) {
 				BBtl = objBB[0].add(v[0]);
 				BBbr = objBB[1].add(v[0]);
 			} else {
-				Vec2[] objBBfar = new Vec2[2];
-				objBBfar[0].set(objBB[0].x + v[1].x, objBB[0].y + v[1].y);
-				objBBfar[1].set(objBB[1].x + v[1].x, objBB[1].y + v[1].y);
-				objBB[0].add(v[0]);
-				objBB[1].add(v[0]);
-				BBtl.set(min(objBB[0].x, objBBfar[0].x), min(objBB[0].y, objBBfar[0].y));
-				BBbr.set(max(objBB[1].x, objBBfar[1].x), max(objBB[1].y, objBBfar[1].y));
-			}*/
+				BBtl.set(min(objBB[0].x + v[0].x, objBB[0].x + v[1].x), min(objBB[0].y + v[0].y, objBB[0].y + v[1].y));
+				BBbr.set(max(objBB[1].x + v[0].x, objBB[1].x + v[1].x), max(objBB[1].y + v[0].y, objBB[1].y + v[1].y));
+			}
 
-		} catch (Exception ex) {			
+		} catch (Exception ex) {
 			System.out.println(ex);
 		}
 
 	}
+
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		//if (onScreen(p1, p2)) {
-			if(obj!=null){
+		/* Debug Bounding box
+		 * pG.noFill(); pG.stroke(255, 255, 0); pG.rectMode(PConstants.CORNERS);
+		 * pG.rect(BBtl.x, BBtl.y, BBbr.x, BBbr.y);
+		 */
+		if (onScreen(p1, p2)) {
+			if (obj != null) {
 				pG.pushMatrix();
 				pG.translate(loc.x, loc.y);
 				pG.rotate(rot);
 				obj.draw(pG, p1, p2);
 				pG.popMatrix();
-			}				
-		//}
+			}
+		}
 	}
 
 	private float min(float a, float b) {
@@ -434,13 +439,13 @@ class Instance extends Container {
 	public void build() {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.KINEMATIC;
-		Vec2 worldLoc=world.coordPixelsToWorld(loc);
-		bd.position.set(world.coordPixelsToWorld(worldLoc));		
+		Vec2 worldLoc = world.coordPixelsToWorld(loc);
+		bd.position.set(world.coordPixelsToWorld(worldLoc));
 		body = world.world.createBody(bd);
 		proxy = world.particles.createBody(bd);
 		for (Container c : obj.shapes) {
 			if (c.type.equals("poly")) {
-				
+
 				Poly pc = (Poly) c;
 				FixtureDef fd = pc.getFixtureDef(true);
 				body.createFixture(fd);
@@ -478,7 +483,7 @@ class Instance extends Container {
 						}
 					}
 				}
-			} else {				
+			} else {
 				loc.set(v[0].x, v[0].y);
 			}
 			if (rT != 0) {
@@ -487,7 +492,7 @@ class Instance extends Container {
 		} else {
 			loc.set(v[0].x, v[0].y);
 		}
-		Vec2 worldLoc=world.coordPixelsToWorld(loc);
+		Vec2 worldLoc = world.coordPixelsToWorld(loc);
 		body.setTransform(worldLoc, -rot);
 		proxy.setTransform(worldLoc, -rot);
 	}
@@ -511,7 +516,9 @@ class Object extends Container {
 			if (xml.hasChildren()) {
 				XML[] children = xml.getChildren("container");
 				for (XML child : children) {
-					addShape(getFromXML(child));
+					Container c = getFromXML(child);
+					c.noCheck();
+					addShape(c);
 				}
 			}
 		} catch (Exception ex) {
@@ -533,21 +540,18 @@ class Object extends Container {
 
 	public Vec2[] getBoundingBox() {
 		Vec2[] out = new Vec2[2];
+		out[0] = new Vec2(0, 0);
+		out[1] = new Vec2(0, 0);
 		for (Container s : shapes) {
 			for (Vec2 vert : s.v) {
-				if (out[0] == null) {
-					out[0] = vert;
-					out[1] = vert;
-				} else {
-					if (vert.x < out[0].x)
-						out[0].x = vert.x;
-					if (vert.y < out[0].y)
-						out[0].y = vert.y;
-					if (vert.x > out[1].x)
-						out[1].x = vert.x;
-					if (vert.y > out[1].y)
-						out[1].y = vert.y;
-				}
+				if (vert.x < out[0].x)
+					out[0].x = vert.x;
+				if (vert.y < out[0].y)
+					out[0].y = vert.y;
+				if (vert.x > out[1].x)
+					out[1].x = vert.x;
+				if (vert.y > out[1].y)
+					out[1].y = vert.y;
 			}
 		}
 		return out;
@@ -555,6 +559,8 @@ class Object extends Container {
 
 	public Vec2[] getBoundingBoxWithRotation() {
 		Vec2[] out = new Vec2[2];
+		out[0] = new Vec2(0, 0);
+		out[1] = new Vec2(0, 0);
 		float d = 0;
 		for (Container s : shapes) {
 			for (Vec2 vert : s.v) {
@@ -612,9 +618,10 @@ class Layer extends Container {
 		if (!disable) {
 			Vec2 tr;
 			if (paralax == 0) {
-				tr = new Vec2(p1.x * (1 - paralax), p1.y * (1 - paralax));
+				tr = new Vec2(p1.x, p1.y);
 			} else {
-				tr = new Vec2(p2.x / 2f + (p1.x - 760) * (1 - paralax), p2.y / 2f + (p1.y - 540) * (1 - paralax));
+				tr = new Vec2(vp.half.x + (p1.x - vp.half.x) * (1 - paralax),
+						vp.half.y + (p1.y - vp.half.y) * (1 - paralax));
 			}
 
 			Vec2 tl = new Vec2((int) -tr.x, (int) -tr.y);

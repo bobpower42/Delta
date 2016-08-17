@@ -9,8 +9,6 @@ import beads.Glide;
 import beads.Mult;
 import beads.OnePoleFilter;
 import beads.Plug;
-import beads.TapIn;
-import beads.TapOut;
 import beads.WavePlayer;
 
 public class PlayerSound {
@@ -242,8 +240,7 @@ public class PlayerSound {
 		if (_impulse > 0.1 && ship_active) {
 			imp = _impulse / 50f;
 			imp += solid_hit_impulse.getValue();
-			solid_hit_impulse.setValueImmediately(imp);
-			// System.out.println("imp: "+imp);
+			solid_hit_impulse.setValueImmediately(imp);			
 		}
 		solid_hit_impulse.setValue(0);
 	}
@@ -269,8 +266,7 @@ public class PlayerSound {
 			imp = _impulse / 40f;
 			bounce_hit_impulse.setValueImmediately(imp);
 			bounce_hit_frequency.setValueImmediately(0);
-			bounce_hit_frequency.setValue(_impulse * 100);
-			// System.out.println("imp: "+imp);
+			bounce_hit_frequency.setValue(_impulse * 100);			
 		}
 		bounce_hit_impulse.setValue(0);
 	}
@@ -278,10 +274,8 @@ public class PlayerSound {
 	public void addKillImpulse(float _impulse) {
 		float imp = 0;
 		if (ship_active) {
-			imp = 0.2f + (_impulse / 20f);
-			// imp += kill_hit_impulse.getValue();
-			kill_hit_impulse.setValueImmediately(imp);
-			// System.out.println("imp: "+imp);
+			imp = 0.2f + (_impulse / 20f);			
+			kill_hit_impulse.setValueImmediately(imp);			
 		}
 		kill_hit_impulse.setValue(0);
 	}
@@ -305,8 +299,7 @@ public class PlayerSound {
 				frA = 0.1f;
 			boost_speed.setValue(frS);
 			boost_gain.setValueImmediately(frA);
-		}
-		//boost_speed.setValue(0);
+		}		
 		boost_gain.setValue(0);
 	}
 

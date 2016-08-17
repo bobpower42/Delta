@@ -6,13 +6,10 @@ import java.io.FilenameFilter;
 import beads.AudioContext;
 import beads.Gain;
 import beads.Plug;
-import beads.Reverb;
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PGraphics;
-import processing.core.PImage;
 import processing.data.XML;
-import processing.opengl.PShader;
+
 
 public class DeltaMain extends PApplet {
 	//player colours
@@ -86,7 +83,6 @@ public class DeltaMain extends PApplet {
 		XML pack = loadXML(files[0].getAbsolutePath());
 
 		world.loadfromXML(pack, "005_paralax");
-
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
 		player.createShip();

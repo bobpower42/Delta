@@ -6,8 +6,6 @@ import org.jbox2d.common.Vec2;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PVector;
-import processing.opengl.PShader;
 
 public class Viewport {
 	PApplet pA;

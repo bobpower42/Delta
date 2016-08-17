@@ -854,25 +854,25 @@
       <layer data="overlay" disable="true" fade="0.0" paralax="0.0" type="layer"/>
     </map>
     <map bg="6" bgcl="-9342607" data="005_paralax" fg="4" fgcl="-1" type="map">
-      <layer data="fixed" fade="0.85" paralax="0.0" type="layer">
+      <layer data="fixed" fade="0.85" paralax="1.0" type="layer">
         <container cl="-7960954" data="solid" fill="4" type="circle">
           <vert x="-288.0" y="-144.0"/>
           <vert x="-64.0" y="-144.0"/>
         </container>
       </layer>
-      <layer data="paralax1" fade="0.7" paralax="0.85" type="layer">
+      <layer data="paralax1" fade="0.7" paralax="0.75" type="layer">
         <container cl="-6579301" data="solid" fill="4" type="circle">
           <vert x="-288.0" y="-144.0"/>
           <vert x="-80.0" y="-160.0"/>
         </container>
       </layer>
-      <layer data="paralax2" fade="0.55" paralax="0.7" type="layer">
+      <layer data="paralax2" fade="0.55" paralax="0.5" type="layer">
         <container cl="-5197648" data="solid" fill="4" type="circle">
           <vert x="-288.0" y="-144.0"/>
           <vert x="-96.0" y="-144.0"/>
         </container>
       </layer>
-      <layer data="paralax3" fade="0.4" paralax="0.55" type="layer">
+      <layer data="paralax3" fade="0.4" paralax="0.25" type="layer">
         <container cl="-3750202" data="solid" fill="4" type="circle">
           <vert x="-288.0" y="-144.0"/>
           <vert x="-112.0" y="-144.0"/>
@@ -908,12 +908,6 @@
           <vert x="-512.0" y="80.0"/>
           <vert x="-592.0" y="80.0"/>
           <vert x="-592.0" y="-368.0"/>
-        </container>
-        <container data="tl" type="marker">
-          <vert x="-592.0" y="-448.0"/>
-        </container>
-        <container data="br" type="marker">
-          <vert x="16.0" y="160.0"/>
         </container>
         <container data="start" type="marker">
           <vert x="-448.0" y="32.0"/>
