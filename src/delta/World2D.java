@@ -39,7 +39,7 @@ public class World2D {
 	ArrayList<Particle> partsAdd;
 	ArrayList<Player> doFinish;	
 	long lastFrameTimer;
-	float frameRate;
+	public float frameRate;
 	UGen out;
 	public static int MAXPARTICLES = 200;
 	public static int FRAMES;
@@ -372,6 +372,7 @@ public class World2D {
 			Player p = (Player) cP;
 			if (cO.data.equals("boost")) {
 				p.remBoostContact(_contact);
+				p.sound.endBoost();				
 			} else if (cO.data.equals("kill")) {
 				p.remKillContact(_contact);
 			} else {
@@ -446,6 +447,8 @@ public class World2D {
 		try {
 			world.step(timeStep, velocityIterations, positionIterations);
 			particles.step(timeStep, velocityIterations, positionIterations);
+			world.clearForces();
+			particles.clearForces();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

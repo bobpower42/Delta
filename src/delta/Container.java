@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -232,7 +234,7 @@ class Circle extends Container {
 	public FixtureDef getFixtureDef(Boolean relative) {
 		CircleShape sd = new CircleShape();
 		if (relative) {
-			sd.m_p.set(v[0]);
+			sd.m_p.set(world.coordPixelsToWorld(v[0]));
 		}
 		sd.m_radius = world.scalarPixelsToWorld(d);
 		FixtureDef fd = new FixtureDef();
@@ -332,13 +334,13 @@ class Instance extends Container {
 
 	int rT, aT, abT, bT, baT, rTO, abTO, abTotal;
 	float rot, rotStep;
-	Vec2 loc;
+	Vec2 locScreen, ABLocStepScreen, BALocStepScreen;
+	Vec2 ABLocStepWorld, BALocStepWorld, LocStepWorld;
 
 	Instance(World2D _world, XML xml) {
 
 		world = _world;
 		type = "instance";
-		nv = 0;
 		nv = 0;
 		rT = 0;
 		rTO = 0;
@@ -348,6 +350,8 @@ class Instance extends Container {
 		baT = 0;
 		abTO = 0;
 		abTotal = 0;
+		LocStepWorld=new Vec2(0,0);
+		
 		try {
 			if (xml.hasAttribute("data")) {
 				data = xml.getString("data");
@@ -367,14 +371,15 @@ class Instance extends Container {
 				baT = xml.getInt("bat");
 			if (xml.hasAttribute("abto"))
 				abTO = xml.getInt("abto");
+			abTotal = aT + abT + bT + baT;
 			XML[] verts = xml.getChildren("vert");
 			v = new Vec2[verts.length];
 			for (XML vert : verts) {
 				v[nv] = new Vec2(vert.getFloat("x"), vert.getFloat("y"));
 				nv++;
 			}
-			loc = new Vec2(v[0]);
-			rot = 0;
+			locScreen = new Vec2(v[0]);
+
 			if (rT != 0) {
 				rotStep = 6.283185307f / (float) rT;
 			} else {
@@ -388,19 +393,24 @@ class Instance extends Container {
 			BBbr = new Vec2();
 			if (rT != 0) {
 				objBB = obj.getBoundingBoxWithRotation();
+				rotStep = 6.283185307f / (float) rT;
 			} else {
 				objBB = obj.getBoundingBox();
+				rotStep = 0;
 			}
-			System.out.println("object BB tl x: " + objBB[0].x + " y: " + objBB[0].y + " br x: " + objBB[1].x + " y: "
-					+ objBB[1].y);
-
 			if (nv == 1) {
 				BBtl = objBB[0].add(v[0]);
 				BBbr = objBB[1].add(v[0]);
+				ABLocStepScreen = new Vec2(0, 0);
+				BALocStepScreen = new Vec2(0, 0);
 			} else {
 				BBtl.set(min(objBB[0].x + v[0].x, objBB[0].x + v[1].x), min(objBB[0].y + v[0].y, objBB[0].y + v[1].y));
 				BBbr.set(max(objBB[1].x + v[0].x, objBB[1].x + v[1].x), max(objBB[1].y + v[0].y, objBB[1].y + v[1].y));
+				ABLocStepScreen = new Vec2((v[1].x - v[0].x) / (float) abT, (v[1].y - v[0].y) / (float) abT);
+				BALocStepScreen = new Vec2((v[0].x - v[1].x) / (float) baT, (v[0].y - v[1].y) / (float) baT);
 			}
+			ABLocStepWorld = new Vec2(world.coordPixelsToWorld(ABLocStepScreen));
+			BALocStepWorld = new Vec2(world.coordPixelsToWorld(BALocStepScreen));
 
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -409,14 +419,16 @@ class Instance extends Container {
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		/* Debug Bounding box
-		 * pG.noFill(); pG.stroke(255, 255, 0); pG.rectMode(PConstants.CORNERS);
-		 * pG.rect(BBtl.x, BBtl.y, BBbr.x, BBbr.y);
-		 */
+		/* Debug Bounding box */
+		//pG.noFill();
+		//pG.stroke(255, 255, 0);
+		//pG.rectMode(PConstants.CORNERS);
+		//pG.rect(BBtl.x, BBtl.y, BBbr.x, BBbr.y);
+
 		if (onScreen(p1, p2)) {
 			if (obj != null) {
 				pG.pushMatrix();
-				pG.translate(loc.x, loc.y);
+				pG.translate(locScreen.x, locScreen.y);
 				pG.rotate(rot);
 				obj.draw(pG, p1, p2);
 				pG.popMatrix();
@@ -439,8 +451,6 @@ class Instance extends Container {
 	public void build() {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.KINEMATIC;
-		Vec2 worldLoc = world.coordPixelsToWorld(loc);
-		bd.position.set(world.coordPixelsToWorld(worldLoc));
 		body = world.world.createBody(bd);
 		proxy = world.particles.createBody(bd);
 		for (Container c : obj.shapes) {
@@ -457,44 +467,65 @@ class Instance extends Container {
 				proxy.createFixture(fd);
 			}
 		}
-	}
+		update(0);
+	}	
+
+	private void setTransformAndVelocity(Vec2 _loc, float _rot, Vec2 _lin, float _ang) {
+		body.setTransform(_loc, -_rot);
+		proxy.setTransform(_loc, -_rot);
+		body.setAngularVelocity(-_ang * world.frameRate);
+		body.setLinearVelocity(new Vec2(_lin.x * world.frameRate, _lin.y * world.frameRate));
+		proxy.setAngularVelocity(-_ang * world.frameRate);
+		proxy.setLinearVelocity(new Vec2(_lin.x * world.frameRate, _lin.y * world.frameRate));
+	}	
 
 	public void update(int frame) {
-		if (obj != null) {
-			if ((abT != 0 || baT != 0) && nv > 1) {
-				int loop = (abTO + frame) % (aT + abT + bT + baT);
-				if (loop < aT) {
-					loc.set(v[0].x, v[0].y);
+		boolean sync = frame==0;
+		if (rT != 0) {
+			int loop = (rTO + frame) % rT;
+			rot = loop * rotStep;
+			if (loop == 0)
+				sync = true;
+		}else{
+			rot=0;
+		}
+		if ((abT != 0 || baT != 0) && nv > 1) {
+			int loop = (abTO + frame) % abTotal;
+			if(loop==0)sync=true;
+			if (loop < aT) {
+				locScreen.set(v[0].x, v[0].y);
+				LocStepWorld.set(new Vec2(0,0));				
+			} else {
+				loop -= aT;
+				if(loop==0)sync=true;
+				if (loop < abT) {
+					float progress = loop / (float) abT;
+					locScreen.set(v[0].x + (v[1].x - v[0].x) * progress, v[0].y + (v[1].y - v[0].y) * progress);
+					LocStepWorld.set(ABLocStepWorld);
 				} else {
-					loop -= aT;
-					if (loop < abT) {
-						float progress = loop / (float) abT;
-						loc.set(v[0].x + (v[1].x - v[0].x) * progress, v[0].y + (v[1].y - v[0].y) * progress);
+					loop -= abT;
+					if(loop==0)sync=true;
+					if (loop < bT) {
+						locScreen.set(v[1].x, v[1].y);
+						LocStepWorld.set(new Vec2(0,0));
 					} else {
-						loop -= abT;
-						if (loop < bT) {
-							loc.set(v[1].x, v[1].y);
-						} else {
-							loop -= bT;
-							if (loop < baT) {
-								float progress = loop / (float) baT;
-								loc.set(v[1].x + (v[0].x - v[1].x) * progress, v[1].y + (v[0].y - v[1].y) * progress);
-							}
+						loop -= bT;
+						if(loop==0)sync=true;
+						if (loop < baT) {
+							float progress = loop / (float) baT;
+							locScreen.set(v[1].x + (v[0].x - v[1].x) * progress, v[1].y + (v[0].y - v[1].y) * progress);
+							LocStepWorld.set(BALocStepWorld);
 						}
 					}
 				}
-			} else {
-				loc.set(v[0].x, v[0].y);
-			}
-			if (rT != 0) {
-				rot = (rTO + frame) * rotStep;
 			}
 		} else {
-			loc.set(v[0].x, v[0].y);
+			locScreen.set(v[0].x, v[0].y);
+			LocStepWorld.set(new Vec2(0,0));
 		}
-		Vec2 worldLoc = world.coordPixelsToWorld(loc);
-		body.setTransform(worldLoc, -rot);
-		proxy.setTransform(worldLoc, -rot);
+		if(sync){
+			setTransformAndVelocity(world.coordPixelsToWorld(locScreen), rot, LocStepWorld, rotStep);
+		}
 	}
 
 	boolean onScreen(Vec2 tl, Vec2 br) {

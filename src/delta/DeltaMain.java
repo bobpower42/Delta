@@ -82,7 +82,7 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "005_paralax");
+		world.loadfromXML(pack, "006_a");
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
 		player.createShip();

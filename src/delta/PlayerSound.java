@@ -199,12 +199,12 @@ public class PlayerSound {
 
 		// boost friction
 		boost_speed = new Glide(ac, 0, 500);
+		boost_speed.setValue(25f);
 		boost_gain = new Glide(ac, 0, 100);
 		boost_friction_smooth = new OnePoleFilter(ac, 500);
-		boost_friction_smooth.addInput(boost_gain);
+		boost_friction_smooth.addInput(boost_gain);		
 		boost_friction = new MetalNoise(ac, 0.5f);
-		boost_friction.setFrequency(boost_speed);
-		
+		boost_friction.setFrequency(boost_speed);		
 		boost_friction_BP = new BiquadFilter(ac, BiquadFilter.LP, boost_speed, 1);
 		boost_friction_BP.addInput(boost_friction);
 		boost_friction_gain = new Gain(ac, 1, boost_friction_smooth);
@@ -240,6 +240,7 @@ public class PlayerSound {
 		if (_impulse > 0.1 && ship_active) {
 			imp = _impulse / 50f;
 			imp += solid_hit_impulse.getValue();
+			if(imp>0.02)imp=0.02f;
 			solid_hit_impulse.setValueImmediately(imp);			
 		}
 		solid_hit_impulse.setValue(0);
@@ -293,15 +294,19 @@ public class PlayerSound {
 		float frS = 0;
 		float frA = 0;
 		if (ship_active) {
-			frS = _friction *25f;
+			frS = 50+_friction *50f;
 			frA = _friction / 300f;
 			if (frA > 0.1)
 				frA = 0.1f;
 			boost_speed.setValue(frS);
 			boost_gain.setValueImmediately(frA);
 		}		
-		boost_gain.setValue(0);
+		boost_gain.setValue(0);		
 	}
+	public void endBoost(){
+		boost_speed.setValue(50f);
+	}
+	
 
 
 
