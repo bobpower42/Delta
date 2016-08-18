@@ -4,7 +4,7 @@
     <color color="D74A29" data="kill" index="0"/>
     <color color="2CD44C" data="boost" index="1"/>
     <color color="FFE700" data="bounce" index="2"/>
-    <color color="2637FF" data="mag" index="3"/>
+    <color color="2435FF" data="mag" index="3"/>
     <color color="FFFFFF" data="solid" index="4"/>
     <color color="2A0F0F" data="solid" index="5"/>
     <color color="717171" data="" index="6"/>
@@ -405,6 +405,22 @@
         <container abt="120" abto="120" at="0" bat="120" bt="0" data="block_1" rt="120" rto="30" type="instance">
           <vert x="1152.0" y="-128.0"/>
           <vert x="1584.0" y="-128.0"/>
+        </container>
+        <container cl="-14404097" data="mag" fill="3" type="circle">
+          <vert x="-96.0" y="128.0"/>
+          <vert x="-48.0" y="176.0"/>
+        </container>
+        <container cl="-14404097" data="mag" fill="3" type="circle">
+          <vert x="-384.0" y="-64.0"/>
+          <vert x="-368.0" y="-48.0"/>
+        </container>
+        <container cl="-14404097" data="mag" fill="3" type="circle">
+          <vert x="1776.0" y="112.0"/>
+          <vert x="1808.0" y="112.0"/>
+        </container>
+        <container cl="-14404097" data="mag" fill="3" type="circle">
+          <vert x="2112.0" y="96.0"/>
+          <vert x="2160.0" y="96.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>

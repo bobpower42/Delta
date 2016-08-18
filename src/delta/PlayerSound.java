@@ -252,8 +252,8 @@ public class PlayerSound {
 		if (_friction > 3 && ship_active) {
 			frS = _friction * 10f;
 			frA = _friction / 30f;
-			if (frA > 0.3)
-				frA = 0.3f;
+			if (frA > 0.1)
+				frA = 0.1f;
 			solid_speed.setValueImmediately(frS);
 			solid_gain.setValueImmediately(frA);
 		}
@@ -264,10 +264,10 @@ public class PlayerSound {
 	public void addBounceImpulse(float _impulse) {
 		float imp = 0;
 		if (_impulse > 0.1 && ship_active) {
-			imp = _impulse / 40f;
+			imp = _impulse / 80f;
 			bounce_hit_impulse.setValueImmediately(imp);
 			bounce_hit_frequency.setValueImmediately(0);
-			bounce_hit_frequency.setValue(_impulse * 100);			
+			bounce_hit_frequency.setValue(_impulse * 40);			
 		}
 		bounce_hit_impulse.setValue(0);
 	}
@@ -294,8 +294,8 @@ public class PlayerSound {
 		float frS = 0;
 		float frA = 0;
 		if (ship_active) {
-			frS = 50+_friction *50f;
-			frA = _friction / 300f;
+			frS = 50+_friction *30f;
+			frA = _friction / 500f;
 			if (frA > 0.1)
 				frA = 0.1f;
 			boost_speed.setValue(frS);

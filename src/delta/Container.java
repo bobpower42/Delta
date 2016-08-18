@@ -467,6 +467,7 @@ class Instance extends Container {
 				proxy.createFixture(fd);
 			}
 		}
+		//this sets instance to correct location, rotation, linear velocity and angular velocity
 		update(0);
 	}	
 
@@ -480,6 +481,9 @@ class Instance extends Container {
 	}	
 
 	public void update(int frame) {
+		//sync world values to screen values on frame=0, once per rotation and at each change of AB state
+		//otherwise just calculate screen location and rotation
+		
 		boolean sync = frame==0;
 		if (rT != 0) {
 			int loop = (rTO + frame) % rT;

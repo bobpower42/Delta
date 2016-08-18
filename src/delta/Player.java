@@ -2,12 +2,14 @@ package delta;
 
 import java.util.ArrayList;
 
+import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
 
@@ -21,7 +23,7 @@ public class Player extends Container {
 	PlayerInput input;
 	Body ship, proxy;
 	boolean finished;
-	
+
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
 	ArrayList<Contact> boost;
@@ -36,11 +38,12 @@ public class Player extends Container {
 	private int vibCounter = 0;
 	private boolean vib = false;
 	float oldmag = 0;
-	Vec2 loc, oldLoc;
+	Vec2 loc, oldLoc, magForce;
 	float curA, oldCurA;
 	AudioContext ac;
 	Plug out;
 	PlayerSound sound;
+	FilterQueryCallback magQuery;
 
 	Player(World2D _world, PlayerInput _input, int _index) {
 		index = _index;
@@ -56,8 +59,9 @@ public class Player extends Container {
 		vel = new Vec2(0, 0);
 		oldVel = new Vec2(0, 0);
 		oldLoc = new Vec2(0, 0);
+		magForce = new Vec2(0, 0);
 		oldCurA = 0;
-		finished=false;
+		finished = false;
 	}
 
 	public void createShip() {
@@ -189,7 +193,7 @@ public class Player extends Container {
 				}
 			}
 			// give ship angular velocity to move it to the right angle. the
-			// larger the multiplier the faster it gets there
+			// larger the multiplier the faster it gets there (max=frame rate)
 			ship.setAngularVelocity(ang * 15);
 
 			// if not in contact with hi-voltage rail heal engines
@@ -243,12 +247,50 @@ public class Player extends Container {
 					}
 				}
 			}
+
+			// mag
+			if (input.butX) {				
+				float radius = 500f;
+				float maxVel = 2f;
+				float worldRad = world.scalarPixelsToWorld(radius);
+				AABB bounds = new AABB(new Vec2(loc.x - worldRad, loc.y - worldRad),new Vec2(loc.x + worldRad, loc.y + worldRad));
+				magQuery = new FilterQueryCallback();
+				magQuery.setFilter("mag");
+				world.world.queryAABB(magQuery, bounds);
+				float minRad = worldRad;
+				boolean found = false;
+				Body thisMag = null;
+				System.out.println("results "+magQuery.found.size());
+				for (Fixture f : magQuery.found) {
+					Body b = f.getBody();
+					Vec2 diff = b.getWorldCenter().sub(loc);
+
+					if (diff.length() < minRad) {
+						minRad = diff.length();
+						found = true;
+						thisMag = b;
+					}
+
+				}
+				if (found) {
+					Vec2 diff = thisMag.getWorldCenter().sub(loc);
+					float force = diff.length();
+					force = (worldRad - force) / worldRad;
+					force *= force * maxVel;
+					diff.normalize();
+					magForce.set(diff.x * force, diff.y * force);
+				}
+
+			}else{
+				magForce.set(0,0);
+			}
+
 			oldLoc.x = loc.x;
 			oldLoc.y = loc.y;
 			oldCurA = curA;
 			// calculate velociy
-			float mx = ov.x + (float) (pwr * Math.cos(curA + PApplet.HALF_PI));
-			float my = ov.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI));
+			float mx = ov.x + (float) (pwr * Math.cos(curA + PApplet.HALF_PI)) + magForce.x;
+			float my = ov.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI)) + magForce.y;
 			ship.setLinearVelocity(new Vec2(mx, my));
 			ship.setLinearDamping(0.4f);
 		}
@@ -257,7 +299,7 @@ public class Player extends Container {
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
 		if (!finished) {
 			Vec2 pos = world.getBodyPixelCoord(ship);
-			float ang = ship.getAngle();			
+			float ang = ship.getAngle();
 			pG.pushMatrix();
 			pG.translate(pos.x, pos.y);
 			pG.rotate(-ang);
@@ -281,18 +323,18 @@ public class Player extends Container {
 			world.world.destroyBody(ship);
 			ship.setActive(false);
 			world.particles.destroyBody(proxy);
-			proxy.setActive(false);			
+			proxy.setActive(false);
 			for (int i = 0; i < 40; i++) {
 				if (world.parts.size() < World2D.MAXPARTICLES) {
-				world.parts.add(new FinishParticle(world, loc,
-						new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
-						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), World2D.cl[index]));
-				world.parts.add(new FinishParticle(world, loc,
-						new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
-						150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
+					world.parts.add(new FinishParticle(world, loc,
+							new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
+							150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), World2D.cl[index]));
+					world.parts.add(new FinishParticle(world, loc,
+							new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
+							150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
 				}
 			}
-			finished=true;
+			finished = true;
 		}
 	}
 
