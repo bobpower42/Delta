@@ -88,13 +88,15 @@ public class DeltaMain extends PApplet {
 		player2 = new Player(world, p[1], 1);
 		player.createShip();
 		player2.createShip();
+		player.tether(player2);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
-		vp = new Viewport(this, world, 0, 0, width, height/2 );
-		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		vp = new Viewport(this, world, 0, 0, width, height);
+		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		vp.attachTarget(player);
+		vp.attachTarget(player2);
 		
-		vp2.attachTarget(player2);
+		//vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
@@ -104,9 +106,9 @@ public class DeltaMain extends PApplet {
 			world.step();
 			//long gameStep=System.nanoTime()-startFrame;			
 			vp.update();
-			vp2.update();			
+			//vp2.update();			
 			image(vp.pg, vp.pos.x, vp.pos.y);
-			image(vp2.pg, vp2.pos.x, vp2.pos.y);
+			//image(vp2.pg, vp2.pos.x, vp2.pos.y);
 			//long viewportDraw=System.nanoTime()-startFrame-gameStep;
 			//println("Game: "+gameStep+" Draw: "+viewportDraw+" G/D Ratio: "+(float)gameStep/(float)viewportDraw);
 			if (frameCounter >= 10) {

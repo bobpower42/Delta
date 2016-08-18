@@ -350,8 +350,8 @@ class Instance extends Container {
 		baT = 0;
 		abTO = 0;
 		abTotal = 0;
-		LocStepWorld=new Vec2(0,0);
-		
+		LocStepWorld = new Vec2(0, 0);
+
 		try {
 			if (xml.hasAttribute("data")) {
 				data = xml.getString("data");
@@ -420,10 +420,10 @@ class Instance extends Container {
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
 		/* Debug Bounding box */
-		//pG.noFill();
-		//pG.stroke(255, 255, 0);
-		//pG.rectMode(PConstants.CORNERS);
-		//pG.rect(BBtl.x, BBtl.y, BBbr.x, BBbr.y);
+		// pG.noFill();
+		// pG.stroke(255, 255, 0);
+		// pG.rectMode(PConstants.CORNERS);
+		// pG.rect(BBtl.x, BBtl.y, BBbr.x, BBbr.y);
 
 		if (onScreen(p1, p2)) {
 			if (obj != null) {
@@ -467,9 +467,10 @@ class Instance extends Container {
 				proxy.createFixture(fd);
 			}
 		}
-		//this sets instance to correct location, rotation, linear velocity and angular velocity
+		// this sets instance to correct location, rotation, linear velocity and
+		// angular velocity
 		update(0);
-	}	
+	}
 
 	private void setTransformAndVelocity(Vec2 _loc, float _rot, Vec2 _lin, float _ang) {
 		body.setTransform(_loc, -_rot);
@@ -478,43 +479,48 @@ class Instance extends Container {
 		body.setLinearVelocity(new Vec2(_lin.x * world.frameRate, _lin.y * world.frameRate));
 		proxy.setAngularVelocity(-_ang * world.frameRate);
 		proxy.setLinearVelocity(new Vec2(_lin.x * world.frameRate, _lin.y * world.frameRate));
-	}	
+	}
 
 	public void update(int frame) {
-		//sync world values to screen values on frame=0, once per rotation and at each change of AB state
-		//otherwise just calculate screen location and rotation
-		
-		boolean sync = frame==0;
+		// sync world values to screen values on frame=0, once per rotation and
+		// at each change of AB state
+		// otherwise just calculate screen location and rotation
+
+		boolean sync = frame == 0;
 		if (rT != 0) {
 			int loop = (rTO + frame) % rT;
 			rot = loop * rotStep;
 			if (loop == 0)
 				sync = true;
-		}else{
-			rot=0;
+		} else {
+			rot = 0;
 		}
 		if ((abT != 0 || baT != 0) && nv > 1) {
 			int loop = (abTO + frame) % abTotal;
-			if(loop==0)sync=true;
+			if (loop == 0)
+				sync = true;
 			if (loop < aT) {
 				locScreen.set(v[0].x, v[0].y);
-				LocStepWorld.set(new Vec2(0,0));				
+				LocStepWorld.set(new Vec2(0, 0));
 			} else {
 				loop -= aT;
-				if(loop==0)sync=true;
+				if (loop == 0)
+					sync = true;
 				if (loop < abT) {
 					float progress = loop / (float) abT;
 					locScreen.set(v[0].x + (v[1].x - v[0].x) * progress, v[0].y + (v[1].y - v[0].y) * progress);
 					LocStepWorld.set(ABLocStepWorld);
 				} else {
 					loop -= abT;
-					if(loop==0)sync=true;
+					if (loop == 0)
+						sync = true;
 					if (loop < bT) {
 						locScreen.set(v[1].x, v[1].y);
-						LocStepWorld.set(new Vec2(0,0));
+						LocStepWorld.set(new Vec2(0, 0));
 					} else {
 						loop -= bT;
-						if(loop==0)sync=true;
+						if (loop == 0)
+							sync = true;
 						if (loop < baT) {
 							float progress = loop / (float) baT;
 							locScreen.set(v[1].x + (v[0].x - v[1].x) * progress, v[1].y + (v[0].y - v[1].y) * progress);
@@ -525,9 +531,9 @@ class Instance extends Container {
 			}
 		} else {
 			locScreen.set(v[0].x, v[0].y);
-			LocStepWorld.set(new Vec2(0,0));
+			LocStepWorld.set(new Vec2(0, 0));
 		}
-		if(sync){
+		if (sync) {
 			setTransformAndVelocity(world.coordPixelsToWorld(locScreen), rot, LocStepWorld, rotStep);
 		}
 	}
@@ -712,6 +718,38 @@ class Level extends Container {
 		for (Container l : layer) {
 			Layer L = (Layer) l;
 			L.draw(pG, p1, p2, vp);
+		}
+	}
+}
+
+class Tether extends Container {
+	Body body;
+	float length;
+	float width;
+
+	Tether(World2D _world, float _length, float _width) {
+		world = _world;
+		type = "tether";
+		length = _length;
+		width = _width;		
+	}
+
+	public void attachBody(Body _body) {
+		body = _body;
+	}
+
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+		if (body != null) {
+			Vec2 loc = world.coordWorldToPixels(body.getWorldCenter());
+			float rot = -body.getAngle();
+			pG.fill(180);
+			pG.noStroke();
+			pG.pushMatrix();
+			pG.translate(loc.x, loc.y);
+			pG.rotate(rot);
+			pG.rectMode(PConstants.CORNERS);
+			pG.rect(-length / 2f, -width / 2f, length / 2f, width / 2f);
+			pG.popMatrix();
 		}
 	}
 }

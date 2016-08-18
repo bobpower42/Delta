@@ -38,6 +38,7 @@ public class World2D {
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
 	ArrayList<Player> doFinish;	
+	ArrayList<Tether> tethers;
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
@@ -57,6 +58,7 @@ public class World2D {
 		partsRemove = new ArrayList<Particle>();
 		partsAdd = new ArrayList<Particle>();
 		kinematics=new ArrayList<Instance>();
+		tethers=new ArrayList<Tether>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
 
@@ -175,6 +177,9 @@ public class World2D {
 
 	public void addPlayer(Player p) {
 		players.add(p);
+	}
+	public void addTether(Tether t) {
+		tethers.add(t);
 	}
 
 	private void generateSparks() {
@@ -306,6 +311,10 @@ public class World2D {
 		// draw particles
 		for (Particle p : parts) {
 			p.draw(pG, p1, p2);
+		}
+		//draw tethers
+		for(Tether t:tethers){
+			t.draw(pG, p1, p2);		
 		}
 		// draw players not added to viewport
 		for (Player p : players) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -12,6 +13,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.joints.RevoluteJoint;
+import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
 import beads.AudioContext;
 import beads.Plug;
@@ -44,6 +47,10 @@ public class Player extends Container {
 	Plug out;
 	PlayerSound sound;
 	FilterQueryCallback magQuery;
+	Player tethered;
+	float tetherLength;
+	Body tether;
+	RevoluteJoint tetherJoint;
 
 	Player(World2D _world, PlayerInput _input, int _index) {
 		index = _index;
@@ -62,6 +69,8 @@ public class Player extends Container {
 		magForce = new Vec2(0, 0);
 		oldCurA = 0;
 		finished = false;
+		tetherLength = 80f;
+
 	}
 
 	public void createShip() {
@@ -93,6 +102,59 @@ public class Player extends Container {
 		proxy.createFixture(fd);
 
 		rocketCallback = new RayCastClosestCallback();
+	}
+
+	void tether(Player _tethered) {
+		tethered = _tethered;
+		loc = ship.getWorldCenter();
+		float tL = world.scalarPixelsToWorld(tetherLength);
+		float r = ship.getAngle();
+		ship.setTransform(new Vec2(loc.x - tL / 2f, loc.y), r);
+		r = tethered.ship.getAngle();
+		tethered.ship.setTransform(new Vec2(loc.x + tL / 2f, loc.y), r);
+		BodyDef bd = new BodyDef();
+		bd.type = BodyType.DYNAMIC;
+		bd.setPosition(loc);
+		FixtureDef fd = new FixtureDef();
+		fd.density = 0.01f;
+		Tether tc=new Tether(world,tetherLength,10f);		
+		fd.setUserData((Container)tc);
+		fd.filter.maskBits = 0x0000; //turn off all collisions with tether
+
+		PolygonShape tShape = new PolygonShape();
+		tShape.setAsBox(tL, world.scalarPixelsToWorld(10));
+
+		fd.setShape(tShape);
+		tether = world.world.createBody(bd);
+		tether.createFixture(fd);
+		
+		tc.attachBody(tether);
+		
+		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+		revoluteJointDef.bodyA = ship;
+		revoluteJointDef.bodyB = tether;
+		revoluteJointDef.collideConnected = false;
+		revoluteJointDef.localAnchorA.set(0, 0);
+		revoluteJointDef.localAnchorB.set(-tL / 2f, 0);
+		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
+
+		tethered.tether(this, tether);
+		world.addTether((Tether)tc);
+
+	}
+
+	void tether(Player _tethered, Body _tether) {
+		tether = _tether;
+		tethered = _tethered;
+		float tL = world.scalarPixelsToWorld(tetherLength);
+		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+		revoluteJointDef.bodyA = ship;
+		revoluteJointDef.bodyB = tether;
+		revoluteJointDef.collideConnected = false;
+		revoluteJointDef.localAnchorA.set(0, 0);
+		revoluteJointDef.localAnchorB.set(tL / 2f, 0);
+		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
+		
 	}
 
 	void connectAudio(AudioContext _ac, Plug _out) {
@@ -249,18 +311,18 @@ public class Player extends Container {
 			}
 
 			// mag
-			if (input.butX) {				
+			if (input.butX) {
 				float radius = 500f;
 				float maxVel = 2f;
 				float worldRad = world.scalarPixelsToWorld(radius);
-				AABB bounds = new AABB(new Vec2(loc.x - worldRad, loc.y - worldRad),new Vec2(loc.x + worldRad, loc.y + worldRad));
+				AABB bounds = new AABB(new Vec2(loc.x - worldRad, loc.y - worldRad),
+						new Vec2(loc.x + worldRad, loc.y + worldRad));
 				magQuery = new FilterQueryCallback();
 				magQuery.setFilter("mag");
 				world.world.queryAABB(magQuery, bounds);
 				float minRad = worldRad;
 				boolean found = false;
 				Body thisMag = null;
-				System.out.println("results "+magQuery.found.size());
 				for (Fixture f : magQuery.found) {
 					Body b = f.getBody();
 					Vec2 diff = b.getWorldCenter().sub(loc);
@@ -281,8 +343,8 @@ public class Player extends Container {
 					magForce.set(diff.x * force, diff.y * force);
 				}
 
-			}else{
-				magForce.set(0,0);
+			} else {
+				magForce.set(0, 0);
 			}
 
 			oldLoc.x = loc.x;

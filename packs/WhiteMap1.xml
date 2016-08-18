@@ -4,7 +4,7 @@
     <color color="D74A29" data="kill" index="0"/>
     <color color="2CD44C" data="boost" index="1"/>
     <color color="FFE700" data="bounce" index="2"/>
-    <color color="2435FF" data="mag" index="3"/>
+    <color color="2234FF" data="mag" index="3"/>
     <color color="FFFFFF" data="solid" index="4"/>
     <color color="2A0F0F" data="solid" index="5"/>
     <color color="717171" data="" index="6"/>
@@ -388,15 +388,8 @@
           <vert x="3744.0" y="64.0"/>
           <vert x="3744.0" y="-416.0"/>
         </container>
-        <container data="1st obj" rt="60" rto="0" type="instance">
-          <vert x="-112.0" y="-208.0"/>
-        </container>
         <container data="balls" rt="120" rto="0" type="instance">
-          <vert x="640.0" y="80.0"/>
-        </container>
-        <container abt="10" abto="0" at="120" bat="60" bt="0" data="piston" rt="0" rto="0" type="instance">
-          <vert x="304.0" y="288.0"/>
-          <vert x="304.0" y="112.0"/>
+          <vert x="464.0" y="-288.0"/>
         </container>
         <container abt="120" abto="0" at="0" bat="120" bt="0" data="block_1" rt="120" rto="0" type="instance">
           <vert x="1152.0" y="96.0"/>
@@ -406,21 +399,56 @@
           <vert x="1152.0" y="-128.0"/>
           <vert x="1584.0" y="-128.0"/>
         </container>
-        <container cl="-14404097" data="mag" fill="3" type="circle">
-          <vert x="-96.0" y="128.0"/>
-          <vert x="-48.0" y="176.0"/>
+        <container cl="-14535425" data="mag" fill="3" type="circle">
+          <vert x="592.0" y="112.0"/>
+          <vert x="624.0" y="112.0"/>
         </container>
-        <container cl="-14404097" data="mag" fill="3" type="circle">
-          <vert x="-384.0" y="-64.0"/>
-          <vert x="-368.0" y="-48.0"/>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="768.0" y="256.0"/>
+          <vert x="768.0" y="-112.0"/>
+          <vert x="832.0" y="-112.0"/>
+          <vert x="832.0" y="256.0"/>
         </container>
-        <container cl="-14404097" data="mag" fill="3" type="circle">
-          <vert x="1776.0" y="112.0"/>
-          <vert x="1808.0" y="112.0"/>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="832.0" y="-176.0"/>
+          <vert x="832.0" y="-112.0"/>
+          <vert x="-448.0" y="-112.0"/>
+          <vert x="-448.0" y="-176.0"/>
         </container>
-        <container cl="-14404097" data="mag" fill="3" type="circle">
-          <vert x="2112.0" y="96.0"/>
-          <vert x="2160.0" y="96.0"/>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="688.0" y="256.0"/>
+          <vert x="768.0" y="176.0"/>
+          <vert x="768.0" y="256.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="688.0" y="-112.0"/>
+          <vert x="768.0" y="-112.0"/>
+          <vert x="768.0" y="-32.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="-32.0"/>
+          <vert x="-448.0" y="-112.0"/>
+          <vert x="-368.0" y="-112.0"/>
+        </container>
+        <container cl="-14535425" data="mag" fill="3" type="circle">
+          <vert x="-176.0" y="112.0"/>
+          <vert x="-144.0" y="112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-96.0" y="80.0"/>
+          <vert x="512.0" y="80.0"/>
+          <vert x="512.0" y="144.0"/>
+          <vert x="-96.0" y="144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="512.0" y="80.0"/>
+          <vert x="592.0" y="112.0"/>
+          <vert x="512.0" y="144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-96.0" y="80.0"/>
+          <vert x="-96.0" y="144.0"/>
+          <vert x="-176.0" y="112.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
