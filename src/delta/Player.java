@@ -37,7 +37,7 @@ public class Player extends Container {
 	
 	float killFactor = 1.5f;
 	float heal = 0.015f;
-	float killFactorMax = 1.8f;
+	float killFactorMax = 1.6f;
 	public int index;
 	public int totalContacts = 1;
 	private Vec2 vel, oldVel;

@@ -36,7 +36,7 @@ public class Viewport {
 		track=new Vec2(0,0);
 		pg.beginDraw();
 		//pg.noSmooth();
-		pg.smooth(4);
+		
 		pg.endDraw();
 	}
 

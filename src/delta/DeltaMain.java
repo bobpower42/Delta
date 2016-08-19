@@ -51,7 +51,7 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D);
-		//noSmooth();
+		
 		smooth(0);
 
 		
@@ -90,7 +90,7 @@ public class DeltaMain extends PApplet {
 		player2 = new Player(world, p[1], 1);
 		player.createShip();
 		player2.createShip();
-		player.tether(player2);
+		//player.tether(player2);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
 		vp = new Viewport(this, world, 0, 0, width, height);
@@ -100,7 +100,7 @@ public class DeltaMain extends PApplet {
 		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		//vp2.loadShader(loadShader("vcr.glsl"));
 		vp.attachTarget(player);
-		vp.attachTarget(player2);
+		//vp.attachTarget(player2);
 		
 		//vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();

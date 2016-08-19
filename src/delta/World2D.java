@@ -42,7 +42,7 @@ public class World2D {
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
-	public static int MAXPARTICLES = 200;
+	public static int MAXPARTICLES = 400;
 	public static int FRAMES;
 
 	World2D(float _frameRate, UGen _out) {		
