@@ -313,7 +313,7 @@ public class Player extends Container {
 			// mag
 			if (input.butX) {
 				float radius = 500f;
-				float maxVel = 2f;
+				float maxVel = 3f;
 				float worldRad = world.scalarPixelsToWorld(radius);
 				AABB bounds = new AABB(new Vec2(loc.x - worldRad, loc.y - worldRad),
 						new Vec2(loc.x + worldRad, loc.y + worldRad));
@@ -326,7 +326,6 @@ public class Player extends Container {
 				for (Fixture f : magQuery.found) {
 					Body b = f.getBody();
 					Vec2 diff = b.getWorldCenter().sub(loc);
-
 					if (diff.length() < minRad) {
 						minRad = diff.length();
 						found = true;

@@ -10,6 +10,7 @@ import beads.Reverb;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.data.XML;
+import processing.opengl.PShader;
 
 
 public class DeltaMain extends PApplet {
@@ -33,7 +34,7 @@ public class DeltaMain extends PApplet {
 	int frameCounter = 0;
 	float fps = 0;
 	PFont font;
-	float frameRate=50f;
+	float frameRate=60f;
 
 	public static void main(String[] args) {
 		String[] a = { "MAIN" };
@@ -50,7 +51,7 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D);
-		smooth(2);
+		smooth(1);
 
 		
 	}
@@ -88,10 +89,13 @@ public class DeltaMain extends PApplet {
 		player2 = new Player(world, p[1], 1);
 		player.createShip();
 		player2.createShip();
-		player.tether(player2);
+		//player.tether(player2);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
 		vp = new Viewport(this, world, 0, 0, width, height);
+		PShader ts;
+		ts=loadShader("vcr.glsl");
+		//vp.loadShader("C:/Users/Bob/4PG/Delta/data/vcr.glsl");
 		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		vp.attachTarget(player);
 		vp.attachTarget(player2);

@@ -182,7 +182,10 @@ class Poly extends Container {
 		} else if (data.equals("kill")) {
 			fd.friction = 0.9f;
 			fd.restitution = 0.8f;
-		} else if (data.equals("end")) {
+		} else if (data.equals("mag")) {
+			fd.friction = 0.0f;
+			fd.restitution = 0.1f;
+		}else if (data.equals("end")) {
 			fd.isSensor();
 		}
 		return fd;
@@ -253,7 +256,10 @@ class Circle extends Container {
 		} else if (data.equals("kill")) {
 			fd.friction = 0.9f;
 			fd.restitution = 0.8f;
-		} else if (data.equals("end")) {
+		} else if (data.equals("mag")) {
+			fd.friction = 0.0f;
+			fd.restitution = 0.1f;
+		}else if (data.equals("end")) {
 			fd.isSensor();
 		}
 		return fd;

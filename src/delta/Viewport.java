@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.jbox2d.common.Vec2;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PGraphics;
+import processing.opengl.PShader;
 
 public class Viewport {
 	PApplet pA;
@@ -14,6 +16,8 @@ public class Viewport {
 	Vec2 pos, dim, cam, half, track, damp, f_damp;
 	World2D world;
 	ArrayList<Player> target;
+	PShader filter;
+	boolean hasShader=false;
 
 	Viewport(PApplet _pA, World2D _world, int _x, int _y, int _w, int _h) {
 		pA = _pA;
@@ -21,7 +25,7 @@ public class Viewport {
 		pos = new Vec2(_x, _y);
 		dim = new Vec2(_w, _h);
 		half = new Vec2(_w / 2, _h / 2);
-		pg = pA.createGraphics(_w, _h);
+		pg = pA.createGraphics(_w, _h, PConstants.P3D);
 
 		cam = new Vec2(0, 0);
 		damp = new Vec2(0, 0);
@@ -62,6 +66,9 @@ public class Viewport {
 		}
 		pg.beginDraw();
 		world.map.draw(pg, cam, dim, this);
+		if(hasShader){
+			pg.filter(filter);
+		}
 		pg.endDraw();
 
 	}
@@ -69,6 +76,11 @@ public class Viewport {
 	public void attachTarget(Player _target) {
 		target.add(_target);
 
+	}
+	
+	public void loadShader(PShader _glsl){		
+		filter=_glsl;
+		hasShader=true;
 	}
 
 }
