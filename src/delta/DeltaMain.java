@@ -51,7 +51,8 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D);
-		smooth(1);
+		//noSmooth();
+		smooth(0);
 
 		
 	}
@@ -84,19 +85,20 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "006_a");
+		world.loadfromXML(pack, "001_rails");
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
 		player.createShip();
 		player2.createShip();
-		//player.tether(player2);
+		player.tether(player2);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
 		vp = new Viewport(this, world, 0, 0, width, height);
-		PShader ts;
-		ts=loadShader("vcr.glsl");
-		//vp.loadShader("C:/Users/Bob/4PG/Delta/data/vcr.glsl");
+		//PShader ts;
+		//ts=loadShader("vcr.glsl");
+		vp.loadShader(loadShader("vcr.glsl"));
 		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		//vp2.loadShader(loadShader("vcr.glsl"));
 		vp.attachTarget(player);
 		vp.attachTarget(player2);
 		

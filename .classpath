@@ -41,6 +41,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="jaw.jar"/>
 	<classpathentry kind="lib" path="GameControlPlus.jar"/>
-	<classpathentry kind="lib" path="data/vcr.glsl"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -748,13 +748,13 @@ class Tether extends Container {
 		if (body != null) {
 			Vec2 loc = world.coordWorldToPixels(body.getWorldCenter());
 			float rot = -body.getAngle();
-			pG.fill(180);
+			pG.fill(255);
 			pG.noStroke();
 			pG.pushMatrix();
 			pG.translate(loc.x, loc.y);
 			pG.rotate(rot);
 			pG.rectMode(PConstants.CORNERS);
-			pG.rect(-length / 2f, -width / 2f, length / 2f, width / 2f);
+			pG.rect(-length / 4f, -width / 2f, length / 4f, width / 2f);
 			pG.popMatrix();
 		}
 	}

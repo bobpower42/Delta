@@ -32,6 +32,9 @@ public class Player extends Container {
 	ArrayList<Contact> boost;
 	ArrayList<Contact> kill;
 	ArrayList<Contact> hit;
+	
+	ArrayList<Viewport> view;
+	
 	float killFactor = 1.5f;
 	float heal = 0.015f;
 	float killFactorMax = 1.8f;
@@ -59,6 +62,7 @@ public class Player extends Container {
 		boost = new ArrayList<Contact>();
 		kill = new ArrayList<Contact>();
 		hit = new ArrayList<Contact>();
+		view = new ArrayList<Viewport>();
 		world = _world;
 		input = _input;
 		type = "player";
@@ -102,6 +106,9 @@ public class Player extends Container {
 		proxy.createFixture(fd);
 
 		rocketCallback = new RayCastClosestCallback();
+	}
+	void attachViewport(Viewport _view){
+		view.add(_view);
 	}
 
 	void tether(Player _tethered) {
@@ -199,10 +206,13 @@ public class Player extends Container {
 			float md = PApplet.abs(mag - oldmag);
 			oldmag = mag;
 			// if over a threshold of 1
-			if (md > 1) {
+			if (md > 3) {
 				// clamp to 10
 				if (md > 10)
 					md = 10;
+				for(Viewport vp:view){
+					vp.setColorHit(vel.mul(2f));
+				}
 				// only send message if not already vibrating (don't overload)
 				if (!vib) {
 					input.vibrateLeft(md / 10f);
