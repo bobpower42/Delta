@@ -71,17 +71,23 @@ public class Viewport {
 			cam.y += (f_damp.y - cam.y) / 10f;
 		}
 		pg.beginDraw();
-		world.map.draw(pg, cam, dim, this);
+		world.map.draw(pg, cam, dim, this);		
+		
 		if(hasShader){
 			separation_smooth.x+=(separation.x-separation_smooth.x)/5f;
 			separation_smooth.y+=(separation.y-separation_smooth.y)/5f;
 			filter.set("magX", separation_smooth.x);
 			filter.set("magY", separation_smooth.y);
 			pg.filter(filter);
+			pg.endDraw();
 			separation.x*=0.9f;
 			separation.y*=0.9f;
+			//filter.set("ppixels", pg.get());
+		}else{
+			pg.endDraw();
 		}
-		pg.endDraw();
+		
+		
 
 	}
 
@@ -94,6 +100,7 @@ public class Viewport {
 	public void loadShader(PShader _glsl){		
 		filter=_glsl;
 		hasShader=true;
+		filter.set("scanlinesNum", dim.y*1.5f);
 	}
 	public void setColorHit(Vec2 _sep){
 		separation=_sep;

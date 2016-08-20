@@ -9,6 +9,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import processing.core.PConstants;
@@ -736,6 +737,7 @@ class Tether extends Container {
 	Tether(World2D _world, float _length, float _width) {
 		world = _world;
 		type = "tether";
+		data= "tether";
 		length = _length;
 		width = _width;		
 	}
@@ -759,3 +761,13 @@ class Tether extends Container {
 		}
 	}
 }
+
+class CollisionFilter extends Container{
+	public Fixture fixture;
+	CollisionFilter(Fixture _fixture){
+		data="sensor";
+		type="sensor";
+		fixture=_fixture;
+	}
+}
+

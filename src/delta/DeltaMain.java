@@ -50,11 +50,9 @@ public class DeltaMain extends PApplet {
 		for (int i = 0; i < 4; i++) {
 			p[i] = new PlayerInput(this, i + 1);
 		}
-		fullScreen(P2D);
-		
-		smooth(0);
-
-		
+		fullScreen(P2D);	
+		//turn off anti-aliasing, can do our own with glsl filter
+		smooth(0);		
 	}
 
 	public void setup() {
@@ -93,16 +91,14 @@ public class DeltaMain extends PApplet {
 		//player.tether(player2);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
-		vp = new Viewport(this, world, 0, 0, width, height);
-		//PShader ts;
-		//ts=loadShader("vcr.glsl");
+		vp = new Viewport(this, world, 0, 0, width, height/2);
 		vp.loadShader(loadShader("vcr.glsl"));
-		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-		//vp2.loadShader(loadShader("vcr.glsl"));
+		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		vp2.loadShader(loadShader("vcr.glsl"));
 		vp.attachTarget(player);
 		//vp.attachTarget(player2);
 		
-		//vp2.attachTarget(player2);
+		vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
@@ -112,9 +108,9 @@ public class DeltaMain extends PApplet {
 			world.step();
 			//long gameStep=System.nanoTime()-startFrame;			
 			vp.update();
-			//vp2.update();			
+			vp2.update();			
 			image(vp.pg, vp.pos.x, vp.pos.y);
-			//image(vp2.pg, vp2.pos.x, vp2.pos.y);
+			image(vp2.pg, vp2.pos.x, vp2.pos.y);
 			//long viewportDraw=System.nanoTime()-startFrame-gameStep;
 			//println("Game: "+gameStep+" Draw: "+viewportDraw+" G/D Ratio: "+(float)gameStep/(float)viewportDraw);
 			if (frameCounter >= 10) {

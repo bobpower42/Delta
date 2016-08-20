@@ -13,6 +13,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
@@ -37,16 +38,17 @@ public class World2D {
 	ArrayList<Particle> parts;
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
-	ArrayList<Player> doFinish;	
+	ArrayList<Player> doFinish;
 	ArrayList<Tether> tethers;
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
 	public static int MAXPARTICLES = 400;
 	public static int FRAMES;
+	public boolean playerCollisions = true;
 
-	World2D(float _frameRate, UGen _out) {		
-		FRAMES=-1;
+	World2D(float _frameRate, UGen _out) {
+		FRAMES = -1;
 		out = _out;
 		frameRate = _frameRate;
 		world = new World(new Vec2(0, -9.8f));
@@ -57,8 +59,8 @@ public class World2D {
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
 		partsAdd = new ArrayList<Particle>();
-		kinematics=new ArrayList<Instance>();
-		tethers=new ArrayList<Tether>();
+		kinematics = new ArrayList<Instance>();
+		tethers = new ArrayList<Tether>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
 
@@ -146,6 +148,7 @@ public class World2D {
 			if (c.type.equals("poly")) {
 				Poly pc = (Poly) c;
 				FixtureDef fd = pc.getFixtureDef(false);
+
 				BodyDef bd = new BodyDef();
 				bd.type = BodyType.STATIC;
 				bd.position.set(coordPixelsToWorld(c.v[0]));
@@ -163,12 +166,13 @@ public class World2D {
 				b.createFixture(fd);
 				Body bp = particles.createBody(bd);
 				bp.createFixture(fd);
+
 			} else if (c.type.equals("marker")) {
 				if (c.data.equals("start")) {
 					spawn = c;
 				}
 			} else if (c.type.equals("instance")) {
-				Instance ic=(Instance)c;
+				Instance ic = (Instance) c;
 				ic.build();
 				kinematics.add(ic);
 			}
@@ -178,6 +182,7 @@ public class World2D {
 	public void addPlayer(Player p) {
 		players.add(p);
 	}
+
 	public void addTether(Tether t) {
 		tethers.add(t);
 	}
@@ -199,64 +204,68 @@ public class World2D {
 				cP = cB;
 				cO = cA;
 			}
+			if (cP != null) {
+				if (!cO.data.equals("sensor")) {
+					// get the contact point in world coordinates
+					WorldManifold worldManifold = new WorldManifold();
+					c.getWorldManifold(worldManifold);
+					Vec2 worldPoint = worldManifold.points[0];
 
-			// get the contact point in world coordinates
-			WorldManifold worldManifold = new WorldManifold();
-			c.getWorldManifold(worldManifold);
-			Vec2 worldPoint = worldManifold.points[0];
+					// find the relative speed of the fixtures at that point
+					Vec2 velA = bA.getLinearVelocityFromWorldPoint(worldPoint);
+					Vec2 velB = bB.getLinearVelocityFromWorldPoint(worldPoint);
+					Vec2 vel = new Vec2(velA.x + velB.x, velA.y + velB.y);
+					float relativeSpeed = (velA.sub(velB)).length();
+					float totalFriction = fA.getFriction() * fB.getFriction();
 
-			// find the relative speed of the fixtures at that point
-			Vec2 velA = bA.getLinearVelocityFromWorldPoint(worldPoint);
-			Vec2 velB = bB.getLinearVelocityFromWorldPoint(worldPoint);
-			Vec2 vel = new Vec2(velA.x + velB.x, velA.y + velB.y);
-			float relativeSpeed = (velA.sub(velB)).length();
-			float totalFriction = fA.getFriction() * fB.getFriction();
-			if (cO.data.equals("boost")) {
-				if (cP != null) {
-					Player tp = (Player) cP;
-					tp.sound.addBoostFriction(relativeSpeed);
-				}
-				Vec2 loc = new Vec2(worldPoint.x - vel.x / 400f, worldPoint.y + vel.y / 400f);
-				// System.out.println(relativeSpeed);
-				int t = 3 + (int) (relativeSpeed / 3f);
+					if (cO.data.equals("boost")) {
+						if (cP != null) {
+							Player tp = (Player) cP;
+							tp.sound.addBoostFriction(relativeSpeed);
+						}
+						Vec2 loc = new Vec2(worldPoint.x - vel.x / 400f, worldPoint.y + vel.y / 400f);
+						// System.out.println(relativeSpeed);
+						int t = 3 + (int) (relativeSpeed / 3f);
 
-				for (int i = 0; i < t; i++) {
-					if (parts.size() < MAXPARTICLES) {
-						parts.add(new BoostParticle(this, loc,
-								new Vec2(relativeSpeed * ((float) Math.random() * 2f - 1),
-										relativeSpeed * ((float) Math.random() * 2f - 1)),
-								100 + (float) Math.random() * 100f, 10 + (float) Math.random() * 10f));
+						for (int i = 0; i < t; i++) {
+							if (parts.size() < MAXPARTICLES) {
+								parts.add(new BoostParticle(this, loc,
+										new Vec2(relativeSpeed * ((float) Math.random() * 2f - 1),
+												relativeSpeed * ((float) Math.random() * 2f - 1)),
+										100 + (float) Math.random() * 100f, 10 + (float) Math.random() * 10f));
 
-					}
-				}
+							}
+						}
 
-			} else if (cO.data.equals("kill")) {
-				Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
+					} else if (cO.data.equals("kill")) {
+						Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
 
-				for (int i = 0; i < 4; i++) {
-					if (parts.size() < MAXPARTICLES) {
-						parts.add(new KillParticle(this, loc,
-								new Vec2(25f * ((float) Math.random() * 2f - 1),
-										25f * ((float) Math.random() * 2f - 1)),
-								300f, 15 + (float) Math.random() * 15f));
-					}
-				}
+						for (int i = 0; i < 4; i++) {
+							if (parts.size() < MAXPARTICLES) {
+								parts.add(new KillParticle(this, loc,
+										new Vec2(25f * ((float) Math.random() * 2f - 1),
+												25f * ((float) Math.random() * 2f - 1)),
+										300f, 15 + (float) Math.random() * 15f));
+							}
+						}
 
-			} else {
-				float intensity = relativeSpeed * totalFriction;
-				if (cP != null) {
-					Player tp = (Player) cP;
-					tp.sound.addSolidFriction(intensity);
-				}
-				if (intensity > 3) {
-					for (int i = 0; i < 4; i++) {
+					} else {
+						float intensity = relativeSpeed * totalFriction;
+						if (cP != null) {
+							Player tp = (Player) cP;
+							tp.sound.addSolidFriction(intensity);
+						}
+						if (intensity > 3) {
+							for (int i = 0; i < 4; i++) {
 
-						Vec2 loc = new Vec2(worldPoint.x - vel.x / 50f, worldPoint.y + vel.y / 50f);
-						if (parts.size() < MAXPARTICLES) {
-							parts.add(new SparkParticle(this, loc,
-									new Vec2(relativeSpeed * ((float) Math.random() * 4f - 2),
-											relativeSpeed * ((float) Math.random() * 4f - 2)),
-									100f, 2 + (float) Math.random() * 5f));
+								Vec2 loc = new Vec2(worldPoint.x - vel.x / 50f, worldPoint.y + vel.y / 50f);
+								if (parts.size() < MAXPARTICLES) {
+									parts.add(new SparkParticle(this, loc,
+											new Vec2(relativeSpeed * ((float) Math.random() * 4f - 2),
+													relativeSpeed * ((float) Math.random() * 4f - 2)),
+											100f, 2 + (float) Math.random() * 5f));
+								}
+							}
 						}
 					}
 				}
@@ -277,7 +286,7 @@ public class World2D {
 	}
 
 	public void update() {
-		for(Instance k:kinematics){
+		for (Instance k : kinematics) {
 			k.update(FRAMES);
 		}
 		for (Player p : doFinish) {
@@ -312,9 +321,9 @@ public class World2D {
 		for (Particle p : parts) {
 			p.draw(pG, p1, p2);
 		}
-		//draw tethers
-		for(Tether t:tethers){
-			t.draw(pG, p1, p2);		
+		// draw tethers
+		for (Tether t : tethers) {
+			t.draw(pG, p1, p2);
 		}
 		// draw players not added to viewport
 		for (Player p : players) {
@@ -351,10 +360,10 @@ public class World2D {
 			} else if (cO.data.equals("kill")) {
 				p.addKillContact(_contact);
 			} else if (cO.data.equals("finish")) {
-				if(!p.finished){
-				doFinish.add(p);
+				if (!p.finished) {
+					doFinish.add(p);
 				}
-			} else {
+			} else if (!cO.data.equals("sensor")) {
 				p.addHitContact(_contact);
 			}
 		}
@@ -381,9 +390,17 @@ public class World2D {
 			Player p = (Player) cP;
 			if (cO.data.equals("boost")) {
 				p.remBoostContact(_contact);
-				p.sound.endBoost();				
+				p.sound.endBoost();
 			} else if (cO.data.equals("kill")) {
 				p.remKillContact(_contact);
+			} else if (cO.data.equals("sensor")) {
+				if (playerCollisions) {					
+					CollisionFilter cf = (CollisionFilter) cO;
+					Filter f=cf.fixture.getFilterData();
+					Filter pf=p.ship_fixture.getFilterData();
+					f.maskBits |= pf.categoryBits;
+					cf.fixture.setFilterData(f);					
+				}
 			} else {
 				p.remHitContact(_contact);
 			}
@@ -392,7 +409,7 @@ public class World2D {
 
 	private void addObject(Container _obj) {
 		String od = _obj.getData();
-		obj.put(od, (Object)_obj);
+		obj.put(od, (Object) _obj);
 	}
 
 	public void setScale(float scale_) {
@@ -446,7 +463,7 @@ public class World2D {
 
 	public void step() {
 		FRAMES++;
-		update();		
+		update();
 		float timeStep = 1 / 50f;
 		lastFrameTimer = System.nanoTime();
 		this.step(timeStep, 5, 5);

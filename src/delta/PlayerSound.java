@@ -151,7 +151,7 @@ public class PlayerSound {
 		master.addInput(bounce_hit_LP);
 
 		// kill hit
-		kill_hit_impulse = new Glide(ac, 0, 100);
+		kill_hit_impulse = new Glide(ac, 0, 50);
 		kill_hit_smooth = new OnePoleFilter(ac, 800);
 		kill_hit_smooth.addInput(kill_hit_impulse);
 		kill_hit_clip = new Clip(ac);

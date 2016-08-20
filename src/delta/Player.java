@@ -10,6 +10,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
@@ -24,6 +25,7 @@ import processing.core.PGraphics;
 public class Player extends Container {
 	World2D world;
 	PlayerInput input;
+	Fixture ship_fixture;
 	Body ship, proxy;
 	boolean finished;
 
@@ -32,11 +34,11 @@ public class Player extends Container {
 	ArrayList<Contact> boost;
 	ArrayList<Contact> kill;
 	ArrayList<Contact> hit;
-	
+
 	ArrayList<Viewport> view;
-	
+
 	float killFactor = 1.5f;
-	float heal = 0.015f;
+	float heal = 0.01f;
 	float killFactorMax = 1.6f;
 	public int index;
 	public int totalContacts = 1;
@@ -95,11 +97,21 @@ public class Player extends Container {
 		fd.density = 1;
 		fd.friction = 0.5f;
 		fd.restitution = 0.02f;
+		fd.filter.categoryBits=1<<(index+3);
+		fd.filter.maskBits=0x0001;		
 		fd.setUserData(this);
-
+		
 		// Attach fixture to body
 		ship = world.world.createBody(bd);
 		ship.createFixture(fd);
+		ship_fixture=ship.getFixtureList();
+		CollisionFilter cf=new CollisionFilter(ship_fixture);
+		FixtureDef sensor = new FixtureDef();
+		sensor.shape = cs;
+		sensor.filter.maskBits=0xFFFD;
+		sensor.isSensor=true;
+		sensor.setUserData(cf);
+		ship.createFixture(sensor);
 		// ship.setAngularVelocity(10.1f);
 
 		proxy = world.particles.createBody(bdp);
@@ -107,7 +119,8 @@ public class Player extends Container {
 
 		rocketCallback = new RayCastClosestCallback();
 	}
-	void attachViewport(Viewport _view){
+
+	void attachViewport(Viewport _view) {
 		view.add(_view);
 	}
 
@@ -124,9 +137,10 @@ public class Player extends Container {
 		bd.setPosition(loc);
 		FixtureDef fd = new FixtureDef();
 		fd.density = 0.01f;
-		Tether tc=new Tether(world,tetherLength,10f);		
-		fd.setUserData((Container)tc);
-		fd.filter.maskBits = 0x0000; //turn off all collisions with tether
+		Tether tc = new Tether(world, tetherLength, 10f);
+		fd.setUserData((Container) tc);
+		fd.filter.maskBits = 0x0001; // turn off collisions with tether and players
+		fd.filter.categoryBits = 0x0002;
 
 		PolygonShape tShape = new PolygonShape();
 		tShape.setAsBox(tL, world.scalarPixelsToWorld(10));
@@ -134,9 +148,9 @@ public class Player extends Container {
 		fd.setShape(tShape);
 		tether = world.world.createBody(bd);
 		tether.createFixture(fd);
-		
+
 		tc.attachBody(tether);
-		
+
 		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
 		revoluteJointDef.bodyA = ship;
 		revoluteJointDef.bodyB = tether;
@@ -146,7 +160,7 @@ public class Player extends Container {
 		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
 
 		tethered.tether(this, tether);
-		world.addTether((Tether)tc);
+		world.addTether((Tether) tc);
 
 	}
 
@@ -161,7 +175,7 @@ public class Player extends Container {
 		revoluteJointDef.localAnchorA.set(0, 0);
 		revoluteJointDef.localAnchorB.set(tL / 2f, 0);
 		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
-		
+
 	}
 
 	void connectAudio(AudioContext _ac, Plug _out) {
@@ -210,7 +224,7 @@ public class Player extends Container {
 				// clamp to 10
 				if (md > 10)
 					md = 10;
-				for(Viewport vp:view){
+				for (Viewport vp : view) {
 					vp.setColorHit(vel.mul(2f));
 				}
 				// only send message if not already vibrating (don't overload)
@@ -347,7 +361,7 @@ public class Player extends Container {
 					Vec2 diff = thisMag.getWorldCenter().sub(loc);
 					float force = diff.length();
 					force = (worldRad - force) / worldRad;
-					force *= force * maxVel;
+					force *= maxVel;
 					diff.normalize();
 					magForce.set(diff.x * force, diff.y * force);
 				}
