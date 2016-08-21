@@ -2,15 +2,12 @@ package delta;
 
 import java.io.File;
 import java.io.FilenameFilter;
-
 import beads.AudioContext;
 import beads.Gain;
 import beads.Plug;
-import beads.Reverb;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.data.XML;
-import processing.opengl.PShader;
 
 
 public class DeltaMain extends PApplet {
