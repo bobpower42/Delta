@@ -37,11 +37,11 @@ void main(void) {
 	
 	
 	
-	vec3 color = vec3(red/4,green/4,blue/4);
-	if(scanlines!=0){
+	vec3 color = vec3(red*0.25,green*0.25,blue*0.25);
+	
 	float scanline = sin(uv.y*scanlinesNum)*0.02*scanlines;
 	color -= scanline;
-	}
+
 	
 	gl_FragColor = vec4(color,1.0);
 }

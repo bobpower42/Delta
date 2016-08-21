@@ -76,12 +76,13 @@ public class Viewport {
 		if(hasShader){
 			separation_smooth.x+=(separation.x-separation_smooth.x)/5f;
 			separation_smooth.y+=(separation.y-separation_smooth.y)/5f;
-			filter.set("magX", separation_smooth.x);
+			filter.set("magX", separation_smooth.x+0.8f);
 			filter.set("magY", separation_smooth.y);
 			pg.filter(filter);
 			pg.endDraw();
-			separation.x*=0.9f;
-			separation.y*=0.9f;
+			separation.x*=0.85f;
+			separation.y*=0.85f;
+			
 			//filter.set("ppixels", pg.get());
 		}else{
 			pg.endDraw();

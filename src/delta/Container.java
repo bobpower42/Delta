@@ -184,7 +184,7 @@ class Poly extends Container {
 			fd.friction = 0.9f;
 			fd.restitution = 0.8f;
 		} else if (data.equals("mag")) {
-			fd.friction = 0.0f;
+			fd.friction = 0.1f;
 			fd.restitution = 0.1f;
 		}else if (data.equals("end")) {
 			fd.isSensor();
@@ -258,7 +258,7 @@ class Circle extends Container {
 			fd.friction = 0.9f;
 			fd.restitution = 0.8f;
 		} else if (data.equals("mag")) {
-			fd.friction = 0.0f;
+			fd.friction = 0.1f;
 			fd.restitution = 0.1f;
 		}else if (data.equals("end")) {
 			fd.isSensor();

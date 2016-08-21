@@ -46,6 +46,8 @@ public class World2D {
 	public static int MAXPARTICLES = 400;
 	public static int FRAMES;
 	public boolean playerCollisions = true;
+	public static int interFrame=0;
+	public static int interFrames=5;
 
 	World2D(float _frameRate, UGen _out) {
 		FRAMES = -1;
@@ -116,6 +118,10 @@ public class World2D {
 			}
 		});
 
+	}
+	
+	public float getTime(){
+		return (FRAMES*(interFrame+1)/(float)interFrames)*60f;
 	}
 
 	public void loadfromXML(XML xml, String name) {
@@ -225,7 +231,7 @@ public class World2D {
 						}
 						Vec2 loc = new Vec2(worldPoint.x - vel.x / 400f, worldPoint.y + vel.y / 400f);
 						// System.out.println(relativeSpeed);
-						int t = 3 + (int) (relativeSpeed / 3f);
+						int t = 1 + (int) (relativeSpeed / 9f);
 
 						for (int i = 0; i < t; i++) {
 							if (parts.size() < MAXPARTICLES) {
@@ -240,7 +246,7 @@ public class World2D {
 					} else if (cO.data.equals("kill")) {
 						Vec2 loc = new Vec2(worldPoint.x - vel.x / 1000f, worldPoint.y + vel.y / 1000f);
 
-						for (int i = 0; i < 4; i++) {
+						for (int i = 0; i < 2; i++) {
 							if (parts.size() < MAXPARTICLES) {
 								parts.add(new KillParticle(this, loc,
 										new Vec2(25f * ((float) Math.random() * 2f - 1),
@@ -256,7 +262,7 @@ public class World2D {
 							tp.sound.addSolidFriction(intensity);
 						}
 						if (intensity > 3) {
-							for (int i = 0; i < 4; i++) {
+							//for (int i = 0; i < 2; i++) {
 
 								Vec2 loc = new Vec2(worldPoint.x - vel.x / 50f, worldPoint.y + vel.y / 50f);
 								if (parts.size() < MAXPARTICLES) {
@@ -265,7 +271,7 @@ public class World2D {
 													relativeSpeed * ((float) Math.random() * 4f - 2)),
 											100f, 2 + (float) Math.random() * 5f));
 								}
-							}
+							//}
 						}
 					}
 				}
@@ -293,7 +299,7 @@ public class World2D {
 			p.finish();
 		}
 		doFinish.clear();
-		generateSparks();
+		//generateSparks();
 
 		for (Particle p : parts) {
 			if (p.update()) {
@@ -359,6 +365,7 @@ public class World2D {
 				p.addBoostContact(_contact);
 			} else if (cO.data.equals("kill")) {
 				p.addKillContact(_contact);
+				p.killFactor = 0;
 			} else if (cO.data.equals("finish")) {
 				if (!p.finished) {
 					doFinish.add(p);
@@ -394,12 +401,12 @@ public class World2D {
 			} else if (cO.data.equals("kill")) {
 				p.remKillContact(_contact);
 			} else if (cO.data.equals("sensor")) {
-				if (playerCollisions) {					
+				if (playerCollisions) {
 					CollisionFilter cf = (CollisionFilter) cO;
-					Filter f=cf.fixture.getFilterData();
-					Filter pf=p.ship_fixture.getFilterData();
+					Filter f = cf.fixture.getFilterData();
+					Filter pf = p.ship_fixture.getFilterData();
 					f.maskBits |= pf.categoryBits;
-					cf.fixture.setFilterData(f);					
+					cf.fixture.setFilterData(f);
 				}
 			} else {
 				p.remHitContact(_contact);
@@ -464,15 +471,19 @@ public class World2D {
 	public void step() {
 		FRAMES++;
 		update();
-		float timeStep = 1 / 50f;
+		float timeStep = 1 / frameRate;
 		lastFrameTimer = System.nanoTime();
 		this.step(timeStep, 5, 5);
 	}
 
 	private void step(float timeStep, int velocityIterations, int positionIterations) {
 		try {
-			world.step(timeStep, velocityIterations, positionIterations);
-			particles.step(timeStep, velocityIterations, positionIterations);
+			timeStep /= (float) interFrames;
+			for (interFrame = 0; interFrame < interFrames; interFrame++) {
+				generateSparks();
+				world.step(timeStep, velocityIterations, positionIterations);
+				particles.step(timeStep, velocityIterations, positionIterations);
+			}
 			world.clearForces();
 			particles.clearForces();
 		} catch (Exception ex) {

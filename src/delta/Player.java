@@ -37,9 +37,9 @@ public class Player extends Container {
 
 	ArrayList<Viewport> view;
 
-	float killFactor = 1.5f;
+	public float killFactor = 1.5f;
 	float heal = 0.01f;
-	float killFactorMax = 1.6f;
+	float powerMax = 1.5f;
 	public int index;
 	public int totalContacts = 1;
 	private Vec2 vel, oldVel;
@@ -94,7 +94,7 @@ public class Player extends Container {
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = cs;
-		fd.density = 1;
+		fd.density = 1.0f;
 		fd.friction = 0.5f;
 		fd.restitution = 0.02f;
 		fd.filter.categoryBits=1<<(index+3);
@@ -112,7 +112,7 @@ public class Player extends Container {
 		sensor.isSensor=true;
 		sensor.setUserData(cf);
 		ship.createFixture(sensor);
-		// ship.setAngularVelocity(10.1f);
+		
 
 		proxy = world.particles.createBody(bdp);
 		proxy.createFixture(fd);
@@ -143,7 +143,7 @@ public class Player extends Container {
 		fd.filter.categoryBits = 0x0002;
 
 		PolygonShape tShape = new PolygonShape();
-		tShape.setAsBox(tL, world.scalarPixelsToWorld(10));
+		tShape.setAsBox(tL/2f, world.scalarPixelsToWorld(5));
 
 		fd.setShape(tShape);
 		tether = world.world.createBody(bd);
@@ -238,7 +238,7 @@ public class Player extends Container {
 			// if vibrating count down a few frames and then stop
 			if (vib) {
 				vibCounter++;
-				if (vibCounter > 5) {
+				if (vibCounter > 7) {
 					input.vibrateLeft(0);
 					vib = false;
 				}
@@ -284,10 +284,10 @@ public class Player extends Container {
 
 			// if not in contact with hi-voltage rail heal engines
 			if (kill.size() == 0) {
-				if (killFactor < killFactorMax)
+				if (killFactor < powerMax)
 					killFactor += heal;
 				else
-					killFactor = killFactorMax;
+					killFactor = powerMax;
 			} else {
 				// kill engines
 				killFactor = 0;
@@ -313,11 +313,11 @@ public class Player extends Container {
 			}
 			pwr *= killFactor;
 			sound.setPower(pwr);
-			sound.setVol((float) killFactor / killFactorMax);
+			sound.setVol((float) killFactor / powerMax);
 			// Generate smoke particles
 			loc = ship.getWorldCenter();
 			if (pwr > 0) {
-				for (int i = 0; i < (int) ((killFactor / killFactorMax) * 2f); i++) {
+				for (int i = 0; i < (int) ((killFactor / powerMax) * 2f); i++) {
 					float rand = -0.1f + 0.2f * (float) Math.random();
 					float randInter = ((float) Math.random()) * 2.0f;
 					Vec2 thisLoc = new Vec2(oldLoc.x + (loc.x - oldLoc.x) * randInter,

@@ -151,16 +151,16 @@ public class PlayerSound {
 		master.addInput(bounce_hit_LP);
 
 		// kill hit
-		kill_hit_impulse = new Glide(ac, 0, 50);
-		kill_hit_smooth = new OnePoleFilter(ac, 800);
+		kill_hit_impulse = new Glide(ac, 0, 20);
+		kill_hit_smooth = new OnePoleFilter(ac, 1800);
 		kill_hit_smooth.addInput(kill_hit_impulse);
 		kill_hit_clip = new Clip(ac);
 		kill_hit_clip.addInput(kill_hit_smooth);
 		kill_hit_gain = new Gain(ac, 1, kill_hit_clip);
 		kill_hit = new MetalNoise(ac, 0.8f);
 		kill_hit.setFrequency(50f);
-		kill_hit_LP = new BiquadFilter(ac, BiquadFilter.LP, 4000, 1);
-		kill_hit_HP = new BiquadFilter(ac, BiquadFilter.HP, 4000, 1);
+		kill_hit_LP = new BiquadFilter(ac, BiquadFilter.LP, 5000, 1);
+		kill_hit_HP = new BiquadFilter(ac, BiquadFilter.HP, 5000, 1);
 		kill_hit_LP.addInput(kill_hit);
 		kill_hit_HP.addInput(kill_hit_LP);
 		kill_hit_gain.addInput(kill_hit_HP);

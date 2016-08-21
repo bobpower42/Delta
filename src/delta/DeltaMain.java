@@ -50,9 +50,8 @@ public class DeltaMain extends PApplet {
 		for (int i = 0; i < 4; i++) {
 			p[i] = new PlayerInput(this, i + 1);
 		}
-		fullScreen(P2D);	
-		//turn off anti-aliasing, can do our own with glsl filter
-		smooth(0);		
+		fullScreen(P2D);	//openGl		
+		smooth(0);	 //turn off anti-aliasing, can do our own with glsl filter	
 	}
 
 	public void setup() {
@@ -68,7 +67,7 @@ public class DeltaMain extends PApplet {
 		noCursor();
 		frameRate(frameRate);
 		world = new World2D(frameRate, out);
-		world.setScale(50f);
+		world.setScale(60f);
 		packFolder = System.getProperty("user.dir") + "\\packs";
 		File folder = new File(packFolder);
 
@@ -122,8 +121,8 @@ public class DeltaMain extends PApplet {
 			} else {
 				frameCounter++;
 			}
-			fill(0);
-			text("FPS: " + fps, 10,10);
+			//fill(0);
+			//text("FPS: " + fps, 10,10);
 
 		} else if (state == menuState) {
 

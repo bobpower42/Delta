@@ -16,7 +16,7 @@ public class RayCastClosestCallback implements RayCastCallback {
 
 	public float reportFixture(Fixture fixture, Vec2 point, Vec2 normal, float fraction) {
 		Container c=(Container) fixture.getUserData();
-		if (!c.type.equals("player") && !c.type.equals("tether")) {
+		if (!c.type.equals("player") && !c.type.equals("tether") && !c.type.equals("sensor")) {
 			m_hit = true;
 			m_point = point;
 			m_fraction = fraction;
