@@ -202,31 +202,34 @@ public class World2D {
 
 	public void tether(ArrayList<Player> tP) {
 		int num = tP.size();
-		Player[] pList = new Player[num];
-		for (int i = 0; i < num; i++) {
-			pList[i] = tP.get(i);
-			pList[i].tether(tP);
-		}
 		if (num > 1) {
-			float ang = PConstants.TWO_PI / (float) num;
-			float rad = tetherLength / (2.0f * PApplet.sin(PConstants.PI / (float) num));
-			float start_ang = 0;
-			if (num > 2) {
-				start_ang = ang / 2f;
+			Player[] pList = new Player[num];
+			for (int i = 0; i < num; i++) {
+				pList[i] = tP.get(i); //use array instead (just easier)
+				pList[i].tether(tP); //pass tether list to each player in tether list
 			}
+			//these values are used to get the position of ships and tethers
+			float ang = PConstants.TWO_PI / (float) num; 
+			float rad = tetherLength / (2.0f * PApplet.sin(PConstants.PI / (float) num)); //radius of circle 
+			float start_ang = 0;
+			if (num == 3)start_ang = ang / 4f;
+			if (num == 4)start_ang = ang / 2f;
+			
 			Vec2[] pos = new Vec2[num];
 			for (int i = 0; i < num; i++) {
 				pos[i] = new Vec2(spawn.v[0].x + rad * PApplet.cos(start_ang + i * ang),
 						spawn.v[0].y + rad * PApplet.sin(start_ang + i * ang));
 			}
-
+			//move ships
 			for (int i = 0; i < num; i++) {
-				pList[i].ship.setTransform(coordPixelsToWorld(pos[i]), 0);				
+				pList[i].ship.setTransform(coordPixelsToWorld(pos[i]), 0);
 			}
 			float tL = scalarPixelsToWorld(tetherLength);
 			float tW = scalarPixelsToWorld(tetherWidth);
+			
 			for (int i = 0; i < num; i++) {
-				if (!(num == 2 && i == 1)) { //no need to close loop if only two players
+				if (!(num == 2 && i == 1)) { // no need to close loop if only
+												// two players
 					int j = (i + 1) % num;
 					Vec2 tpos = new Vec2((pos[i].x + pos[j].x) / 2f, (pos[i].y + pos[j].y) / 2f);
 					float tang = PApplet.atan2(pos[j].y - pos[i].y, pos[j].x - pos[i].x);
@@ -239,17 +242,13 @@ public class World2D {
 					fd.filter.maskBits = 0x0001; // turn off collisions with
 													// tether and players
 					fd.filter.categoryBits = 0x0002;
-
 					PolygonShape tShape = new PolygonShape();
 					tShape.setAsBox(tL / 2f, tW / 2f);
-
 					fd.setShape(tShape);
 					Body tether = world.createBody(bd);
 					tether.createFixture(fd);
 					tc.attachBody(tether);
-
 					tether.setTransform(coordPixelsToWorld(tpos), -tang);
-
 					RevoluteJointDef revoluteJointDefA = new RevoluteJointDef();
 					revoluteJointDefA.bodyA = pList[i].ship;
 					revoluteJointDefA.bodyB = tether;
@@ -257,7 +256,6 @@ public class World2D {
 					revoluteJointDefA.localAnchorA.set(0, 0);
 					revoluteJointDefA.localAnchorB.set(-tL / 2f, 0);
 					world.createJoint(revoluteJointDefA);
-
 					RevoluteJointDef revoluteJointDefB = new RevoluteJointDef();
 					revoluteJointDefB.bodyA = pList[j].ship;
 					revoluteJointDefB.bodyB = tether;
@@ -265,17 +263,15 @@ public class World2D {
 					revoluteJointDefB.localAnchorA.set(0, 0);
 					revoluteJointDefB.localAnchorB.set(tL / 2f, 0);
 					world.createJoint(revoluteJointDefB);
-
-					// tethered.tether(this, tether);
 					addTether((Tether) tc);
 				}
 			}
-			if (num == 4) { //cross braces
+			if (num == 4) { // cross braces if x4
 				for (int i = 0; i < 2; i++) {
 					int j = (i + 2) % num;
 					Vec2 tpos = new Vec2((pos[i].x + pos[j].x) / 2f, (pos[i].y + pos[j].y) / 2f);
 					float tang = PApplet.atan2(pos[j].y - pos[i].y, pos[j].x - pos[i].x);
-					float tlen= PApplet.dist(pos[i].x, pos[i].y, pos[j].x, pos[j].y);
+					float tlen = PApplet.dist(pos[i].x, pos[i].y, pos[j].x, pos[j].y);
 					BodyDef bd = new BodyDef();
 					bd.type = BodyType.DYNAMIC;
 					FixtureDef fd = new FixtureDef();
@@ -285,17 +281,13 @@ public class World2D {
 					fd.filter.maskBits = 0x0001; // turn off collisions with
 													// tether and players
 					fd.filter.categoryBits = 0x0002;
-
 					PolygonShape tShape = new PolygonShape();
 					tShape.setAsBox(scalarPixelsToWorld(tlen) / 2f, tW / 2f);
-
 					fd.setShape(tShape);
 					Body tether = world.createBody(bd);
 					tether.createFixture(fd);
 					tc.attachBody(tether);
-
 					tether.setTransform(coordPixelsToWorld(tpos), -tang);
-
 					RevoluteJointDef revoluteJointDefA = new RevoluteJointDef();
 					revoluteJointDefA.bodyA = pList[i].ship;
 					revoluteJointDefA.bodyB = tether;
@@ -303,18 +295,14 @@ public class World2D {
 					revoluteJointDefA.localAnchorA.set(0, 0);
 					revoluteJointDefA.localAnchorB.set(-scalarPixelsToWorld(tlen) / 2f, 0);
 					world.createJoint(revoluteJointDefA);
-
 					RevoluteJointDef revoluteJointDefB = new RevoluteJointDef();
 					revoluteJointDefB.bodyA = pList[j].ship;
 					revoluteJointDefB.bodyB = tether;
 					revoluteJointDefB.collideConnected = false;
 					revoluteJointDefB.localAnchorA.set(0, 0);
 					revoluteJointDefB.localAnchorB.set(scalarPixelsToWorld(tlen) / 2f, 0);
-					world.createJoint(revoluteJointDefB);
-
-					// tethered.tether(this, tether);
+					world.createJoint(revoluteJointDefB);					
 					addTether((Tether) tc);
-
 				}
 			}
 		}

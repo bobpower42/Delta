@@ -11,10 +11,9 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.data.XML;
 
-
 public class DeltaMain extends PApplet {
-	//player colours
-	public static int[] cl = { -34048, -16740353, -65413, -8716033 };	
+	// player colours
+	public static int[] cl = { -34048, -16740353, -65413, -8716033 };
 	private PlayerInput[] p;
 	Player player, player2;
 	private int splashState = 0;
@@ -28,12 +27,12 @@ public class DeltaMain extends PApplet {
 	Viewport vp, vp2;
 	AudioContext ac;
 	Gain master;
-	Plug out;	
+	Plug out;
 	long frameTimer;
 	int frameCounter = 0;
 	float fps = 0;
 	PFont font;
-	float frameRate=60f;
+	float frameRate = 60f;
 
 	public static void main(String[] args) {
 		String[] a = { "MAIN" };
@@ -49,14 +48,14 @@ public class DeltaMain extends PApplet {
 		for (int i = 0; i < 4; i++) {
 			p[i] = new PlayerInput(this, i + 1);
 		}
-		fullScreen(P2D);	//openGl		
-		smooth(0);	 //turn off anti-aliasing, can do our own with glsl filter	
+		fullScreen(P2D); // openGl
+		smooth(0); // turn off anti-aliasing, can do our own with glsl filter
 	}
 
 	public void setup() {
-		font=loadFont("Avant-GardeBoldT.-48.vlw");
-		textFont(font,24);
-		textAlign(LEFT,TOP);
+		font = loadFont("Avant-GardeBoldT.-48.vlw");
+		textFont(font, 24);
+		textAlign(LEFT, TOP);
 		ac = new AudioContext();
 		out = new Plug(ac);
 		master = new Gain(ac, 1, 2.5f);
@@ -84,55 +83,56 @@ public class DeltaMain extends PApplet {
 		world.loadfromXML(pack, "006_a");
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
-		Player player3= new Player(world, p[2], 2);
-		Player player4= new Player(world, p[3], 3);
+		Player player3 = new Player(world, p[2], 2);
+		Player player4 = new Player(world, p[3], 3);
 		player.createShip();
 		player2.createShip();
 		player3.createShip();
 		player4.createShip();
-		ArrayList<Player> test=new ArrayList<Player>();
+		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(player);
 		test.add(player2);
-		//test.add(player3);
-		//test.add(player4);
+		 test.add(player3);
+		// test.add(player4);
 		world.tether(test);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
 		player3.connectAudio(ac, out);
 		player4.connectAudio(ac, out);
-		vp = new Viewport(this, world, 0, 0, width, height/2);
+		vp = new Viewport(this, world, 0, 0, width, height / 2);
 		vp.loadShader(loadShader("vcr.glsl"));
 		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		vp2.loadShader(loadShader("vcr.glsl"));
 		vp.attachTarget(player);
-		//vp.attachTarget(player2);
-		
+		// vp.attachTarget(player2);
+
 		vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
 	public void draw() {
 		if (state == splashState) {
-			//long startFrame=System.nanoTime();
+			// long startFrame=System.nanoTime();
 			world.step();
-			//long gameStep=System.nanoTime()-startFrame;			
+			// long gameStep=System.nanoTime()-startFrame;
 			vp.update();
-			vp2.update();			
+			vp2.update();
 			image(vp.pg, vp.pos.x, vp.pos.y);
 			image(vp2.pg, vp2.pos.x, vp2.pos.y);
-			//long viewportDraw=System.nanoTime()-startFrame-gameStep;
-			//println("Game: "+gameStep+" Draw: "+viewportDraw+" G/D Ratio: "+(float)gameStep/(float)viewportDraw);
+			// long viewportDraw=System.nanoTime()-startFrame-gameStep;
+			// println("Game: "+gameStep+" Draw: "+viewportDraw+" G/D Ratio:
+			// "+(float)gameStep/(float)viewportDraw);
 			if (frameCounter >= 10) {
 				frameCounter = 0;
 				fps = 10000000 / (float) (System.nanoTime() - frameTimer);
 				fps *= 1000;
 				frameTimer = System.nanoTime();
-				
+
 			} else {
 				frameCounter++;
 			}
-			//fill(0);
-			text("FPS: " + fps, 10,10);
+			// fill(0);
+			text("FPS: " + fps, 10, 10);
 
 		} else if (state == menuState) {
 
@@ -150,14 +150,14 @@ public class DeltaMain extends PApplet {
 		}
 	}
 
-	public void exit() {		
+	public void exit() {
 		for (PlayerInput pi : p) {
 			pi.release();
 		}
 		ac.stop();
 		surface.stopThread();
-		
-		ac = null;		
+
+		ac = null;
 		System.out.println("stopping");
 		super.exit();
 		System.exit(0);
