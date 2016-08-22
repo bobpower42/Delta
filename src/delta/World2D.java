@@ -3,7 +3,6 @@ package delta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -20,10 +19,10 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
-
 import beads.UGen;
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PFont;
 import processing.core.PGraphics;
 import processing.data.XML;
 
@@ -36,6 +35,7 @@ public class World2D {
 	Layer game;
 	Map<String, Object> obj = new HashMap<String, Object>();
 	Container spawn;
+	Container score;
 	ArrayList<Instance> kinematics;
 	ArrayList<Player> players;
 	ArrayList<Contact> contacts;
@@ -43,7 +43,9 @@ public class World2D {
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
 	ArrayList<Player> doFinish;
+	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
+	ArrayList<Tether> doDestroyTethers;
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
@@ -53,6 +55,7 @@ public class World2D {
 	public static int interFrame = 0;
 	public static int interFrames = 5;
 	public Vec2 spawnPoint;
+	public PFont font;
 
 	World2D(float _frameRate, UGen _out) {
 		FRAMES = -1;
@@ -64,12 +67,14 @@ public class World2D {
 		particles = new World(new Vec2(0, -9.8f));
 		players = new ArrayList<Player>();
 		doFinish = new ArrayList<Player>();
+		doFinishLater = new ArrayList<Player>();
 		contacts = new ArrayList<Contact>();
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
 		partsAdd = new ArrayList<Particle>();
 		kinematics = new ArrayList<Instance>();
 		tethers = new ArrayList<Tether>();
+		doDestroyTethers = new ArrayList<Tether>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
 
@@ -128,7 +133,7 @@ public class World2D {
 	}
 
 	public float getTime() {
-		return (FRAMES * (interFrame + 1) / (float) interFrames) * 60f;
+		return (FRAMES + ((interFrame + 1) / (float) interFrames)) / 60f;
 	}
 
 	public void loadfromXML(XML xml, String name) {
@@ -184,6 +189,9 @@ public class World2D {
 				if (c.data.equals("start")) {
 					spawn = c;
 				}
+				if (c.data.equals("score")) {
+					score = c;
+				}
 			} else if (c.type.equals("instance")) {
 				Instance ic = (Instance) c;
 				ic.build();
@@ -205,28 +213,33 @@ public class World2D {
 		if (num > 1) {
 			Player[] pList = new Player[num];
 			for (int i = 0; i < num; i++) {
-				pList[i] = tP.get(i); //use array instead (just easier)
-				pList[i].tether(tP); //pass tether list to each player in tether list
+				pList[i] = tP.get(i); // use array instead (just easier)
+				pList[i].tether(tP); // pass tether list to each player in
+										// tether list
 			}
-			//these values are used to get the position of ships and tethers
-			float ang = PConstants.TWO_PI / (float) num; 
-			float rad = tetherLength / (2.0f * PApplet.sin(PConstants.PI / (float) num)); //radius of circle 
+			// these values are used to get the position of ships and tethers
+			float ang = PConstants.TWO_PI / (float) num;
+			float rad = tetherLength / (2.0f * PApplet.sin(PConstants.PI / (float) num)); // radius
+																							// of
+																							// circle
 			float start_ang = 0;
-			if (num == 3)start_ang = ang / 4f;
-			if (num == 4)start_ang = ang / 2f;
-			
+			if (num == 3)
+				start_ang = ang / 4f;
+			if (num == 4)
+				start_ang = ang / 2f;
+
 			Vec2[] pos = new Vec2[num];
 			for (int i = 0; i < num; i++) {
 				pos[i] = new Vec2(spawn.v[0].x + rad * PApplet.cos(start_ang + i * ang),
 						spawn.v[0].y + rad * PApplet.sin(start_ang + i * ang));
 			}
-			//move ships
+			// move ships
 			for (int i = 0; i < num; i++) {
 				pList[i].ship.setTransform(coordPixelsToWorld(pos[i]), 0);
 			}
 			float tL = scalarPixelsToWorld(tetherLength);
 			float tW = scalarPixelsToWorld(tetherWidth);
-			
+
 			for (int i = 0; i < num; i++) {
 				if (!(num == 2 && i == 1)) { // no need to close loop if only
 												// two players
@@ -248,6 +261,7 @@ public class World2D {
 					Body tether = world.createBody(bd);
 					tether.createFixture(fd);
 					tc.attachBody(tether);
+					pList[i].tethers.add(tc);
 					tether.setTransform(coordPixelsToWorld(tpos), -tang);
 					RevoluteJointDef revoluteJointDefA = new RevoluteJointDef();
 					revoluteJointDefA.bodyA = pList[i].ship;
@@ -287,6 +301,7 @@ public class World2D {
 					Body tether = world.createBody(bd);
 					tether.createFixture(fd);
 					tc.attachBody(tether);
+					pList[i].tethers.add(tc);
 					tether.setTransform(coordPixelsToWorld(tpos), -tang);
 					RevoluteJointDef revoluteJointDefA = new RevoluteJointDef();
 					revoluteJointDefA.bodyA = pList[i].ship;
@@ -301,7 +316,7 @@ public class World2D {
 					revoluteJointDefB.collideConnected = false;
 					revoluteJointDefB.localAnchorA.set(0, 0);
 					revoluteJointDefB.localAnchorB.set(scalarPixelsToWorld(tlen) / 2f, 0);
-					world.createJoint(revoluteJointDefB);					
+					world.createJoint(revoluteJointDefB);
 					addTether((Tether) tc);
 				}
 			}
@@ -415,7 +430,18 @@ public class World2D {
 			p.finish();
 		}
 		doFinish.clear();
-		// generateSparks();
+		if (doFinishLater.size() > 0) {
+			doFinish.addAll(doFinishLater);
+			doFinishLater.clear();
+		}
+
+		for (Tether t : doDestroyTethers) {
+			t.finished=true;
+			tethers.remove(t);
+			world.destroyBody(t.body);
+			t.body.setActive(false);
+		}
+		doDestroyTethers.clear();	
 
 		for (Particle p : parts) {
 			if (p.update()) {
@@ -445,17 +471,17 @@ public class World2D {
 		}
 		// draw tethers
 		for (Tether t : tethers) {
-			t.draw(pG, p1, p2);
+			t.draw(pG, p1, p2, vp);
 		}
 		// draw players not added to viewport
 		for (Player p : players) {
 			if (!vp.target.contains(p)) {
-				p.draw(pG, p1, p2);
+				p.draw(pG, p1, p2, vp);
 			}
 		}
 		// draw viewport players
 		for (Player p : vp.target) {
-			p.draw(pG, p1, p2);
+			p.draw(pG, p1, p2, vp);
 		}
 	}
 

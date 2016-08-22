@@ -49,7 +49,7 @@ public class Player extends Container {
 	PlayerSound sound;
 	FilterQueryCallback magQuery;
 	ArrayList<Player> tethered;
-	Body tether;
+	ArrayList<Tether> tethers;
 	RevoluteJoint tetherJoint;
 
 	Player(World2D _world, PlayerInput _input, int _index) {
@@ -61,6 +61,7 @@ public class Player extends Container {
 		hit = new ArrayList<Contact>();
 		view = new ArrayList<Viewport>();
 		tethered=new ArrayList<Player>();
+		tethers=new ArrayList<Tether>();
 		world = _world;
 		input = _input;
 		type = "player";
@@ -328,7 +329,7 @@ public class Player extends Container {
 		}
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!finished) {
 			Vec2 pos = world.getBodyPixelCoord(ship);
 			float ang = ship.getAngle();
@@ -367,6 +368,15 @@ public class Player extends Container {
 				}
 			}
 			finished = true;
+			for(Tether t:tethers){
+				world.doDestroyTethers.add(t);				
+			}
+			for(Player p:tethered){
+				if(!p.finished){
+					world.doFinishLater.add(p);
+					break;
+				}				
+			}
 		}
 	}
 

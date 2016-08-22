@@ -10,6 +10,8 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
+
+import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.data.XML;
@@ -76,7 +78,7 @@ public abstract class Container {
 		return true;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 
 	}
 
@@ -134,7 +136,7 @@ class Poly extends Container {
 		return false;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!check || onScreen(p1, p2)) {
 			pG.fill(fill);
 			pG.noStroke();
@@ -184,7 +186,7 @@ class Poly extends Container {
 		} else if (data.equals("mag")) {
 			fd.friction = 0.1f;
 			fd.restitution = 0.1f;
-		}else if (data.equals("end")) {
+		} else if (data.equals("end")) {
 			fd.isSensor();
 		}
 		return fd;
@@ -224,7 +226,7 @@ class Circle extends Container {
 		return false;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!check || onScreen(p1, p2)) {
 			pG.fill(fill);
 			pG.noStroke();
@@ -258,7 +260,7 @@ class Circle extends Container {
 		} else if (data.equals("mag")) {
 			fd.friction = 0.1f;
 			fd.restitution = 0.1f;
-		}else if (data.equals("end")) {
+		} else if (data.equals("end")) {
 			fd.isSensor();
 		}
 		return fd;
@@ -305,7 +307,7 @@ class Marker extends Container {
 		return false;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (onScreen(p1, p2)) {
 			if (data != null) {
 				pG.fill(world.getForeground());
@@ -326,6 +328,11 @@ class Marker extends Container {
 						pG.rect(p1.x, v[0].y, v[0].x, p2.y);
 
 					}
+				} else if (data.equals("score")) {
+					pG.fill(180);
+					pG.textFont(world.font,44);
+					pG.text(PApplet.nfc(world.getTime(),2), v[0].x, v[0].y);
+
 				}
 			}
 		}
@@ -423,7 +430,7 @@ class Instance extends Container {
 
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		/* Debug Bounding box */
 		// pG.noFill();
 		// pG.stroke(255, 255, 0);
@@ -435,7 +442,7 @@ class Instance extends Container {
 				pG.pushMatrix();
 				pG.translate(locScreen.x, locScreen.y);
 				pG.rotate(rot);
-				obj.draw(pG, p1, p2);
+				obj.draw(pG, p1, p2, vp);
 				pG.popMatrix();
 			}
 		}
@@ -578,9 +585,9 @@ class Object extends Container {
 		shapes.add(_shape);
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		for (Container s : shapes) {
-			s.draw(pG, p1, p2);
+			s.draw(pG, p1, p2, vp);
 		}
 	}
 
@@ -679,7 +686,7 @@ class Layer extends Container {
 				world.draw(pG, tr, br, vp);
 			}
 			for (Container s : shapes) {
-				s.draw(pG, tl, br);
+				s.draw(pG, tl, br, vp);
 			}
 
 			pG.popMatrix();
@@ -731,21 +738,22 @@ class Tether extends Container {
 	Body body;
 	float length;
 	float width;
+	boolean finished=false;
 
 	Tether(World2D _world, float _length, float _width) {
 		world = _world;
 		type = "tether";
-		data= "tether";
+		data = "tether";
 		length = _length;
-		width = _width;		
+		width = _width;
 	}
 
 	public void attachBody(Body _body) {
 		body = _body;
 	}
 
-	public void draw(PGraphics pG, Vec2 p1, Vec2 p2) {
-		if (body != null) {
+	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
+		if (body != null && !finished) {
 			Vec2 loc = world.coordWorldToPixels(body.getWorldCenter());
 			float rot = -body.getAngle();
 			pG.fill(255);
@@ -760,12 +768,12 @@ class Tether extends Container {
 	}
 }
 
-class CollisionFilter extends Container{
+class CollisionFilter extends Container {
 	public Fixture fixture;
-	CollisionFilter(Fixture _fixture){
-		data="sensor";
-		type="sensor";
-		fixture=_fixture;
+
+	CollisionFilter(Fixture _fixture) {
+		data = "sensor";
+		type = "sensor";
+		fixture = _fixture;
 	}
 }
-

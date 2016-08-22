@@ -125,7 +125,7 @@
     </object>
   </objects>
   <maps>
-    <map bg="6" bgcl="-9342607" data="002_small" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="002_small" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax1" fade="0.9" paralax="0.6" type="layer">
         <container cl="-8421505" closed="true" data="" fill="4" type="poly">
@@ -235,7 +235,7 @@
       </layer>
       <layer data="overlay" disable="true" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="006_a" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="006_a" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" fade="0.85" paralax="0.0" type="layer"/>
       <layer data="paralax1" fade="0.75" paralax="0.65" type="layer">
         <container cl="-7039852" data="solid" fill="4" type="circle">
@@ -432,7 +432,7 @@
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="003_small test" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="003_small test" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax1" disable="true" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax2" disable="true" fade="0.0" paralax="0.0" type="layer"/>
@@ -475,7 +475,7 @@
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="004_towerfall" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="004_towerfall" fg="4" fgcl="-1" split="VVV" type="map">
       <layer data="fixed" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax1" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax2" fade="0.0" paralax="0.0" type="layer"/>
@@ -624,7 +624,7 @@
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="001_rails" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="001_rails" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="paralax1" fade="0.9" paralax="0.6" type="layer">
         <container cl="-8421505" closed="true" data="" fill="4" type="poly">
@@ -1082,7 +1082,7 @@
       </layer>
       <layer data="overlay" disable="true" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="005_paralax" fg="4" fgcl="-1" type="map">
+    <map bg="6" bgcl="-9342607" data="005_paralax" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" fade="0.85" paralax="0.0" type="layer">
         <container cl="-7960954" data="solid" fill="4" type="circle">
           <vert x="-288.0" y="-144.0"/>

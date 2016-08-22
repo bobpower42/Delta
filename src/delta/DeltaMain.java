@@ -80,48 +80,46 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "006_a");
+		world.loadfromXML(pack, "001_rails");
+		world.font=font;
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
-		Player player3 = new Player(world, p[2], 2);
-		Player player4 = new Player(world, p[3], 3);
+		//Player player3 = new Player(world, p[2], 2);
+		//Player player4 = new Player(world, p[3], 3);
 		player.createShip();
 		player2.createShip();
-		player3.createShip();
-		player4.createShip();
+		//player3.createShip();
+		//player4.createShip();
 		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(player);
 		test.add(player2);
-		 test.add(player3);
+		 //test.add(player3);
 		// test.add(player4);
-		world.tether(test);
+		//world.tether(test);
+		//test = new ArrayList<Player>();
+		//test.add(player3);
+		//test.add(player4);
+		//world.tether(test);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
-		player3.connectAudio(ac, out);
-		player4.connectAudio(ac, out);
-		vp = new Viewport(this, world, 0, 0, width, height / 2);
+		//player3.connectAudio(ac, out);
+		//player4.connectAudio(ac, out);
+		vp = new Viewport(this, world, 0, 0, width, height);
 		vp.loadShader(loadShader("vcr.glsl"));
-		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-		vp2.loadShader(loadShader("vcr.glsl"));
+		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		//vp2.loadShader(loadShader("vcr.glsl"));
 		vp.attachTarget(player);
-		// vp.attachTarget(player2);
-
-		vp2.attachTarget(player2);
+		//vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
 	public void draw() {
-		if (state == splashState) {
-			// long startFrame=System.nanoTime();
-			world.step();
-			// long gameStep=System.nanoTime()-startFrame;
+		if (state == splashState) {			
+			world.step();			
 			vp.update();
-			vp2.update();
+			//vp2.update();
 			image(vp.pg, vp.pos.x, vp.pos.y);
-			image(vp2.pg, vp2.pos.x, vp2.pos.y);
-			// long viewportDraw=System.nanoTime()-startFrame-gameStep;
-			// println("Game: "+gameStep+" Draw: "+viewportDraw+" G/D Ratio:
-			// "+(float)gameStep/(float)viewportDraw);
+			//image(vp2.pg, vp2.pos.x, vp2.pos.y);			
 			if (frameCounter >= 10) {
 				frameCounter = 0;
 				fps = 10000000 / (float) (System.nanoTime() - frameTimer);
@@ -131,7 +129,7 @@ public class DeltaMain extends PApplet {
 			} else {
 				frameCounter++;
 			}
-			// fill(0);
+			fill(0);
 			text("FPS: " + fps, 10, 10);
 
 		} else if (state == menuState) {
@@ -156,7 +154,6 @@ public class DeltaMain extends PApplet {
 		}
 		ac.stop();
 		surface.stopThread();
-
 		ac = null;
 		System.out.println("stopping");
 		super.exit();
