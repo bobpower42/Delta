@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -14,8 +13,6 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
-import org.jbox2d.dynamics.joints.RevoluteJointDef;
-
 import beads.AudioContext;
 import beads.Plug;
 import processing.core.PApplet;
@@ -51,8 +48,7 @@ public class Player extends Container {
 	Plug out;
 	PlayerSound sound;
 	FilterQueryCallback magQuery;
-	Player tethered;
-	float tetherLength;
+	ArrayList<Player> tethered;
 	Body tether;
 	RevoluteJoint tetherJoint;
 
@@ -64,6 +60,7 @@ public class Player extends Container {
 		kill = new ArrayList<Contact>();
 		hit = new ArrayList<Contact>();
 		view = new ArrayList<Viewport>();
+		tethered=new ArrayList<Player>();
 		world = _world;
 		input = _input;
 		type = "player";
@@ -74,8 +71,6 @@ public class Player extends Container {
 		magForce = new Vec2(0, 0);
 		oldCurA = 0;
 		finished = false;
-		tetherLength = 80f;
-
 	}
 
 	public void createShip() {
@@ -94,24 +89,23 @@ public class Player extends Container {
 		FixtureDef fd = new FixtureDef();
 		fd.shape = cs;
 		fd.density = 1.0f;
-		fd.friction = 0.5f;
+		fd.friction = 0.4f;
 		fd.restitution = 0.02f;
-		fd.filter.categoryBits=1<<(index+3);
-		fd.filter.maskBits=0x0001;		
+		fd.filter.categoryBits = 1 << (index + 3);
+		fd.filter.maskBits = 0x0001;
 		fd.setUserData(this);
-		
+
 		// Attach fixture to body
 		ship = world.world.createBody(bd);
 		ship.createFixture(fd);
-		ship_fixture=ship.getFixtureList();
-		CollisionFilter cf=new CollisionFilter(ship_fixture);
+		ship_fixture = ship.getFixtureList();
+		CollisionFilter cf = new CollisionFilter(ship_fixture);
 		FixtureDef sensor = new FixtureDef();
 		sensor.shape = cs;
-		sensor.filter.maskBits=0xFFFD;
-		sensor.isSensor=true;
+		sensor.filter.maskBits = 0xFFFD;
+		sensor.isSensor = true;
 		sensor.setUserData(cf);
 		ship.createFixture(sensor);
-		
 
 		proxy = world.particles.createBody(bdp);
 		proxy.createFixture(fd);
@@ -123,58 +117,12 @@ public class Player extends Container {
 		view.add(_view);
 	}
 
-	void tether(Player _tethered) {
-		tethered = _tethered;
-		loc = ship.getWorldCenter();
-		float tL = world.scalarPixelsToWorld(tetherLength);
-		float r = ship.getAngle();
-		ship.setTransform(new Vec2(loc.x - tL / 2f, loc.y), r);
-		r = tethered.ship.getAngle();
-		tethered.ship.setTransform(new Vec2(loc.x + tL / 2f, loc.y), r);
-		BodyDef bd = new BodyDef();
-		bd.type = BodyType.DYNAMIC;
-		bd.setPosition(loc);
-		FixtureDef fd = new FixtureDef();
-		fd.density = 0.01f;
-		Tether tc = new Tether(world, tetherLength, 10f);
-		fd.setUserData((Container) tc);
-		fd.filter.maskBits = 0x0001; // turn off collisions with tether and players
-		fd.filter.categoryBits = 0x0002;
-
-		PolygonShape tShape = new PolygonShape();
-		tShape.setAsBox(tL/2f, world.scalarPixelsToWorld(5));
-
-		fd.setShape(tShape);
-		tether = world.world.createBody(bd);
-		tether.createFixture(fd);
-
-		tc.attachBody(tether);
-
-		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
-		revoluteJointDef.bodyA = ship;
-		revoluteJointDef.bodyB = tether;
-		revoluteJointDef.collideConnected = false;
-		revoluteJointDef.localAnchorA.set(0, 0);
-		revoluteJointDef.localAnchorB.set(-tL / 2f, 0);
-		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
-
-		tethered.tether(this, tether);
-		world.addTether((Tether) tc);
-
-	}
-
-	void tether(Player _tethered, Body _tether) {
-		tether = _tether;
-		tethered = _tethered;
-		float tL = world.scalarPixelsToWorld(tetherLength);
-		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
-		revoluteJointDef.bodyA = ship;
-		revoluteJointDef.bodyB = tether;
-		revoluteJointDef.collideConnected = false;
-		revoluteJointDef.localAnchorA.set(0, 0);
-		revoluteJointDef.localAnchorB.set(tL / 2f, 0);
-		tetherJoint = (RevoluteJoint) world.world.createJoint(revoluteJointDef);
-
+	void tether(ArrayList<Player> _tethered) {
+		for (Player tp : _tethered) {
+			if (!(tp == this)) {
+				tethered.add(tp);
+			}
+		}
 	}
 
 	void connectAudio(AudioContext _ac, Plug _out) {

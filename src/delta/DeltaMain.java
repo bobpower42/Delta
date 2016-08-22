@@ -2,6 +2,8 @@ package delta;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
+
 import beads.AudioContext;
 import beads.Gain;
 import beads.Plug;
@@ -79,14 +81,25 @@ public class DeltaMain extends PApplet {
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
 
-		world.loadfromXML(pack, "001_rails");
+		world.loadfromXML(pack, "006_a");
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
+		Player player3= new Player(world, p[2], 2);
+		Player player4= new Player(world, p[3], 3);
 		player.createShip();
 		player2.createShip();
-		//player.tether(player2);
+		player3.createShip();
+		player4.createShip();
+		ArrayList<Player> test=new ArrayList<Player>();
+		test.add(player);
+		test.add(player2);
+		//test.add(player3);
+		//test.add(player4);
+		world.tether(test);
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
+		player3.connectAudio(ac, out);
+		player4.connectAudio(ac, out);
 		vp = new Viewport(this, world, 0, 0, width, height/2);
 		vp.loadShader(loadShader("vcr.glsl"));
 		vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
@@ -119,7 +132,7 @@ public class DeltaMain extends PApplet {
 				frameCounter++;
 			}
 			//fill(0);
-			//text("FPS: " + fps, 10,10);
+			text("FPS: " + fps, 10,10);
 
 		} else if (state == menuState) {
 
@@ -149,5 +162,4 @@ public class DeltaMain extends PApplet {
 		super.exit();
 		System.exit(0);
 	}
-
 }
