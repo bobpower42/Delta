@@ -372,28 +372,6 @@
         <container data="start" type="marker">
           <vert x="-224.0" y="224.0"/>
         </container>
-        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
-          <vert x="3840.0" y="256.0"/>
-          <vert x="3936.0" y="208.0"/>
-          <vert x="3936.0" y="256.0"/>
-        </container>
-        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="3936.0" y="256.0"/>
-          <vert x="3936.0" y="-288.0"/>
-          <vert x="4032.0" y="-288.0"/>
-          <vert x="4032.0" y="256.0"/>
-        </container>
-        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
-          <vert x="3936.0" y="-416.0"/>
-          <vert x="3840.0" y="-272.0"/>
-          <vert x="3840.0" y="-416.0"/>
-        </container>
-        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
-          <vert x="3840.0" y="-416.0"/>
-          <vert x="3840.0" y="64.0"/>
-          <vert x="3744.0" y="64.0"/>
-          <vert x="3744.0" y="-416.0"/>
-        </container>
         <container data="balls" rt="120" rto="0" type="instance">
           <vert x="464.0" y="-288.0"/>
         </container>
@@ -428,6 +406,9 @@
         </container>
         <container data="br" type="marker">
           <vert x="6464.0" y="320.0"/>
+        </container>
+        <container data="score" type="marker">
+          <vert x="6800.0" y="-80.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>

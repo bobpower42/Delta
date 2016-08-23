@@ -64,7 +64,7 @@ public class DeltaMain extends PApplet {
 		ac.start();
 		noCursor();
 		frameRate(frameRate);
-		world = new World2D(frameRate, out);
+		world = new World2D(this, frameRate, out);
 		world.setScale(60f);
 		packFolder = System.getProperty("user.dir") + "\\packs";
 		File folder = new File(packFolder);
@@ -79,8 +79,10 @@ public class DeltaMain extends PApplet {
 		}
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
+		String name=files[0].getName();
 
-		world.loadfromXML(pack, "001_rails");
+		world.loadfromXML(pack, name,"001_rails");
+		world.addGhost(loadBytes("test.ghost"));
 		world.font=font;
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);

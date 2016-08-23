@@ -27,10 +27,12 @@ import processing.core.PGraphics;
 import processing.data.XML;
 
 public class World2D {
+	PApplet pA;
 	public World world, particles;
 	public static int[] cl = { -34048, -16740353, -65413, -8716033 };
 	private float scale;
 	float tetherLength, tetherWidth;
+	String mapName, fileName;
 	Level map;
 	Layer game;
 	Map<String, Object> obj = new HashMap<String, Object>();
@@ -46,7 +48,8 @@ public class World2D {
 	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
 	ArrayList<Tether> doDestroyTethers;
-	Ghost test;
+	ArrayList<Ghost> ghosts;
+
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
@@ -58,8 +61,8 @@ public class World2D {
 	public Vec2 spawnPoint;
 	public PFont font;
 
-	World2D(float _frameRate, UGen _out) {
-		test=new Ghost(this,0,"");
+	World2D(PApplet _pA, float _frameRate, UGen _out) {
+		pA = _pA;
 		FRAMES = -1;
 		out = _out;
 		frameRate = _frameRate;
@@ -77,6 +80,7 @@ public class World2D {
 		kinematics = new ArrayList<Instance>();
 		tethers = new ArrayList<Tether>();
 		doDestroyTethers = new ArrayList<Tether>();
+		ghosts = new ArrayList<Ghost>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
 
@@ -138,7 +142,9 @@ public class World2D {
 		return (FRAMES + ((interFrame + 1) / (float) interFrames)) / 60f;
 	}
 
-	public void loadfromXML(XML xml, String name) {
+	public void loadfromXML(XML xml, String _filename, String name) {
+		fileName = _filename;
+		mapName = name;
 		XML oxml = xml.getChild("objects");
 		XML[] children = oxml.getChildren("object");
 		for (XML child : children) {
@@ -204,6 +210,14 @@ public class World2D {
 
 	public void addPlayer(Player p) {
 		players.add(p);
+		p.setRecorderData(fileName, mapName);
+	}
+
+	public void addGhost(byte[] bytes) {
+		Ghost g = new Ghost(this, bytes);		
+		if (g.map.equals(mapName) && g.file.equals(fileName)) {
+			ghosts.add(g);
+		}
 	}
 
 	public void addTether(Tether t) {
@@ -326,17 +340,18 @@ public class World2D {
 		}
 
 	}
-	public void prepareCollisions(){
-		for(Player p:players){
-			for(Player pn:players){
-				if(!p.equals(pn)){
-					Vec2 ploc=p.ship.getWorldCenter();
-					Vec2 pnloc=pn.ship.getWorldCenter();
-					if(ploc.x!=pnloc.x || ploc.y!=pnloc.y){
-						Filter pFilter=p.ship_fixture.getFilterData();
-						Filter pnFilter=pn.ship_fixture.getFilterData();
-						pFilter.maskBits|=pnFilter.categoryBits;
-						pnFilter.maskBits|=pFilter.categoryBits;
+
+	public void prepareCollisions() {
+		for (Player p : players) {
+			for (Player pn : players) {
+				if (!p.equals(pn)) {
+					Vec2 ploc = p.ship.getWorldCenter();
+					Vec2 pnloc = pn.ship.getWorldCenter();
+					if (ploc.x != pnloc.x || ploc.y != pnloc.y) {
+						Filter pFilter = p.ship_fixture.getFilterData();
+						Filter pnFilter = pn.ship_fixture.getFilterData();
+						pFilter.maskBits |= pnFilter.categoryBits;
+						pnFilter.maskBits |= pFilter.categoryBits;
 						p.ship_fixture.setFilterData(pFilter);
 						pn.ship_fixture.setFilterData(pnFilter);
 					}
@@ -457,12 +472,12 @@ public class World2D {
 		}
 
 		for (Tether t : doDestroyTethers) {
-			t.finished=true;
+			t.finished = true;
 			tethers.remove(t);
 			world.destroyBody(t.body);
 			t.body.setActive(false);
 		}
-		doDestroyTethers.clear();	
+		doDestroyTethers.clear();
 
 		for (Particle p : parts) {
 			if (p.update()) {
@@ -481,6 +496,7 @@ public class World2D {
 		partsAdd.clear();
 		for (Player p : players) {
 			p.update();
+			p.recordFrame(FRAMES);
 		}
 
 	}
@@ -490,8 +506,11 @@ public class World2D {
 		for (Particle p : parts) {
 			p.draw(pG, p1, p2);
 		}
-		
-		test.draw(pG, FRAMES-100);
+		// draw ghosts
+		for (Ghost g : ghosts) {
+			g.draw(pG, FRAMES);
+		}
+
 		// draw tethers
 		for (Tether t : tethers) {
 			t.draw(pG, p1, p2, vp);
@@ -636,7 +655,6 @@ public class World2D {
 	public void step() {
 		FRAMES++;
 		update();
-		test.add(FRAMES,players.get(0).getLocRot());
 		float timeStep = 1 / frameRate;
 		lastFrameTimer = System.nanoTime();
 		this.step(timeStep, 5, 5);

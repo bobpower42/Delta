@@ -119,6 +119,10 @@ public class Player extends Container {
 
 		rocketCallback = new RayCastClosestCallback();
 	}
+	
+	public void setRecorderData(String _file, String _map){
+		recorder=new Ghost(world,index,_file,_map);
+	}
 
 	void attachViewport(Viewport _view) {
 		view.add(_view);
@@ -337,6 +341,9 @@ public class Player extends Container {
 			ship.setLinearDamping(0.4f);
 		}
 	}
+	public void recordFrame(int _frame){
+		recorder.add(_frame, getLocRot());
+	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!finished) {
@@ -382,6 +389,9 @@ public class Player extends Container {
 				}
 			}
 			finished = true;
+			recordFrame(World2D.FRAMES);
+			recorder.finish(World2D.FRAMES, world.getTime());
+			recorder.getBytes();
 			for(Tether t:tethers){
 				world.doDestroyTethers.add(t);				
 			}
