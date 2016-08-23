@@ -24,6 +24,10 @@ public class Player extends Container {
 	Fixture ship_fixture;
 	Body ship, proxy;
 	boolean finished;
+	float maxVelocity;
+	int collisionCount;
+	Ghost recorder;
+	boolean recordGhost;
 
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
@@ -72,6 +76,8 @@ public class Player extends Container {
 		magForce = new Vec2(0, 0);
 		oldCurA = 0;
 		finished = false;
+		maxVelocity=0;
+		collisionCount=0;
 	}
 
 	public void createShip() {
@@ -137,10 +143,12 @@ public class Player extends Container {
 	}
 
 	public void addKillContact(Contact _contact) {
+		collisionCount++;
 		kill.add(_contact);
 	}
 
 	public void addHitContact(Contact _contact) {
+		collisionCount++;
 		hit.add(_contact);
 	}
 
@@ -160,6 +168,7 @@ public class Player extends Container {
 		if (!finished) {
 			// compare the change in velocity since previous frame
 			vel = ship.getLinearVelocity();
+			if(vel.length()>maxVelocity)maxVelocity=vel.length();
 			vel.sub(oldVel);
 			oldVel = ship.getLinearVelocity();
 			// compare the magnitude of that change against that magnitude in
@@ -343,6 +352,11 @@ public class Player extends Container {
 			pG.arc(0, 0, 2 * r, 2 * r, -3.14f, 0);
 			pG.popMatrix();
 		}
+	}
+	public LocRot getLocRot(){
+		Vec2 loc = world.getBodyPixelCoord(ship);
+		float rot = -ship.getAngle();
+		return new LocRot(loc,rot);		
 	}
 
 	public void finish() {

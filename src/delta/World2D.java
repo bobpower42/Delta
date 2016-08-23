@@ -46,6 +46,7 @@ public class World2D {
 	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
 	ArrayList<Tether> doDestroyTethers;
+	Ghost test;
 	long lastFrameTimer;
 	public float frameRate;
 	UGen out;
@@ -58,6 +59,7 @@ public class World2D {
 	public PFont font;
 
 	World2D(float _frameRate, UGen _out) {
+		test=new Ghost(this,0,"");
 		FRAMES = -1;
 		out = _out;
 		frameRate = _frameRate;
@@ -320,8 +322,27 @@ public class World2D {
 					addTether((Tether) tc);
 				}
 			}
+			prepareCollisions();
 		}
 
+	}
+	public void prepareCollisions(){
+		for(Player p:players){
+			for(Player pn:players){
+				if(!p.equals(pn)){
+					Vec2 ploc=p.ship.getWorldCenter();
+					Vec2 pnloc=pn.ship.getWorldCenter();
+					if(ploc.x!=pnloc.x || ploc.y!=pnloc.y){
+						Filter pFilter=p.ship_fixture.getFilterData();
+						Filter pnFilter=pn.ship_fixture.getFilterData();
+						pFilter.maskBits|=pnFilter.categoryBits;
+						pnFilter.maskBits|=pFilter.categoryBits;
+						p.ship_fixture.setFilterData(pFilter);
+						pn.ship_fixture.setFilterData(pnFilter);
+					}
+				}
+			}
+		}
 	}
 
 	private void generateSparks() {
@@ -469,6 +490,8 @@ public class World2D {
 		for (Particle p : parts) {
 			p.draw(pG, p1, p2);
 		}
+		
+		test.draw(pG, FRAMES-100);
 		// draw tethers
 		for (Tether t : tethers) {
 			t.draw(pG, p1, p2, vp);
@@ -613,6 +636,7 @@ public class World2D {
 	public void step() {
 		FRAMES++;
 		update();
+		test.add(FRAMES,players.get(0).getLocRot());
 		float timeStep = 1 / frameRate;
 		lastFrameTimer = System.nanoTime();
 		this.step(timeStep, 5, 5);

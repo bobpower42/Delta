@@ -18,6 +18,8 @@ public class Viewport {
 	ArrayList<Player> target;
 	PShader filter;
 	boolean hasShader = false;
+	float fade=0;
+	float fadeTarget=1;
 
 	Viewport(PApplet _pA, World2D _world, int _x, int _y, int _w, int _h) {
 		pA = _pA;
@@ -34,10 +36,7 @@ public class Viewport {
 		f_damp = new Vec2(0, 0);
 		target = new ArrayList<Player>();
 		track = new Vec2(0, 0);
-		pg.beginDraw();
-		// pg.noSmooth();
-
-		pg.endDraw();
+		fade=0;
 	}
 
 	void update() {
@@ -71,14 +70,15 @@ public class Viewport {
 		// damp track again (smooth out movement)
 		cam.x += (f_damp.x - cam.x) / 10f;
 		cam.y += (f_damp.y - cam.y) / 10f;
-
 		pg.beginDraw();
-		world.map.draw(pg, cam, dim, this);
+		world.map.draw(pg, cam, dim, this);		
 		if (hasShader) {
+			fade+=(fadeTarget-fade)/30f;
 			separation_smooth.x += (separation.x - separation_smooth.x) / 5f;
 			separation_smooth.y += (separation.y - separation_smooth.y) / 5f;
 			filter.set("magX", separation_smooth.x + 0.8f);
 			filter.set("magY", separation_smooth.y);
+			filter.set("fade", fade);
 			pg.filter(filter);
 			pg.endDraw();
 			separation.x *= 0.86f;
@@ -87,6 +87,9 @@ public class Viewport {
 			pg.endDraw();
 		}
 
+	}
+	public void setFade(float _f){
+		fadeTarget=_f;
 	}
 
 	public void attachTarget(Player _target) {

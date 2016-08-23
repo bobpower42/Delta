@@ -75,7 +75,7 @@ public class DeltaMain extends PApplet {
 			}
 		});
 		for (int i = 0; i < files.length; i++) {
-			println(files[i].toString());
+			println(files[i].getName());
 		}
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
@@ -119,6 +119,7 @@ public class DeltaMain extends PApplet {
 			vp.update();
 			//vp2.update();
 			image(vp.pg, vp.pos.x, vp.pos.y);
+			
 			//image(vp2.pg, vp2.pos.x, vp2.pos.y);			
 			if (frameCounter >= 10) {
 				frameCounter = 0;

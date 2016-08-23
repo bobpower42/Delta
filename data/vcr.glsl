@@ -11,6 +11,7 @@ uniform vec2 texOffset;
 uniform float scanlines = 0.5;
 uniform float scanlinesNum=800.0;
 uniform float rgbOffset = 0.0007;
+uniform float fade=0.0;
 uniform float magX=1.0;
 uniform float magY=1.0;
 
@@ -40,7 +41,7 @@ void main(void) {
 	vec3 color = vec3(red*0.25,green*0.25,blue*0.25);
 	
 	float scanline = sin(uv.y*scanlinesNum)*0.02*scanlines;
-	color -= scanline;
+	color = color*fade-scanline;
 
 	
 	gl_FragColor = vec4(color,1.0);
