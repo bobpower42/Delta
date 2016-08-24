@@ -28,9 +28,9 @@ void main(void) {
 	vec2 uvB=uv+offset;
 	 
    
-	float red = texture2D(texture,uvR).r+texture2D(ppixels,uvR).r+texture2D(texture,vec2(texOffset.s+uvR.x,uvR.y)).r+texture2D(texture,vec2(-texOffset.s+uvR.x,uvR.y)).r;
-	float green = texture2D(texture,uv).g+texture2D(ppixels,uv).g+texture2D(texture,vec2(texOffset.s+uv.x ,uv.y)).g+texture2D(texture,vec2(-texOffset.s+uv.x ,uv.y)).g;
-	float blue = texture2D(texture,uvB).b+texture2D(ppixels,uvB).b+texture2D(texture,vec2(texOffset.s+uvB.x ,uvB.y)).b+texture2D(texture,vec2(-texOffset.s+uvB.x ,uvB.y)).b;
+	float red = 3*texture2D(texture,uvR).r+texture2D(ppixels,uvR).r;//+texture2D(texture,vec2(texOffset.s+uvR.x,uvR.y)).r+texture2D(texture,vec2(-texOffset.s+uvR.x,uvR.y)).r;
+	float green = 3*texture2D(texture,uv).g+texture2D(ppixels,uv).g;//+texture2D(texture,vec2(texOffset.s+uv.x ,uv.y)).g+texture2D(texture,vec2(-texOffset.s+uv.x ,uv.y)).g;
+	float blue = 3*texture2D(texture,uvB).b+texture2D(ppixels,uvB).b;//+texture2D(texture,vec2(texOffset.s+uvB.x ,uvB.y)).b+texture2D(texture,vec2(-texOffset.s+uvB.x ,uvB.y)).b;
 	
 	//float red = 3*texture2D(texture,vec2(uv.x-rgbOffset*magX,uv.y-rgbOffset*magY)).r+texture2D(ppixels,vec2(uv.x-rgbOffset*magX,uv.y-rgbOffset*magY)).r;
 	//float green = 3*texture2D(texture,vec2(uv.x ,uv.y)).g+texture2D(ppixels,vec2(uv.x ,uv.y)).g;

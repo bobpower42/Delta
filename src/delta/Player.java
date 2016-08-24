@@ -389,8 +389,8 @@ public class Player extends Container {
 				}
 			}
 			finished = true;
-			recordFrame(World2D.FRAMES);
-			recorder.finish(World2D.FRAMES, world.getTime());
+			//recordFrame(World2D.FRAMES);
+			recorder.finish(World2D.FRAMES+1, world.getTime());
 			recorder.getBytes();
 			for(Tether t:tethers){
 				world.doDestroyTethers.add(t);				

@@ -48,7 +48,7 @@ public class World2D {
 	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
 	ArrayList<Tether> doDestroyTethers;
-	ArrayList<Ghost> ghosts;
+	ArrayList<Ghost> ghosts;	
 
 	long lastFrameTimer;
 	public float frameRate;
@@ -336,7 +336,7 @@ public class World2D {
 					addTether((Tether) tc);
 				}
 			}
-			prepareCollisions();
+			
 		}
 
 	}
@@ -462,15 +462,6 @@ public class World2D {
 		for (Instance k : kinematics) {
 			k.update(FRAMES);
 		}
-		for (Player p : doFinish) {
-			p.finish();
-		}
-		doFinish.clear();
-		if (doFinishLater.size() > 0) {
-			doFinish.addAll(doFinishLater);
-			doFinishLater.clear();
-		}
-
 		for (Tether t : doDestroyTethers) {
 			t.finished = true;
 			tethers.remove(t);
@@ -497,6 +488,15 @@ public class World2D {
 		for (Player p : players) {
 			p.update();
 			p.recordFrame(FRAMES);
+		}
+		
+		for (Player p : doFinish) {
+			p.finish();
+		}
+		doFinish.clear();
+		if (doFinishLater.size() > 0) {
+			doFinish.addAll(doFinishLater);
+			doFinishLater.clear();
 		}
 
 	}

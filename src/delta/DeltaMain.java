@@ -49,7 +49,7 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D); // openGl
-		smooth(0); // turn off anti-aliasing, can do our own with glsl filter
+		smooth(0); 
 	}
 
 	public void setup() {
@@ -82,35 +82,38 @@ public class DeltaMain extends PApplet {
 		String name=files[0].getName();
 
 		world.loadfromXML(pack, name,"001_rails");
-		world.addGhost(loadBytes("test.ghost"));
+		//world.addGhost(loadBytes("006_a_630589024test.ghost"));
 		world.font=font;
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
-		//Player player3 = new Player(world, p[2], 2);
-		//Player player4 = new Player(world, p[3], 3);
+		Player player3 = new Player(world, p[2], 2);
+		Player player4 = new Player(world, p[3], 3);
+		vp = new Viewport(this, world, 0, 0, width, height);
+		vp.loadShader(loadShader("vcr.glsl"));
 		player.createShip();
 		player2.createShip();
-		//player3.createShip();
-		//player4.createShip();
+		player3.createShip();
+		player4.createShip();
 		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(player);
 		test.add(player2);
-		 //test.add(player3);
-		// test.add(player4);
-		//world.tether(test);
-		//test = new ArrayList<Player>();
+		vp.attachTarget(test);
 		//test.add(player3);
 		//test.add(player4);
-		//world.tether(test);
+		world.tether(test);
+		test = new ArrayList<Player>();
+		test.add(player3);
+		test.add(player4);
+		world.tether(test);
+		world.prepareCollisions();
 		player.connectAudio(ac, out);
 		player2.connectAudio(ac, out);
-		//player3.connectAudio(ac, out);
-		//player4.connectAudio(ac, out);
-		vp = new Viewport(this, world, 0, 0, width, height);
-		vp.loadShader(loadShader("vcr.glsl"));
+		player3.connectAudio(ac, out);
+		player4.connectAudio(ac, out);
+		
 		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
 		//vp2.loadShader(loadShader("vcr.glsl"));
-		vp.attachTarget(player);
+		
 		//vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
@@ -132,8 +135,8 @@ public class DeltaMain extends PApplet {
 			} else {
 				frameCounter++;
 			}
-			fill(0);
-			text("FPS: " + fps, 10, 10);
+			//fill(0);
+			//text("FPS: " + fps, 10, 10);
 
 		} else if (state == menuState) {
 

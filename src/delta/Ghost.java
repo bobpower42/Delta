@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+
 import org.jbox2d.common.Vec2;
 import processing.core.PGraphics;
 
@@ -43,7 +45,7 @@ public class Ghost extends Container {
 	public void add(int _frame, LocRot lr) {
 		if (_frame < 0)
 			_frame = 0;
-		if (!finished || _frame < lastFrame) {
+		if (!finished || _frame <= lastFrame) {
 			if (_frame < block) {
 				locRot[_frame] = new LocRot(lr.loc, lr.rot);
 			} else {
@@ -59,7 +61,7 @@ public class Ghost extends Container {
 	public LocRot get(int _frame) {
 		if (_frame < 0)
 			_frame = 0;
-		if ((!finished || _frame < lastFrame)) {
+		if ((!finished || _frame <= lastFrame)) {
 			if (_frame < block) {
 				return locRot[_frame];
 			} else {
@@ -77,13 +79,13 @@ public class Ghost extends Container {
 		
 		if (_frame < 0)
 			_frame = 0;
-		if (_frame > lastFrame - 1) {
-			_frame = lastFrame - 1;
-			fade += 1;
+		if (_frame > lastFrame-1) {
+			_frame = lastFrame-1;
+			fade += 0.2;
 		}else{
 			fade=0;
 		}
-		if (r - fade > 0) {
+		if (4 - fade > 0) {
 			LocRot lr = get(_frame);
 			// System.out.println("x: "+lr.loc.x+" y: "+lr.loc.y);
 			if (lr != null) {
@@ -91,12 +93,12 @@ public class Ghost extends Container {
 					pG.pushMatrix();
 					pG.translate(lr.loc.x, lr.loc.y);
 					pG.rotate(lr.rot);
-					pG.strokeWeight(4);
+					pG.strokeWeight(4-fade);
 					pG.stroke(255);
 					pG.noFill();
-					pG.arc(0, 0, 2 * (r-fade), 2 * (r-fade), 0, 3.14f);
+					pG.arc(0, 0, 2 * r, 2 * r, 0, 3.14f);
 					pG.stroke(World2D.cl[index]);
-					pG.arc(0, 0, 2 * (r-fade), 2 * (r-fade), -3.14f, 0);
+					pG.arc(0, 0, 2 * r, 2 * r, -3.14f, 0);
 					pG.popMatrix();
 				}
 
@@ -133,7 +135,8 @@ public class Ghost extends Container {
 			}
 
 			byte[] out = bas.toByteArray();
-			world.pA.saveBytes("test.ghost", out);
+			long number = (long) Math.floor(Math.random() * 900000000L) + 10000000L;			
+			world.pA.saveBytes(map+"_"+String.valueOf(number)+"test.ghost", out);
 			return bas.toByteArray();
 		}
 		return null;
@@ -141,8 +144,7 @@ public class Ghost extends Container {
 
 	public void getFromBytes(byte[] buffer) {
 		ByteArrayInputStream bas = new ByteArrayInputStream(buffer);
-		DataInputStream ds = new DataInputStream(bas);
-		lastFrame = buffer.length / 12; // 4 bytes per float
+		DataInputStream ds = new DataInputStream(bas);		
 		try {
 			file = "";
 			boolean end = false;
@@ -177,7 +179,7 @@ public class Ghost extends Container {
 			index = ds.readInt();
 			time = ds.readFloat();
 			lastFrame = ds.readInt();
-			block = lastFrame;
+			block = lastFrame+1;
 			locRot = new LocRot[block];
 			for (int i = 0; i < lastFrame; i++) {
 				float x = ds.readFloat();
