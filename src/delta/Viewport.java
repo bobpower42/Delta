@@ -15,11 +15,13 @@ public class Viewport {
 	PGraphics pg;
 	Vec2 pos, dim, cam, half, track, damp, f_damp, separation, separation_smooth;
 	World2D world;
+	ArrayList<PlayerInput> inputs;
 	ArrayList<Player> target;
 	PShader filter;
 	boolean hasShader = false;
-	float fade=0;
-	float fadeTarget=1;
+	float fade = 0;
+	float fadeTarget = 1;
+	boolean paused = false;
 
 	Viewport(PApplet _pA, World2D _world, int _x, int _y, int _w, int _h) {
 		pA = _pA;
@@ -35,8 +37,9 @@ public class Viewport {
 		damp = new Vec2(0, 0);
 		f_damp = new Vec2(0, 0);
 		target = new ArrayList<Player>();
+		inputs = new ArrayList<PlayerInput>();
 		track = new Vec2(0, 0);
-		fade=0;
+		fade = 0;
 	}
 
 	void update() {
@@ -71,36 +74,52 @@ public class Viewport {
 		cam.x += (f_damp.x - cam.x) / 10f;
 		cam.y += (f_damp.y - cam.y) / 10f;
 		pg.beginDraw();
-		world.map.draw(pg, cam, dim, this);		
+		world.map.draw(pg, cam, dim, this);
 		if (hasShader) {
-			fade+=(fadeTarget-fade)/30f;
+			fade += (fadeTarget - fade) / 8f;
 			separation_smooth.x += (separation.x - separation_smooth.x) / 5f;
 			separation_smooth.y += (separation.y - separation_smooth.y) / 5f;
 			filter.set("magX", separation_smooth.x + 0.8f);
 			filter.set("magY", separation_smooth.y);
 			filter.set("fade", fade);
 			pg.filter(filter);
-			pg.endDraw();
+
 			separation.x *= 0.86f;
 			separation.y *= 0.86f;
-		} else {
-			pg.endDraw();
+		}
+		if (paused) {
+			pg.textFont(world.font, 44);
+			pg.textAlign(PConstants.CENTER, PConstants.CENTER);
+			pg.fill(255);
+			pg.text("paused", dim.x / 2f, dim.y / 2f);
 		}
 
+		pg.endDraw();
+
 	}
-	public void setFade(float _f){
-		fadeTarget=_f;
+
+	public void setFade(float _f) {
+		fadeTarget = _f;
+	}
+
+	public void setPause(boolean isPaused) {
+		paused = isPaused;
+		if (paused) {
+			setFade(0.2f);
+		}else{
+			setFade(1f);
+		}
 	}
 
 	public void attachTarget(Player _target) {
 		target.add(_target);
 		_target.attachViewport(this);
+		inputs.add(_target.getInput());
 	}
 
 	public void attachTarget(ArrayList<Player> _list) {
 		for (Player player : _list) {
-			target.add(player);
-			player.attachViewport(this);
+			attachTarget(player);
 		}
 	}
 

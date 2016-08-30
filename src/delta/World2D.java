@@ -19,7 +19,9 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
-import beads.UGen;
+
+import beads.Plug;
+//import beads.UGen;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
@@ -28,6 +30,7 @@ import processing.data.XML;
 
 public class World2D {
 	PApplet pA;
+	LeaderBoard leaderboard;
 	public World world, particles;
 	public static int[] cl = { -34048, -16740353, -65413, -8716033 };
 	private float scale;
@@ -48,11 +51,11 @@ public class World2D {
 	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
 	ArrayList<Tether> doDestroyTethers;
-	ArrayList<Ghost> ghosts;	
+	ArrayList<Ghost> ghosts;
 
 	long lastFrameTimer;
 	public float frameRate;
-	UGen out;
+	Plug out;
 	public static int MAXPARTICLES = 400;
 	public static int FRAMES;
 	public boolean playerCollisions = true;
@@ -61,7 +64,7 @@ public class World2D {
 	public Vec2 spawnPoint;
 	public PFont font;
 
-	World2D(PApplet _pA, float _frameRate, UGen _out) {
+	World2D(PApplet _pA, float _frameRate, Plug _out) {
 		pA = _pA;
 		FRAMES = -1;
 		out = _out;
@@ -142,7 +145,7 @@ public class World2D {
 		return (FRAMES + ((interFrame + 1) / (float) interFrames)) / 60f;
 	}
 
-	public void loadfromXML(XML xml, String _filename, String name) {
+	public void loadfromXML(XML xml, String pack, String _filename, String name) {
 		fileName = _filename;
 		mapName = name;
 		XML oxml = xml.getChild("objects");
@@ -166,6 +169,9 @@ public class World2D {
 			map = new Level(this, children[i]);
 			game = map.getLayer(5);
 			buildMap();
+			System.out.println(fileName);
+			String[] fileSplit = fileName.split("\\.");
+			leaderboard = new LeaderBoard(pA, pack, fileSplit[0], name);
 		}
 	}
 
@@ -214,7 +220,7 @@ public class World2D {
 	}
 
 	public void addGhost(byte[] bytes) {
-		Ghost g = new Ghost(this, bytes);		
+		Ghost g = new Ghost(this, bytes);
 		if (g.map.equals(mapName) && g.file.equals(fileName)) {
 			ghosts.add(g);
 		}
@@ -336,13 +342,14 @@ public class World2D {
 					addTether((Tether) tc);
 				}
 			}
-			
+
 		}
 
 	}
 
-	public void prepareCollisions() {
+	public void prepare() {
 		for (Player p : players) {
+			p.connectAudio(out.getContext(), (Plug) out);
 			for (Player pn : players) {
 				if (!p.equals(pn)) {
 					Vec2 ploc = p.ship.getWorldCenter();
@@ -489,7 +496,7 @@ public class World2D {
 			p.update();
 			p.recordFrame(FRAMES);
 		}
-		
+
 		for (Player p : doFinish) {
 			p.finish();
 		}
@@ -552,6 +559,7 @@ public class World2D {
 				p.killFactor = 0;
 			} else if (cO.data.equals("finish")) {
 				if (!p.finished) {
+					p.recorder.finish(FRAMES+2, getTime());
 					doFinish.add(p);
 				}
 			} else if (!cO.data.equals("sensor")) {

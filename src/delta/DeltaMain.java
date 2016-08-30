@@ -21,7 +21,7 @@ public class DeltaMain extends PApplet {
 	private int gameState = 2;
 	private int state = 0;
 	public int frame = 0;
-	private boolean pause = false;
+	public boolean pause = false;
 	private String packFolder;
 	public World2D world;
 	Viewport vp, vp2;
@@ -33,6 +33,7 @@ public class DeltaMain extends PApplet {
 	float fps = 0;
 	PFont font;
 	float frameRate = 60f;
+	int counter = 0;
 
 	public static void main(String[] args) {
 		String[] a = { "MAIN" };
@@ -49,7 +50,7 @@ public class DeltaMain extends PApplet {
 			p[i] = new PlayerInput(this, i + 1);
 		}
 		fullScreen(P2D); // openGl
-		smooth(0); 
+		smooth(0); // turn off anti-aliasing
 	}
 
 	public void setup() {
@@ -79,53 +80,70 @@ public class DeltaMain extends PApplet {
 		}
 		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
 		XML pack = loadXML(files[0].getAbsolutePath());
-		String name=files[0].getName();
-
-		world.loadfromXML(pack, name,"001_rails");
-		//world.addGhost(loadBytes("006_a_630589024test.ghost"));
-		world.font=font;
+		String name = files[0].getName();
+		println(name);
+		world.loadfromXML(pack, packFolder, name, "006_a");
+		// world.addGhost(loadBytes("006_a_630589024test.ghost"));
+		world.font = font;
 		player = new Player(world, p[0], 0);
 		player2 = new Player(world, p[1], 1);
-		Player player3 = new Player(world, p[2], 2);
-		Player player4 = new Player(world, p[3], 3);
+		// Player player3 = new Player(world, p[2], 2);
+		// Player player4 = new Player(world, p[3], 3);
 		vp = new Viewport(this, world, 0, 0, width, height);
 		vp.loadShader(loadShader("vcr.glsl"));
 		player.createShip();
 		player2.createShip();
-		player3.createShip();
-		player4.createShip();
+		// player3.createShip();
+		// player4.createShip();
 		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(player);
 		test.add(player2);
-		vp.attachTarget(test);
-		//test.add(player3);
-		//test.add(player4);
-		world.tether(test);
+		vp.attachTarget(player);
+		// test.add(player3);
+		// test.add(player4);
+		// world.tether(test);
 		test = new ArrayList<Player>();
-		test.add(player3);
-		test.add(player4);
-		world.tether(test);
-		world.prepareCollisions();
-		player.connectAudio(ac, out);
-		player2.connectAudio(ac, out);
-		player3.connectAudio(ac, out);
-		player4.connectAudio(ac, out);
-		
-		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-		//vp2.loadShader(loadShader("vcr.glsl"));
-		
-		//vp2.attachTarget(player2);
+		// test.add(player3);
+		// test.add(player4);
+		// world.tether(test);
+		world.prepare();
+
+		// player3.connectAudio(ac, out);
+		// player4.connectAudio(ac, out);
+
+		// vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		// vp2.loadShader(loadShader("vcr.glsl"));
+
+		// vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
 	public void draw() {
-		if (state == splashState) {			
-			world.step();			
+		if (state == splashState) {
+			background(0);
+			counter++;
+			if (counter == 50) {
+				state = menuState;
+			}
+
+		} else if (state == menuState) {
+			state = gameState;
+
+		} else if (state == gameState) {
+			if (!pause) {
+
+				world.step();
+				vp.setFade(1f);
+				// vp2.update();
+
+				// image(vp2.pg, vp2.pos.x, vp2.pos.y);
+
+			} else {
+				vp.setFade(0.2f);
+			}
 			vp.update();
-			//vp2.update();
 			image(vp.pg, vp.pos.x, vp.pos.y);
-			
-			//image(vp2.pg, vp2.pos.x, vp2.pos.y);			
+
 			if (frameCounter >= 10) {
 				frameCounter = 0;
 				fps = 10000000 / (float) (System.nanoTime() - frameTimer);
@@ -135,23 +153,22 @@ public class DeltaMain extends PApplet {
 			} else {
 				frameCounter++;
 			}
-			//fill(0);
-			//text("FPS: " + fps, 10, 10);
+			fill(0);
+			// text("FPS: " + fps, 10, 10);
 
-		} else if (state == menuState) {
-
-		} else if (state == gameState) {
-			if (!pause) {
-			} else {
-
-			}
 		}
 	}
 
 	public void pause() {
 		if (state == gameState) {
+
 			pause = !pause;
+			vp.setPause(pause);
 		}
+	}
+
+	public boolean isPaused() {
+		return pause;
 	}
 
 	public void exit() {

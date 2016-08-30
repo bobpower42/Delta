@@ -330,7 +330,7 @@ class Marker extends Container {
 					}
 				} else if (data.equals("score")) {
 					pG.fill(180);
-					pG.textFont(world.font,44);
+					pG.textFont(world.font,48);
 					pG.text(PApplet.nfc(world.getTime(),2), v[0].x, v[0].y);
 
 				}

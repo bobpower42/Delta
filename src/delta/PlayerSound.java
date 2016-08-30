@@ -83,7 +83,7 @@ public class PlayerSound {
 
 		ac = _ac;
 		out = _out;
-		global = new Glide(ac, 0, 1500);
+		global = new Glide(ac, 0, 3000);
 		master = new Gain(ac, 1, global);
 		global.setValue(1.0f);
 		out.addInput(master);

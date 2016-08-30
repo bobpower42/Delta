@@ -134,9 +134,8 @@ public class Ghost extends Container {
 				e.printStackTrace();
 			}
 
-			byte[] out = bas.toByteArray();
-			long number = (long) Math.floor(Math.random() * 900000000L) + 10000000L;			
-			world.pA.saveBytes(map+"_"+String.valueOf(number)+"test.ghost", out);
+			//byte[] out = bas.toByteArray();
+			
 			return bas.toByteArray();
 		}
 		return null;

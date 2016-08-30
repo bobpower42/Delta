@@ -26,7 +26,7 @@ public class Player extends Container {
 	boolean finished;
 	float maxVelocity;
 	int collisionCount;
-	Ghost recorder;
+	public Ghost recorder;
 	boolean recordGhost;
 
 	RayCastClosestCallback rocketCallback;
@@ -118,6 +118,10 @@ public class Player extends Container {
 		proxy.createFixture(fd);
 
 		rocketCallback = new RayCastClosestCallback();
+	}
+	
+	public PlayerInput getInput(){
+		return input;	
 	}
 	
 	public void setRecorderData(String _file, String _map){
@@ -390,8 +394,12 @@ public class Player extends Container {
 			}
 			finished = true;
 			//recordFrame(World2D.FRAMES);
-			recorder.finish(World2D.FRAMES+1, world.getTime());
-			recorder.getBytes();
+			//recorder.finish(World2D.FRAMES+1, world.getTime());
+			if(world.leaderboard.check(recorder.time)>0){
+				world.leaderboard.place(recorder);
+			}
+			
+			//recorder.getBytes();
 			for(Tether t:tethers){
 				world.doDestroyTethers.add(t);				
 			}
