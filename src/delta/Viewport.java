@@ -11,7 +11,6 @@ import processing.opengl.PShader;
 
 public class Viewport {
 	PApplet pA;
-
 	PGraphics pg;
 	Vec2 pos, dim, cam, half, track, damp, f_damp, separation, separation_smooth;
 	World2D world;
@@ -56,23 +55,28 @@ public class Viewport {
 		}
 		if (count > 0) {
 			track.set(xTotal / count, yTotal / count);
-			// offset to top left corner
+			track.x = -track.x + half.x;
+			track.y = -track.y + half.y;
+			// camera tracking. 3 steps to give it a more natural look
+			// damp track (follow target)
+			damp.x += (track.x - damp.x) / 15f;
+			damp.y += (track.y - damp.y) / 15f;
+			// flip damp track over target (track ahead)
+			f_damp.x = track.x + (track.x - damp.x);
+			f_damp.y = track.y + (track.y - damp.y);
+			// damp track again (smooth out movement)
+			cam.x += (f_damp.x - cam.x) / 10f;
+			cam.y += (f_damp.y - cam.y) / 10f;
 
 		} else {
 			track.set(world.score.v[0]);
+			track.x = -track.x + half.x;
+			track.y = -track.y + half.y;
+			cam.x += (f_damp.x - cam.x) / 20f;
+			cam.y += (f_damp.y - cam.y) / 20f;
+			
 		}
-		track.x = -track.x + half.x;
-		track.y = -track.y + half.y;
-		// camera tracking. 3 steps to give it a more natural look
-		// damp track (follow target)
-		damp.x += (track.x - damp.x) / 15f;
-		damp.y += (track.y - damp.y) / 15f;
-		// flip damp track over target (track ahead)
-		f_damp.x = track.x + (track.x - damp.x);
-		f_damp.y = track.y + (track.y - damp.y);
-		// damp track again (smooth out movement)
-		cam.x += (f_damp.x - cam.x) / 10f;
-		cam.y += (f_damp.y - cam.y) / 10f;
+		
 		pg.beginDraw();
 		world.map.draw(pg, cam, dim, this);
 		if (hasShader) {

@@ -28,6 +28,7 @@ public class Player extends Container {
 	int collisionCount;
 	public Ghost recorder;
 	boolean recordGhost;
+	LocRot locRot;
 
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
@@ -343,10 +344,11 @@ public class Player extends Container {
 			float my = ov.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI)) + magForce.y;
 			ship.setLinearVelocity(new Vec2(mx, my));
 			ship.setLinearDamping(0.4f);
+			locRot=getLocRot();
 		}
 	}
 	public void recordFrame(int _frame){
-		recorder.add(_frame, getLocRot());
+		recorder.add(_frame, locRot);
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
@@ -368,6 +370,13 @@ public class Player extends Container {
 		Vec2 loc = world.getBodyPixelCoord(ship);
 		float rot = -ship.getAngle();
 		return new LocRot(loc,rot);		
+	}
+	
+	public void setFinishTime(int _frames, float _time){
+		recorder.finish(_frames, _time);
+		for(Player p:tethered){
+			p.recorder.finish(_frames, _time);
+		}
 	}
 
 	public void finish() {
@@ -392,23 +401,10 @@ public class Player extends Container {
 							150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
 				}
 			}
-			finished = true;
-			//recordFrame(World2D.FRAMES);
-			//recorder.finish(World2D.FRAMES+1, world.getTime());
-			if(world.leaderboard.check(recorder.time)>0){
-				world.leaderboard.place(recorder);
-			}
-			
-			//recorder.getBytes();
+			finished = true;			
 			for(Tether t:tethers){
-				world.doDestroyTethers.add(t);				
-			}
-			for(Player p:tethered){
-				if(!p.finished){
-					world.doFinishLater.add(p);
-					break;
-				}				
-			}
+				world.tethersRemove.add(t);				
+			}			
 		}
 	}
 

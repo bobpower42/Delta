@@ -45,7 +45,10 @@ public class Ghost extends Container {
 	public void add(int _frame, LocRot lr) {
 		if (_frame < 0)
 			_frame = 0;
-		if (!finished || _frame <= lastFrame) {
+		if (!finished){
+			if(_frame >= lastFrame && lastFrame!=0) {
+				finished=true;
+			}		
 			if (_frame < block) {
 				locRot[_frame] = new LocRot(lr.loc, lr.rot);
 			} else {
@@ -81,7 +84,7 @@ public class Ghost extends Container {
 			_frame = 0;
 		if (_frame > lastFrame-1) {
 			_frame = lastFrame-1;
-			fade += 0.2;
+			fade += 0.1;
 		}else{
 			fade=0;
 		}
@@ -106,10 +109,10 @@ public class Ghost extends Container {
 		}
 	}
 
-	public void finish(int _frame, float _time) {
-		time = _time;
-		finished = true;
+	public void finish(int _frame, float _time) {		
+		time = _time;		
 		lastFrame = _frame;
+		System.out.println("index: "+index+" time: "+time+" frame: "+lastFrame);
 	}
 
 	public byte[] getBytes() {
@@ -191,7 +194,7 @@ public class Ghost extends Container {
 			e.printStackTrace();
 		}
 		finished = true;
-		System.out.println(":" + file + ":" + map + ":" + name + ":" + index + ":" + time + ":" + lastFrame);
+		//System.out.println(":" + file + ":" + map + ":" + name + ":" + index + ":" + time + ":" + lastFrame);
 	}
 
 }

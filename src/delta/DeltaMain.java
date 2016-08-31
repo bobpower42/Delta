@@ -9,12 +9,14 @@ import beads.Gain;
 import beads.Plug;
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PImage;
 import processing.data.XML;
+import processing.opengl.PJOGL;
 
 public class DeltaMain extends PApplet {
 	// player colours
 	public static int[] cl = { -34048, -16740353, -65413, -8716033 };
-	private PlayerInput[] p;
+	private static PlayerInput[] p;
 	Player player, player2;
 	private int splashState = 0;
 	private int menuState = 1;
@@ -23,6 +25,7 @@ public class DeltaMain extends PApplet {
 	public int frame = 0;
 	public boolean pause = false;
 	private String packFolder;
+	private String userDir;
 	public World2D world;
 	Viewport vp, vp2;
 	AudioContext ac;
@@ -45,15 +48,18 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void settings() {
+		userDir = System.getProperty("user.dir");
 		p = new PlayerInput[4];
 		for (int i = 0; i < 4; i++) {
 			p[i] = new PlayerInput(this, i + 1);
 		}
-		fullScreen(P2D); // openGl
+		fullScreen(P2D); // openGl		
+		PJOGL.setIcon(userDir+"\\data\\icon.png");
 		smooth(0); // turn off anti-aliasing
 	}
 
 	public void setup() {
+		surface.setTitle("delta 1.0");
 		font = loadFont("Avant-GardeBoldT.-48.vlw");
 		textFont(font, 24);
 		textAlign(LEFT, TOP);
@@ -82,7 +88,7 @@ public class DeltaMain extends PApplet {
 		XML pack = loadXML(files[0].getAbsolutePath());
 		String name = files[0].getName();
 		println(name);
-		world.loadfromXML(pack, packFolder, name, "006_a");
+		world.loadfromXML(pack, packFolder, name, "001_rails");
 		// world.addGhost(loadBytes("006_a_630589024test.ghost"));
 		world.font = font;
 		player = new Player(world, p[0], 0);

@@ -47,11 +47,9 @@ public class World2D {
 	ArrayList<Particle> parts;
 	ArrayList<Particle> partsRemove;
 	ArrayList<Particle> partsAdd;
-	ArrayList<Player> doFinish;
-	ArrayList<Player> doFinishLater;
 	ArrayList<Tether> tethers;
-	ArrayList<Tether> doDestroyTethers;
-	ArrayList<Ghost> ghosts;
+	ArrayList<Tether> tethersRemove;
+	ArrayList<Ghost> ghosts;	
 
 	long lastFrameTimer;
 	public float frameRate;
@@ -73,16 +71,14 @@ public class World2D {
 		tetherWidth = 8f;
 		world = new World(new Vec2(0, -9.8f));
 		particles = new World(new Vec2(0, -9.8f));
-		players = new ArrayList<Player>();
-		doFinish = new ArrayList<Player>();
-		doFinishLater = new ArrayList<Player>();
+		players = new ArrayList<Player>();		
 		contacts = new ArrayList<Contact>();
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
 		partsAdd = new ArrayList<Particle>();
 		kinematics = new ArrayList<Instance>();
 		tethers = new ArrayList<Tether>();
-		doDestroyTethers = new ArrayList<Tether>();
+		tethersRemove = new ArrayList<Tether>();
 		ghosts = new ArrayList<Ghost>();
 		lastFrameTimer = System.nanoTime();
 		world.setContactListener(new ContactListener() {
@@ -171,7 +167,7 @@ public class World2D {
 			buildMap();
 			System.out.println(fileName);
 			String[] fileSplit = fileName.split("\\.");
-			leaderboard = new LeaderBoard(pA, pack, fileSplit[0], name);
+			leaderboard = new LeaderBoard(pA, this, pack, fileSplit[0], name);
 		}
 	}
 
@@ -365,6 +361,13 @@ public class World2D {
 				}
 			}
 		}
+		// test
+		for (int i = 1; i < 11; i++) {
+			Ghost gh = leaderboard.getGhost(i);
+			if (gh != null)
+				ghosts.add(gh);
+		}
+
 	}
 
 	private void generateSparks() {
@@ -469,13 +472,13 @@ public class World2D {
 		for (Instance k : kinematics) {
 			k.update(FRAMES);
 		}
-		for (Tether t : doDestroyTethers) {
+		for (Tether t : tethersRemove) {
 			t.finished = true;
 			tethers.remove(t);
 			world.destroyBody(t.body);
 			t.body.setActive(false);
 		}
-		doDestroyTethers.clear();
+		tethersRemove.clear();
 
 		for (Particle p : parts) {
 			if (p.update()) {
@@ -494,18 +497,16 @@ public class World2D {
 		partsAdd.clear();
 		for (Player p : players) {
 			p.update();
-			p.recordFrame(FRAMES);
+			if (!p.recorder.finished) {
+				p.recordFrame(FRAMES);
+				if (p.recorder.finished) {
+					p.finish();
+					if (leaderboard.check(p.recorder.time) > 0) {
+						leaderboard.place(p.recorder);
+					}					
+				}
+			}
 		}
-
-		for (Player p : doFinish) {
-			p.finish();
-		}
-		doFinish.clear();
-		if (doFinishLater.size() > 0) {
-			doFinish.addAll(doFinishLater);
-			doFinishLater.clear();
-		}
-
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
@@ -559,8 +560,7 @@ public class World2D {
 				p.killFactor = 0;
 			} else if (cO.data.equals("finish")) {
 				if (!p.finished) {
-					p.recorder.finish(FRAMES+2, getTime());
-					doFinish.add(p);
+					p.setFinishTime(FRAMES + 2, getTime());					
 				}
 			} else if (!cO.data.equals("sensor")) {
 				p.addHitContact(_contact);
