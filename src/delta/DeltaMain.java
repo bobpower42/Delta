@@ -9,7 +9,7 @@ import beads.Gain;
 import beads.Plug;
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PImage;
+//import processing.core.PImage;
 import processing.data.XML;
 import processing.opengl.PJOGL;
 
@@ -25,7 +25,7 @@ public class DeltaMain extends PApplet {
 	public int frame = 0;
 	public boolean pause = false;
 	private String packFolder;
-	private String userDir;
+	static String userDir;
 	public World2D world;
 	Viewport vp, vp2;
 	AudioContext ac;
@@ -55,17 +55,18 @@ public class DeltaMain extends PApplet {
 		}
 		fullScreen(P2D); // openGl		
 		PJOGL.setIcon(userDir+"\\data\\icon.png");
-		smooth(0); // turn off anti-aliasing
+		smooth(8); // turn off anti-aliasing
 	}
 
 	public void setup() {
 		surface.setTitle("delta 1.0");
+		
 		font = loadFont("Avant-GardeBoldT.-48.vlw");
 		textFont(font, 24);
 		textAlign(LEFT, TOP);
 		ac = new AudioContext();
 		out = new Plug(ac);
-		master = new Gain(ac, 1, 2.5f);
+		master = new Gain(ac, 1, 3.0f);
 		master.addInput(out);
 		ac.out.addInput(master);
 		ac.start();
@@ -91,19 +92,21 @@ public class DeltaMain extends PApplet {
 		world.loadfromXML(pack, packFolder, name, "001_rails");
 		// world.addGhost(loadBytes("006_a_630589024test.ghost"));
 		world.font = font;
-		player = new Player(world, p[0], 0);
-		player2 = new Player(world, p[1], 1);
+		player = new Player(world, 0);
+		player.attachInput(p[0]);
+		player.setTraining(true);
+		//player2 = new Player(world, p[1], 1);
 		// Player player3 = new Player(world, p[2], 2);
 		// Player player4 = new Player(world, p[3], 3);
 		vp = new Viewport(this, world, 0, 0, width, height);
 		vp.loadShader(loadShader("vcr.glsl"));
 		player.createShip();
-		player2.createShip();
+		//player2.createShip();
 		// player3.createShip();
 		// player4.createShip();
 		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(player);
-		test.add(player2);
+		//test.add(player2);
 		vp.attachTarget(player);
 		// test.add(player3);
 		// test.add(player4);
@@ -160,7 +163,7 @@ public class DeltaMain extends PApplet {
 				frameCounter++;
 			}
 			fill(0);
-			// text("FPS: " + fps, 10, 10);
+			text("FPS: " + fps, 10, 10);
 
 		}
 	}

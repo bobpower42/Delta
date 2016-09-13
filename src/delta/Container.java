@@ -89,6 +89,7 @@ public abstract class Container {
 
 class Poly extends Container {
 	Vec2 BBtl, BBbr;
+	int region,nextRegion;
 
 	Poly(World2D _world, XML xml) {
 		world = _world;
@@ -195,6 +196,7 @@ class Poly extends Container {
 }
 
 class Circle extends Container {
+	int region,nextRegion;
 
 	Circle(World2D _world, XML xml) {
 		world = _world;
@@ -668,7 +670,7 @@ class Layer extends Container {
 	}
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
-		if (!disable) {
+		if (!disable && !data.equals("overlay")) {
 			Vec2 tr;
 			if (paralax == 0) {
 				tr = new Vec2(p1.x, p1.y);

@@ -21,6 +21,7 @@ public class Viewport {
 	float fade = 0;
 	float fadeTarget = 1;
 	boolean paused = false;
+	public int trackMode = 0;
 
 	Viewport(PApplet _pA, World2D _world, int _x, int _y, int _w, int _h) {
 		pA = _pA;
@@ -39,6 +40,15 @@ public class Viewport {
 		inputs = new ArrayList<PlayerInput>();
 		track = new Vec2(0, 0);
 		fade = 0;
+		trackMode = 0;
+	}
+
+	public void setTrackMode(int _mode) {
+		if (_mode == 0) {
+			trackMode = 0;
+		} else {
+			trackMode = 1;
+		}
 	}
 
 	void update() {
@@ -46,11 +56,31 @@ public class Viewport {
 		float count = 0;
 		float xTotal = 0;
 		float yTotal = 0;
-		for (Player p : target) {
-			if (!p.finished) {
-				count++;
-				xTotal += p.v[0].x;
-				yTotal += p.v[0].y;
+		if (trackMode == 1) {// micro machine style. Only track the leaders
+			int highestRegion = -1;
+			for (Player p : target) {
+				if (!p.finished) {
+					if (p.thisRegion > highestRegion)
+						highestRegion = p.thisRegion;
+				}
+			}
+			for (Player p : target) {
+				if (!p.finished) {
+					if (p.thisRegion == highestRegion) {
+						count++;
+						xTotal += p.v[0].x;
+						yTotal += p.v[0].y;
+					}
+				}
+			}
+
+		} else { //track the average of all players attached to viewport
+			for (Player p : target) {
+				if (!p.finished) {
+					count++;
+					xTotal += p.v[0].x;
+					yTotal += p.v[0].y;
+				}
 			}
 		}
 		if (count > 0) {
@@ -74,9 +104,9 @@ public class Viewport {
 			track.y = -track.y + half.y;
 			cam.x += (f_damp.x - cam.x) / 20f;
 			cam.y += (f_damp.y - cam.y) / 20f;
-			
+
 		}
-		
+
 		pg.beginDraw();
 		world.map.draw(pg, cam, dim, this);
 		if (hasShader) {
@@ -110,7 +140,7 @@ public class Viewport {
 		paused = isPaused;
 		if (paused) {
 			setFade(0.2f);
-		}else{
+		} else {
 			setFade(1f);
 		}
 	}

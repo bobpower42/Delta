@@ -21,6 +21,7 @@ import processing.core.PGraphics;
 public class Player extends Container {
 	World2D world;
 	PlayerInput input;
+	PlayerAI ai;
 	Fixture ship_fixture;
 	Body ship, proxy;
 	boolean finished;
@@ -28,7 +29,10 @@ public class Player extends Container {
 	int collisionCount;
 	public Ghost recorder;
 	boolean recordGhost;
-	LocRot locRot;
+	public LocRot locRot;
+	public Vec2 worldLoc, screenLoc;
+	public float rot;
+	int regionNum = 0;
 
 	RayCastClosestCallback rocketCallback;
 	float r = 14;
@@ -43,11 +47,12 @@ public class Player extends Container {
 	float powerMax = 1.5f;
 	public int index;
 	public int totalContacts = 1;
-	private Vec2 vel, oldVel;
+	private Vec2 oldVel;
+	public Vec2 vel;
 	private int vibCounter = 0;
 	private boolean vib = false;
 	float oldmag = 0;
-	Vec2 loc, oldLoc, magForce;
+	Vec2 oldLoc, magForce;
 	float curA, oldCurA;
 	AudioContext ac;
 	Plug out;
@@ -57,7 +62,18 @@ public class Player extends Container {
 	ArrayList<Tether> tethers;
 	RevoluteJoint tetherJoint;
 
-	Player(World2D _world, PlayerInput _input, int _index) {
+	public int thisRegion = -1;
+	public int nextRegion = 1;
+	public float magRadius = 500f;
+	public float worldMagRadius;
+	public boolean magInRange;
+	public float magDist;
+	public Vec2 magDiff;
+
+	boolean isAI;
+	boolean training;
+
+	Player(World2D _world, int _index) {
 		index = _index;
 		v = new Vec2[1];
 		v[0] = new Vec2(0, 0);
@@ -65,10 +81,9 @@ public class Player extends Container {
 		kill = new ArrayList<Contact>();
 		hit = new ArrayList<Contact>();
 		view = new ArrayList<Viewport>();
-		tethered=new ArrayList<Player>();
-		tethers=new ArrayList<Tether>();
+		tethered = new ArrayList<Player>();
+		tethers = new ArrayList<Tether>();
 		world = _world;
-		input = _input;
 		type = "player";
 		world.addPlayer(this);
 		vel = new Vec2(0, 0);
@@ -77,8 +92,23 @@ public class Player extends Container {
 		magForce = new Vec2(0, 0);
 		oldCurA = 0;
 		finished = false;
-		maxVelocity=0;
-		collisionCount=0;
+		maxVelocity = 0;
+		collisionCount = 0;
+		worldMagRadius = world.scalarPixelsToWorld(magRadius);
+		training = false;
+	}
+
+	public void attachInput(PlayerInput _input) {
+		input = _input;
+		isAI = false;
+	}
+
+	public void setTraining(boolean _train) {
+		training = _train;
+		if (training) {
+			ai = new PlayerAI(world, this);
+			ai.setTraining(true);
+		}
 	}
 
 	public void createShip() {
@@ -120,13 +150,13 @@ public class Player extends Container {
 
 		rocketCallback = new RayCastClosestCallback();
 	}
-	
-	public PlayerInput getInput(){
-		return input;	
+
+	public PlayerInput getInput() {
+		return input;
 	}
-	
-	public void setRecorderData(String _file, String _map){
-		recorder=new Ghost(world,index,_file,_map);
+
+	public void setRecorderData(String _file, String _map) {
+		recorder = new Ghost(world, index, _file, _map);
 	}
 
 	void attachViewport(Viewport _view) {
@@ -175,9 +205,53 @@ public class Player extends Container {
 
 	public void update() {
 		if (!finished) {
-			// compare the change in velocity since previous frame
+			// get ship location/rotation
+			locRot = getLocRot();
+			// get current and next regions
+			String[] regions = world.getRegion(worldLoc);
+			if (regions != null) {
+				int tr = Integer.valueOf(regions[0]);
+				if (thisRegion != tr) {
+					thisRegion = tr;
+					int nr;
+					if (regions.length > 1) {
+						nr = Integer.valueOf(regions[1]);
+					} else {
+						nr = tr + 1;
+					}
+					nextRegion = nr;
+				}
+			}
+			// check for nearest mag
+
+			AABB bounds = new AABB(new Vec2(worldLoc.x - worldMagRadius, worldLoc.y - worldMagRadius),
+					new Vec2(worldLoc.x + worldMagRadius, worldLoc.y + worldMagRadius));
+			magQuery = new FilterQueryCallback();
+			magQuery.setFilter("mag");
+			world.world.queryAABB(magQuery, bounds);
+			float minRad = worldMagRadius;
+			magInRange = false;
+			Body thisMag = null;
+			for (Fixture f : magQuery.found) {
+				Body b = f.getBody();
+				Vec2 diff = b.getWorldCenter().sub(worldLoc);
+				if (diff.length() < minRad) {
+					minRad = diff.length();
+					magInRange = true;
+					thisMag = b;
+				}
+			}
+			if (magInRange) {
+				magDiff = thisMag.getWorldCenter().sub(worldLoc);
+				magDist = 1 - (magDiff.length() / worldMagRadius);
+			}
+			ai.gather();
+
+			// get ship velocity
 			vel = ship.getLinearVelocity();
-			if(vel.length()>maxVelocity)maxVelocity=vel.length();
+			// compare the change in velocity since previous frame
+			if (vel.length() > maxVelocity)
+				maxVelocity = vel.length();
 			vel.sub(oldVel);
 			oldVel = ship.getLinearVelocity();
 			// compare the magnitude of that change against that magnitude in
@@ -220,21 +294,13 @@ public class Player extends Container {
 			Vec2 ov = ship.getLinearVelocity();
 			Vec2 sRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r)));
 			Vec2 eRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r + 150)));
+			// System.out.println("st x: "+sRay.x+" st y: "+sRay.y+" end x:
+			// "+eRay.x+" end y: "+eRay.y);
 			world.world.raycast(rocketCallback, sRay, eRay);
 
 			// get difference between ship rotaion and thumbstick position
-			float curA = ship.getAngle() * 0.15915494309189533576888376337251f;
-			float padA = -input.ang / 360f;
-			curA -= PApplet.floor(curA);
-			while (curA < 0) {
-				curA = 1 + curA;
-			}
-			padA -= PApplet.floor(padA);
-			while (padA < 0) {
-				padA = 1 + padA;
-			}
-			curA *= PApplet.TWO_PI;
-			padA *= PApplet.TWO_PI;
+			float curA = wrap(ship.getAngle() * 0.15915494309189533576888376337251f);
+			float padA = wrap(getInputAngle() * 0.15915494309189533576888376337251f);
 
 			float ang = padA - curA;
 			if (Math.abs(ang) > PApplet.PI) {
@@ -281,13 +347,13 @@ public class Player extends Container {
 			sound.setPower(pwr);
 			sound.setVol((float) killFactor / powerMax);
 			// Generate smoke particles
-			loc = ship.getWorldCenter();
+
 			if (pwr > 0) {
 				for (int i = 0; i < (int) ((killFactor / powerMax) * 2f); i++) {
 					float rand = -0.1f + 0.2f * (float) Math.random();
 					float randInter = ((float) Math.random()) * 2.0f;
-					Vec2 thisLoc = new Vec2(oldLoc.x + (loc.x - oldLoc.x) * randInter,
-							oldLoc.y + (loc.y - oldLoc.y) * randInter);
+					Vec2 thisLoc = new Vec2(oldLoc.x + (worldLoc.x - oldLoc.x) * randInter,
+							oldLoc.y + (worldLoc.y - oldLoc.y) * randInter);
 					float wr = world.scalarPixelsToWorld(r);
 					Vec2 thisPartLoc = new Vec2(thisLoc.x + wr * PApplet.cos(curA + rand - PApplet.HALF_PI),
 							thisLoc.y + wr * PApplet.sin(curA + rand - PApplet.HALF_PI));
@@ -302,32 +368,11 @@ public class Player extends Container {
 
 			// mag
 			if (input.butX) {
-				float radius = 500f;
-				float maxVel = 3f;
-				float worldRad = world.scalarPixelsToWorld(radius);
-				AABB bounds = new AABB(new Vec2(loc.x - worldRad, loc.y - worldRad),
-						new Vec2(loc.x + worldRad, loc.y + worldRad));
-				magQuery = new FilterQueryCallback();
-				magQuery.setFilter("mag");
-				world.world.queryAABB(magQuery, bounds);
-				float minRad = worldRad;
-				boolean found = false;
-				Body thisMag = null;
-				for (Fixture f : magQuery.found) {
-					Body b = f.getBody();
-					Vec2 diff = b.getWorldCenter().sub(loc);
-					if (diff.length() < minRad) {
-						minRad = diff.length();
-						found = true;
-						thisMag = b;
-					}
-
-				}
-				if (found) {
-					Vec2 diff = thisMag.getWorldCenter().sub(loc);
+				if (magInRange) {
+					Vec2 diff = magDiff;
 					float force = diff.length();
-					force = (worldRad - force) / worldRad;
-					force *= maxVel;
+					force = (worldMagRadius - force) / worldMagRadius;
+					force *= 3f;
 					diff.normalize();
 					magForce.set(diff.x * force, diff.y * force);
 				}
@@ -336,18 +381,54 @@ public class Player extends Container {
 				magForce.set(0, 0);
 			}
 
-			oldLoc.x = loc.x;
-			oldLoc.y = loc.y;
+			oldLoc.x = worldLoc.x;
+			oldLoc.y = worldLoc.y;
 			oldCurA = curA;
 			// calculate velociy
 			float mx = ov.x + (float) (pwr * Math.cos(curA + PApplet.HALF_PI)) + magForce.x;
 			float my = ov.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI)) + magForce.y;
 			ship.setLinearVelocity(new Vec2(mx, my));
 			ship.setLinearDamping(0.4f);
-			locRot=getLocRot();
+
 		}
 	}
-	public void recordFrame(int _frame){
+
+	private float wrap(float a) {
+		a -= PApplet.floor(a);
+		while (a < 0) {
+			a = 1 + a;
+		}
+		a *= PApplet.TWO_PI;
+		return a;
+	}
+
+	private float getInputAngle() {
+		if (isAI) {
+			return 0;
+		} else {
+			return -input.ang * 0.01745329251994329576923f;
+		}
+	}
+
+	public double[] getIdealOutput() {
+		double[] out = new double[4];
+		float ang = getInputAngle();
+		out[0] = Math.cos(ang);
+		out[1] = Math.sin(ang);
+		if (input.butA) {
+			out[2] = 1;
+		} else {
+			out[2] = 0;
+		}
+		if (input.butX) {
+			out[3] = 1;
+		} else {
+			out[3] = 0;
+		}
+		return out;
+	}
+
+	public void recordFrame(int _frame) {
 		recorder.add(_frame, locRot);
 	}
 
@@ -366,15 +447,17 @@ public class Player extends Container {
 			pG.popMatrix();
 		}
 	}
-	public LocRot getLocRot(){
-		Vec2 loc = world.getBodyPixelCoord(ship);
-		float rot = -ship.getAngle();
-		return new LocRot(loc,rot);		
+
+	public LocRot getLocRot() {
+		worldLoc = ship.getWorldCenter();
+		screenLoc = world.coordWorldToPixels(worldLoc);
+		rot = -ship.getAngle();
+		return new LocRot(screenLoc, rot);
 	}
-	
-	public void setFinishTime(int _frames, float _time){
+
+	public void setFinishTime(int _frames, float _time) {
 		recorder.finish(_frames, _time);
-		for(Player p:tethered){
+		for (Player p : tethered) {
 			p.recorder.finish(_frames, _time);
 		}
 	}
@@ -386,25 +469,25 @@ public class Player extends Container {
 			kill.clear();
 			hit.clear();
 			sound.toggle(0);
-			Vec2 loc = ship.getPosition();
 			world.world.destroyBody(ship);
 			ship.setActive(false);
 			world.particles.destroyBody(proxy);
 			proxy.setActive(false);
 			for (int i = 0; i < 40; i++) {
 				if (world.parts.size() < World2D.MAXPARTICLES) {
-					world.parts.add(new FinishParticle(world, loc,
+					world.parts.add(new FinishParticle(world, worldLoc,
 							new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
 							150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), World2D.cl[index]));
-					world.parts.add(new FinishParticle(world, loc,
+					world.parts.add(new FinishParticle(world, worldLoc,
 							new Vec2(15f * (float) Math.random(), 30f * (float) Math.random()),
 							150 + (int) (Math.random() * 50), 5 + (int) (Math.random() * 5), -1));
 				}
 			}
-			finished = true;			
-			for(Tether t:tethers){
-				world.tethersRemove.add(t);				
-			}			
+			finished = true;
+			for (Tether t : tethers) {
+				world.tethersRemove.add(t);
+			}
+			//System.out.println("max: " + maxVelocity);
 		}
 	}
 

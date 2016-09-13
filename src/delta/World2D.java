@@ -1,10 +1,12 @@
 package delta;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.WorldManifold;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -31,13 +33,14 @@ import processing.data.XML;
 public class World2D {
 	PApplet pA;
 	LeaderBoard leaderboard;
-	public World world, particles;
+	public World world, particles, regions;
 	public static int[] cl = { -34048, -16740353, -65413, -8716033 };
 	private float scale;
 	float tetherLength, tetherWidth;
 	String mapName, fileName;
 	Level map;
 	Layer game;
+	Layer region;
 	Map<String, Object> obj = new HashMap<String, Object>();
 	Container spawn;
 	Container score;
@@ -49,12 +52,12 @@ public class World2D {
 	ArrayList<Particle> partsAdd;
 	ArrayList<Tether> tethers;
 	ArrayList<Tether> tethersRemove;
-	ArrayList<Ghost> ghosts;	
+	ArrayList<Ghost> ghosts;
 
 	long lastFrameTimer;
 	public float frameRate;
 	Plug out;
-	public static int MAXPARTICLES = 400;
+	public static int MAXPARTICLES = 2000;
 	public static int FRAMES;
 	public boolean playerCollisions = true;
 	public static int interFrame = 0;
@@ -71,7 +74,8 @@ public class World2D {
 		tetherWidth = 8f;
 		world = new World(new Vec2(0, -9.8f));
 		particles = new World(new Vec2(0, -9.8f));
-		players = new ArrayList<Player>();		
+		regions = new World(new Vec2(0, -9.8f));
+		players = new ArrayList<Player>();
 		contacts = new ArrayList<Contact>();
 		parts = new ArrayList<Particle>();
 		partsRemove = new ArrayList<Particle>();
@@ -164,6 +168,7 @@ public class World2D {
 		if (found) {
 			map = new Level(this, children[i]);
 			game = map.getLayer(5);
+			region = map.getLayer(6);
 			buildMap();
 			System.out.println(fileName);
 			String[] fileSplit = fileName.split("\\.");
@@ -172,11 +177,38 @@ public class World2D {
 	}
 
 	void buildMap() {
-		for (Container c : game.shapes) {
+		int lastRegion = 0;
+		for (Container c : region.shapes) {
 			if (c.type.equals("poly")) {
 				Poly pc = (Poly) c;
 				FixtureDef fd = pc.getFixtureDef(false);
+				String[] d = pc.getData().split(">");
+				if (d != null) {
+					int tr = Integer.valueOf(d[0]);
+					int nr;
+					if (d.length > 1) {
+						nr = Integer.valueOf(d[1]);
+					} else {
+						nr = tr + 1;
+					}
+					pc.region = tr;
+					pc.nextRegion = nr;
+					if (nr > lastRegion)
+						lastRegion = nr;
+				}
+				fd.setUserData(pc);
+				BodyDef bd = new BodyDef();
+				bd.type = BodyType.STATIC;
+				bd.position.set(coordPixelsToWorld(c.v[0]));
+				Body b = regions.createBody(bd);
+				b.createFixture(fd);
+			}
+		}
+		for (Container c : game.shapes) {
 
+			if (c.type.equals("poly")) {
+				Poly pc = (Poly) c;
+				FixtureDef fd = pc.getFixtureDef(false);
 				BodyDef bd = new BodyDef();
 				bd.type = BodyType.STATIC;
 				bd.position.set(coordPixelsToWorld(c.v[0]));
@@ -194,6 +226,11 @@ public class World2D {
 				b.createFixture(fd);
 				Body bp = particles.createBody(bd);
 				bp.createFixture(fd);
+				if (cc.data.equals("finish")) {
+					cc.region = lastRegion;
+					Body br = regions.createBody(bd);
+					br.createFixture(fd);
+				}
 
 			} else if (c.type.equals("marker")) {
 				if (c.data.equals("start")) {
@@ -208,6 +245,7 @@ public class World2D {
 				kinematics.add(ic);
 			}
 		}
+
 	}
 
 	public void addPlayer(Player p) {
@@ -370,6 +408,19 @@ public class World2D {
 
 	}
 
+	public String[] getRegion(Vec2 in) {
+		RegionQueryCallback callback = new RegionQueryCallback();
+		regions.queryAABB(callback, new AABB(in, in));
+		for (Fixture tf : callback.found) {
+			if (tf.testPoint(in)) {
+				Poly pc = (Poly) tf.getUserData();
+				String d = pc.getData();
+				return d.split(">");
+			}
+		}
+		return null;
+	}
+
 	private void generateSparks() {
 		for (Contact c : contacts) {
 			Fixture fA = c.getFixtureA();
@@ -503,7 +554,11 @@ public class World2D {
 					p.finish();
 					if (leaderboard.check(p.recorder.time) > 0) {
 						leaderboard.place(p.recorder);
-					}					
+						
+					}
+					if(p.training){
+						p.ai.saveTrainingFile(DeltaMain.userDir+"\\data\\ai\\train\\"+mapName);
+					}
 				}
 			}
 		}
@@ -560,7 +615,7 @@ public class World2D {
 				p.killFactor = 0;
 			} else if (cO.data.equals("finish")) {
 				if (!p.finished) {
-					p.setFinishTime(FRAMES + 2, getTime());					
+					p.setFinishTime(FRAMES + 2, getTime());
 				}
 			} else if (!cO.data.equals("sensor")) {
 				p.addHitContact(_contact);
