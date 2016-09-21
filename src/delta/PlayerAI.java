@@ -2,9 +2,11 @@ package delta;
 
 import java.io.File;
 
+import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
+import org.encog.persist.EncogDirectoryPersistence;
 import org.encog.util.simple.EncogUtility;
 import org.jbox2d.common.Vec2;
 
@@ -28,6 +30,9 @@ public class PlayerAI {
 	boolean training;
 	int index = 0;
 	double xVal, yVal, aBut, xBut;
+	float jitterVal = 0;
+	float stuckThreshold = 0.5f;
+	float jitterThreshold = 0.2f;
 
 	PlayerAI(World2D _world, Player _player) {
 		world = _world;
@@ -46,16 +51,21 @@ public class PlayerAI {
 		xBut = 0;
 	}
 
-	void setTraining(boolean _training) {
+	public void setTraining(boolean _training) {
 		training = _training;
 		if (training) {
 			trainingSet = new BasicMLDataSet();
 		}
 	}
 
+	public void loadNetwork(File networkFile) {
+		training = false;
+		network = (BasicNetwork) EncogDirectoryPersistence.loadObject(networkFile);
+	}
+
 	public void gather() {
 		index = 0;
-		inputData = new BasicMLData(83);
+		inputData = new BasicMLData(85);
 		int nextRegion = player.nextRegion;
 		Vec2 loc = player.worldLoc;
 		for (int i = 0; i < sensorSpokes; i++) {
@@ -86,6 +96,8 @@ public class PlayerAI {
 		setInput(player.vel.y / 100f);
 		setInput(Math.sin(player.rot));
 		setInput(Math.cos(player.rot));
+		setInput(player.rocketFactor);
+		setInput(player.killFactor / 1.5f);
 		if (player.magInRange) {
 			setInput(player.magDist);
 			setInput(player.magDiff.x / player.worldMagRadius);
@@ -94,7 +106,7 @@ public class PlayerAI {
 			setInput(0);
 			setInput(0);
 			setInput(0);
-		}		
+		}
 		if (training) {
 			if (lastInputData != null) {
 				double[] ideal = player.getIdealOutput();
@@ -104,9 +116,25 @@ public class PlayerAI {
 				aBut = ideal[2];
 				xBut = ideal[3];
 				trainingSet.add(lastInputData, idealData);
-				//System.out.println("record count: " + trainingSet.getRecordCount());
+				// System.out.println("record count: " +
+				// trainingSet.getRecordCount());
 			}
 			lastInputData = inputData;
+		} else {
+
+			MLData out = network.compute(inputData);
+			xVal = out.getData(0);
+			yVal = out.getData(1);
+			aBut = out.getData(2);
+			xBut = out.getData(3);
+			if (player.vel.length() < stuckThreshold) {
+				jitterVal += 0.01;
+			} else {
+				jitterVal *= 0.2;
+			}
+			//xVal += 2*((2*Math.random() * jitterVal)-jitterVal);
+			//yVal += 2*((2*Math.random() * jitterVal)-jitterVal);
+
 		}
 	}
 
@@ -116,15 +144,38 @@ public class PlayerAI {
 	}
 
 	private void setInput(Double _in) {
-		inputData.add(index, _in);		
+		inputData.add(index, _in);
 		index++;
+	}
+
+	public float getAngle() {
+		return (float) Math.atan2(yVal, xVal);
+	}
+
+	public boolean getA() {
+		if (aBut > 0.5) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean getX() {
+		if (xBut > 0.5) {
+			return true;
+		}
+		return false;
 	}
 
 	public boolean saveTrainingFile(String file) {
 		if (training) {
 			try {
-				
-				EncogUtility.saveEGB(new File(file+"_"+trainingSet.size()+".egb"), trainingSet);
+				int i = 0;
+				File fileName;
+				do {
+					i++;
+					fileName = new File(file + "_" + trainingSet.size() + "_" + i + ".egb");
+				} while (fileName.exists());
+				EncogUtility.saveEGB(fileName, trainingSet);
 				return true;
 			} catch (Exception ex) {
 				System.out.println(ex);

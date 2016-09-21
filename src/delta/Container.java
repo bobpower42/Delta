@@ -95,6 +95,7 @@ class Poly extends Container {
 		world = _world;
 		type = "poly";
 		nv = 0;
+		region=-1;
 		try {
 			if (xml.hasAttribute("data"))
 				data = xml.getString("data");
@@ -139,8 +140,14 @@ class Poly extends Container {
 
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!check || onScreen(p1, p2)) {
+			if(region==-1){
 			pG.fill(fill);
 			pG.noStroke();
+			}else{
+				pG.noFill();
+				pG.strokeWeight(0.5f);
+				pG.stroke(0);
+			}
 			pG.beginShape();
 			for (int i = 0; i < v.length; i++) {
 				pG.vertex(v[i].x, v[i].y);

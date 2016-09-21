@@ -1,5 +1,6 @@
 package delta;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.jbox2d.collision.AABB;
@@ -32,6 +33,7 @@ public class Player extends Container {
 	public LocRot locRot;
 	public Vec2 worldLoc, screenLoc;
 	public float rot;
+	public float rocketFactor;
 	int regionNum = 0;
 
 	RayCastClosestCallback rocketCallback;
@@ -64,11 +66,14 @@ public class Player extends Container {
 
 	public int thisRegion = -1;
 	public int nextRegion = 1;
+	public float regionSmooth=0;
 	public float magRadius = 500f;
 	public float worldMagRadius;
 	public boolean magInRange;
+	public boolean magActive;
 	public float magDist;
 	public Vec2 magDiff;
+	private Body activeMag;
 
 	boolean isAI;
 	boolean training;
@@ -96,6 +101,7 @@ public class Player extends Container {
 		collisionCount = 0;
 		worldMagRadius = world.scalarPixelsToWorld(magRadius);
 		training = false;
+		createShip();
 	}
 
 	public void attachInput(PlayerInput _input) {
@@ -103,8 +109,16 @@ public class Player extends Container {
 		isAI = false;
 	}
 
-	public void setTraining(boolean _train) {
-		training = _train;
+	public void attachAi(File networkFile) {
+		training = false;
+		isAI = true;
+		ai = new PlayerAI(world, this);
+		ai.loadNetwork(networkFile);
+	}
+
+	public void setTraining() {
+		training = true;
+		isAI = false;
 		if (training) {
 			ai = new PlayerAI(world, this);
 			ai.setTraining(true);
@@ -183,6 +197,9 @@ public class Player extends Container {
 
 	public void addKillContact(Contact _contact) {
 		collisionCount++;
+		sound.powerDrop(killFactor);					
+		
+		killFactor=0;
 		kill.add(_contact);
 	}
 
@@ -222,6 +239,7 @@ public class Player extends Container {
 					nextRegion = nr;
 				}
 			}
+			regionSmooth+=(thisRegion-regionSmooth)/250f;
 			// check for nearest mag
 
 			AABB bounds = new AABB(new Vec2(worldLoc.x - worldMagRadius, worldLoc.y - worldMagRadius),
@@ -242,21 +260,36 @@ public class Player extends Container {
 				}
 			}
 			if (magInRange) {
+				activeMag=thisMag;
 				magDiff = thisMag.getWorldCenter().sub(worldLoc);
 				magDist = 1 - (magDiff.length() / worldMagRadius);
 			}
-			ai.gather();
+			// get nearest surface behind ship
+			Vec2 sRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r)));
+			Vec2 eRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r + 150)));
+			world.world.raycast(rocketCallback, sRay, eRay);
+			if (rocketCallback.m_hit) {
+				rocketFactor = 1 - rocketCallback.m_fraction;
+				rocketCallback.m_hit = false;
 
+			} else {
+				rocketFactor = 0;
+			}
 			// get ship velocity
 			vel = ship.getLinearVelocity();
+
+			if (training || isAI) {
+				ai.gather();
+			}
+
 			// compare the change in velocity since previous frame
 			if (vel.length() > maxVelocity)
 				maxVelocity = vel.length();
-			vel.sub(oldVel);
-			oldVel = ship.getLinearVelocity();
+
 			// compare the magnitude of that change against that magnitude in
 			// the previous frame
-			float mag = vel.length();
+			float mag = vel.sub(oldVel).length();
+			oldVel = new Vec2(vel);
 			float md = PApplet.abs(mag - oldmag);
 			oldmag = mag;
 			// if over a threshold of 1
@@ -269,7 +302,7 @@ public class Player extends Container {
 				}
 				// only send message if not already vibrating (don't overload)
 				if (!vib) {
-					input.vibrateLeft(md / 10f);
+					vibrate(md / 10f);
 				}
 				// reset counter
 				vibCounter = 0;
@@ -279,7 +312,7 @@ public class Player extends Container {
 			if (vib) {
 				vibCounter++;
 				if (vibCounter > 7) {
-					input.vibrateLeft(0);
+					vibrate(0);
 					vib = false;
 				}
 			}
@@ -289,14 +322,6 @@ public class Player extends Container {
 			v[0] = world.coordWorldToPixels(ship.getPosition());
 			// move the proxy to match (for particle collision)
 			proxy.setTransform(t.p, t.q.getAngle());
-
-			// get ship velocity and nearest surface behind ship
-			Vec2 ov = ship.getLinearVelocity();
-			Vec2 sRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r)));
-			Vec2 eRay = ship.getWorldPoint(new Vec2(0, -world.scalarPixelsToWorld(r + 150)));
-			// System.out.println("st x: "+sRay.x+" st y: "+sRay.y+" end x:
-			// "+eRay.x+" end y: "+eRay.y);
-			world.world.raycast(rocketCallback, sRay, eRay);
 
 			// get difference between ship rotaion and thumbstick position
 			float curA = wrap(ship.getAngle() * 0.15915494309189533576888376337251f);
@@ -316,26 +341,19 @@ public class Player extends Container {
 
 			// if not in contact with hi-voltage rail heal engines
 			if (kill.size() == 0) {
-				if (killFactor < powerMax)
+				if (killFactor < powerMax){
 					killFactor += heal;
-				else
+				}else{
 					killFactor = powerMax;
-			} else {
-				// kill engines
-				killFactor = 0;
+				}
 			}
 
 			// calculate power
 			float pwr = 0;
-			if (input.butA) {
+			if (getAButton()) {
 				sound.toggle(1);
 				if (boost.size() == 0) {
-					if (rocketCallback.m_hit) {
-						pwr = 0.1f + ((1 - rocketCallback.m_fraction) * (1 - rocketCallback.m_fraction)) / 2f;
-						rocketCallback.m_hit = false;
-					} else {
-						pwr = 0.1f;
-					}
+					pwr = 0.1f + (rocketFactor * rocketFactor) / 2f;
 				} else {
 					// boost rail
 					pwr = 0.9f;
@@ -367,9 +385,12 @@ public class Player extends Container {
 			}
 
 			// mag
-			if (input.butX) {
+			if (getXButton()) {
 				if (magInRange) {
-					Vec2 diff = magDiff;
+					magActive = true;
+					sound.magToggle(true);
+					sound.setMagDist(magDist);
+					Vec2 diff = new Vec2(magDiff);
 					float force = diff.length();
 					force = (worldMagRadius - force) / worldMagRadius;
 					force *= 3f;
@@ -378,19 +399,22 @@ public class Player extends Container {
 				}
 
 			} else {
+				magActive = false;
 				magForce.set(0, 0);
+				sound.magToggle(false);
 			}
 
 			oldLoc.x = worldLoc.x;
 			oldLoc.y = worldLoc.y;
 			oldCurA = curA;
 			// calculate velociy
-			float mx = ov.x + (float) (pwr * Math.cos(curA + PApplet.HALF_PI)) + magForce.x;
-			float my = ov.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI)) + magForce.y;
+			float mx = vel.x + (float) (pwr * Math.cos(curA + PApplet.HALF_PI)) + magForce.x;
+			float my = vel.y + (float) (pwr * Math.sin(curA + PApplet.HALF_PI)) + magForce.y;
 			ship.setLinearVelocity(new Vec2(mx, my));
 			ship.setLinearDamping(0.4f);
 
 		}
+
 	}
 
 	private float wrap(float a) {
@@ -402,11 +426,35 @@ public class Player extends Container {
 		return a;
 	}
 
+	private void vibrate(float val) {
+		if (!isAI) {
+			if (input != null) {
+				input.vibrateLeft(val);
+			}
+		}
+	}
+
 	private float getInputAngle() {
 		if (isAI) {
-			return 0;
+			return ai.getAngle();
 		} else {
 			return -input.ang * 0.01745329251994329576923f;
+		}
+	}
+
+	private boolean getAButton() {
+		if (isAI) {
+			return ai.getA();
+		} else {
+			return input.butA;
+		}
+	}
+
+	private boolean getXButton() {
+		if (isAI) {
+			return ai.getX();
+		} else {
+			return input.butX;
 		}
 	}
 
@@ -435,15 +483,29 @@ public class Player extends Container {
 	public void draw(PGraphics pG, Vec2 p1, Vec2 p2, Viewport vp) {
 		if (!finished) {
 			Vec2 pos = world.getBodyPixelCoord(ship);
+
 			float ang = ship.getAngle();
+			if (magActive) {
+				Vec2 magPos= world.getBodyPixelCoord(activeMag);
+				pG.stroke(1677721855);
+				pG.strokeWeight(20*magDist);
+				pG.line(pos.x, pos.y, magPos.x, magPos.y);
+
+			}
 			pG.pushMatrix();
+
 			pG.translate(pos.x, pos.y);
+			
 			pG.rotate(-ang);
 			pG.noStroke();
 			pG.fill(255);
 			pG.arc(0, 0, 2 * r, 2 * r, 0, 3.14f);
 			pG.fill(World2D.cl[index]);
 			pG.arc(0, 0, 2 * r, 2 * r, -3.14f, 0);
+			// pG.noFill();
+			// pG.stroke(255, 255, 0);
+			// pG.strokeWeight(0.5f);
+			// pG.ellipse(0, 0, 1000, 1000);
 			pG.popMatrix();
 		}
 	}
@@ -464,7 +526,7 @@ public class Player extends Container {
 
 	public void finish() {
 		if (!finished) {
-			input.vibrateLeft(0);
+			vibrate(0);
 			boost.clear();
 			kill.clear();
 			hit.clear();
@@ -487,8 +549,13 @@ public class Player extends Container {
 			for (Tether t : tethers) {
 				world.tethersRemove.add(t);
 			}
-			//System.out.println("max: " + maxVelocity);
 		}
+	}
+	
+	boolean onScreen(Vec2 tl, Vec2 br) {
+		if (v[0].x >= tl.x - r && v[0].y > tl.y - r && v[0].x < br.x + r && v[0].y < br.y + r)
+			return true;
+		return false;
 	}
 
 }

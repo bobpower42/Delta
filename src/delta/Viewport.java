@@ -12,7 +12,7 @@ import processing.opengl.PShader;
 public class Viewport {
 	PApplet pA;
 	PGraphics pg;
-	Vec2 pos, dim, cam, half, track, damp, f_damp, separation, separation_smooth;
+	Vec2 pos, dim, cam, half, track, damp, f_damp, separation, separation_smooth, mm_track;
 	World2D world;
 	ArrayList<PlayerInput> inputs;
 	ArrayList<Player> target;
@@ -36,6 +36,7 @@ public class Viewport {
 		cam = new Vec2(0, 0);
 		damp = new Vec2(0, 0);
 		f_damp = new Vec2(0, 0);
+		mm_track=new Vec2(0,0);
 		target = new ArrayList<Player>();
 		inputs = new ArrayList<PlayerInput>();
 		track = new Vec2(0, 0);
@@ -57,19 +58,20 @@ public class Viewport {
 		float xTotal = 0;
 		float yTotal = 0;
 		if (trackMode == 1) {// micro machine style. Only track the leaders
-			int highestRegion = -1;
+			float highestRegion = -1;
 			for (Player p : target) {
 				if (!p.finished) {
-					if (p.thisRegion > highestRegion)
-						highestRegion = p.thisRegion;
+					if (p.regionSmooth > highestRegion)
+						highestRegion = p.regionSmooth;
 				}
 			}
 			for (Player p : target) {
 				if (!p.finished) {
-					if (p.thisRegion == highestRegion) {
-						count++;
-						xTotal += p.v[0].x;
-						yTotal += p.v[0].y;
+					if (p.regionSmooth > highestRegion-2) {
+						float factor=p.regionSmooth - (highestRegion-2);
+						count+=factor;
+						xTotal += p.v[0].x*factor;
+						yTotal += p.v[0].y*factor;
 					}
 				}
 			}
@@ -83,20 +85,22 @@ public class Viewport {
 				}
 			}
 		}
-		if (count > 0) {
-			track.set(xTotal / count, yTotal / count);
+		if (count > 0) {			
+			track.set(xTotal / count, yTotal / count);			
 			track.x = -track.x + half.x;
 			track.y = -track.y + half.y;
 			// camera tracking. 3 steps to give it a more natural look
 			// damp track (follow target)
 			damp.x += (track.x - damp.x) / 15f;
 			damp.y += (track.y - damp.y) / 15f;
+		
 			// flip damp track over target (track ahead)
 			f_damp.x = track.x + (track.x - damp.x);
 			f_damp.y = track.y + (track.y - damp.y);
 			// damp track again (smooth out movement)
 			cam.x += (f_damp.x - cam.x) / 10f;
 			cam.y += (f_damp.y - cam.y) / 10f;
+			
 
 		} else {
 			track.set(world.score.v[0]);

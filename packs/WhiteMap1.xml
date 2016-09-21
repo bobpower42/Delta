@@ -4,7 +4,7 @@
     <color color="D74A29" data="kill" index="0"/>
     <color color="2CD44C" data="boost" index="1"/>
     <color color="FFE700" data="bounce" index="2"/>
-    <color color="1C31FF" data="mag" index="3"/>
+    <color color="162DFF" data="mag" index="3"/>
     <color color="FFFFFF" data="solid" index="4"/>
     <color color="2A0F0F" data="solid" index="5"/>
     <color color="717171" data="" index="6"/>
@@ -300,122 +300,1101 @@
           <vert x="-608.0" y="-208.0"/>
           <vert x="-432.0" y="-208.0"/>
         </container>
-        <container cl="-14929409" data="mag" fill="3" type="circle">
+        <container cl="-15323649" data="mag" fill="3" type="circle">
           <vert x="-400.0" y="32.0"/>
           <vert x="-400.0" y="48.0"/>
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
     </map>
-    <map bg="6" bgcl="-9342607" data="002_small" fg="4" fgcl="-1" split="HHT" type="map">
-      <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
-      <layer data="paralax1" fade="0.9" paralax="0.6" type="layer">
-        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
-          <vert x="64.0" y="-112.0"/>
-          <vert x="96.0" y="-80.0"/>
-          <vert x="64.0" y="-32.0"/>
-          <vert x="32.0" y="-80.0"/>
-        </container>
-        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
-          <vert x="432.0" y="-480.0"/>
-          <vert x="448.0" y="-464.0"/>
-          <vert x="432.0" y="-432.0"/>
-          <vert x="416.0" y="-464.0"/>
-        </container>
-        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
-          <vert x="1344.0" y="-32.0"/>
-          <vert x="1376.0" y="0.0"/>
-          <vert x="1344.0" y="64.0"/>
-          <vert x="1312.0" y="0.0"/>
-        </container>
-        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
-          <vert x="1408.0" y="-416.0"/>
-          <vert x="1504.0" y="-352.0"/>
-          <vert x="1408.0" y="-176.0"/>
-          <vert x="1312.0" y="-352.0"/>
-        </container>
-        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
-          <vert x="592.0" y="16.0"/>
-          <vert x="624.0" y="48.0"/>
-          <vert x="592.0" y="112.0"/>
-          <vert x="560.0" y="48.0"/>
-        </container>
-      </layer>
-      <layer data="paralax2" fade="0.8" paralax="0.4" type="layer">
-        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
-          <vert x="-384.0" y="-144.0"/>
-          <vert x="-352.0" y="-112.0"/>
-          <vert x="-384.0" y="-48.0"/>
-          <vert x="-416.0" y="-112.0"/>
-        </container>
-        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
-          <vert x="160.0" y="0.0"/>
-          <vert x="192.0" y="32.0"/>
-          <vert x="160.0" y="96.0"/>
-          <vert x="128.0" y="32.0"/>
-        </container>
-        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
-          <vert x="448.0" y="256.0"/>
-          <vert x="480.0" y="288.0"/>
-          <vert x="448.0" y="352.0"/>
-          <vert x="416.0" y="288.0"/>
-        </container>
-        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
-          <vert x="1152.0" y="160.0"/>
-          <vert x="1168.0" y="176.0"/>
-          <vert x="1152.0" y="224.0"/>
-          <vert x="1136.0" y="176.0"/>
-        </container>
-        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
-          <vert x="1952.0" y="-352.0"/>
-          <vert x="1968.0" y="-336.0"/>
-          <vert x="1952.0" y="-304.0"/>
-          <vert x="1936.0" y="-336.0"/>
-        </container>
-      </layer>
-      <layer data="paralax3" fade="0.6" paralax="0.2" type="layer">
-        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
-          <vert x="64.0" y="-192.0"/>
-          <vert x="96.0" y="-160.0"/>
-          <vert x="64.0" y="-96.0"/>
-          <vert x="32.0" y="-160.0"/>
-        </container>
-        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
-          <vert x="608.0" y="-288.0"/>
-          <vert x="624.0" y="-272.0"/>
-          <vert x="608.0" y="-224.0"/>
-          <vert x="592.0" y="-272.0"/>
-        </container>
-        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
-          <vert x="1568.0" y="64.0"/>
-          <vert x="1600.0" y="96.0"/>
-          <vert x="1568.0" y="192.0"/>
-          <vert x="1536.0" y="96.0"/>
-        </container>
-        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
-          <vert x="2528.0" y="64.0"/>
-          <vert x="2592.0" y="96.0"/>
-          <vert x="2528.0" y="240.0"/>
-          <vert x="2464.0" y="96.0"/>
-        </container>
-      </layer>
-      <layer data="background" disable="true" fade="0.35" paralax="0.0" type="layer"/>
+    <map bg="6" bgcl="-9342607" data="009_freeform" fg="4" fgcl="-1" split="HHT" type="map">
+      <layer data="fixed" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="paralax1" fade="0.8" paralax="0.8" type="layer"/>
+      <layer data="paralax2" fade="0.6" paralax="0.6" type="layer"/>
+      <layer data="paralax3" fade="0.4" paralax="0.4" type="layer"/>
+      <layer data="background" fade="0.0" paralax="0.0" type="layer"/>
       <layer data="game" fade="0.0" paralax="0.0" type="layer">
-        <container cl="-1" data="solid" fill="4" type="poly">
-          <vert x="2144.0" y="576.0"/>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-192.0" y="-64.0"/>
+          <vert x="-192.0" y="64.0"/>
+          <vert x="-304.0" y="64.0"/>
+          <vert x="-304.0" y="-64.0"/>
         </container>
-        <container cl="-1" data="solid" fill="4" type="poly">
-          <vert x="2432.0" y="576.0"/>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-384.0" y="-80.0"/>
+          <vert x="-304.0" y="-64.0"/>
+          <vert x="-304.0" y="64.0"/>
+          <vert x="-544.0" y="64.0"/>
+          <vert x="-544.0" y="-80.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="-160.0"/>
+          <vert x="-384.0" y="-80.0"/>
+          <vert x="-544.0" y="-80.0"/>
+          <vert x="-544.0" y="-160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="-160.0"/>
+          <vert x="-544.0" y="-160.0"/>
+          <vert x="-544.0" y="-272.0"/>
+          <vert x="-464.0" y="-272.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-464.0" y="-272.0"/>
+          <vert x="-544.0" y="-272.0"/>
+          <vert x="-544.0" y="-480.0"/>
+          <vert x="-384.0" y="-480.0"/>
+          <vert x="-384.0" y="-352.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-384.0" y="-480.0"/>
+          <vert x="-272.0" y="-480.0"/>
+          <vert x="-272.0" y="-368.0"/>
+          <vert x="-384.0" y="-352.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-272.0" y="-480.0"/>
+          <vert x="-176.0" y="-480.0"/>
+          <vert x="-176.0" y="-320.0"/>
+          <vert x="-272.0" y="-368.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-176.0" y="-320.0"/>
+          <vert x="-176.0" y="-480.0"/>
+          <vert x="16.0" y="-480.0"/>
+          <vert x="16.0" y="-352.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="16.0" y="-352.0"/>
+          <vert x="16.0" y="-480.0"/>
+          <vert x="128.0" y="-480.0"/>
+          <vert x="128.0" y="-304.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="128.0" y="-304.0"/>
+          <vert x="128.0" y="-480.0"/>
+          <vert x="400.0" y="-480.0"/>
+          <vert x="400.0" y="-320.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="576.0" y="-240.0"/>
+          <vert x="400.0" y="-320.0"/>
+          <vert x="400.0" y="-480.0"/>
+          <vert x="576.0" y="-480.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="816.0" y="-1248.0"/>
+          <vert x="800.0" y="-880.0"/>
+          <vert x="576.0" y="-880.0"/>
+          <vert x="576.0" y="-1248.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="976.0" y="-1360.0"/>
+          <vert x="816.0" y="-1248.0"/>
+          <vert x="576.0" y="-1248.0"/>
+          <vert x="576.0" y="-1456.0"/>
+          <vert x="976.0" y="-1456.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="976.0" y="-1456.0"/>
+          <vert x="1248.0" y="-1456.0"/>
+          <vert x="1248.0" y="-1360.0"/>
+          <vert x="976.0" y="-1360.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1248.0" y="-1360.0"/>
+          <vert x="1248.0" y="-1456.0"/>
+          <vert x="1696.0" y="-1456.0"/>
+          <vert x="1696.0" y="-1152.0"/>
+        </container>
+        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
+          <vert x="768.0" y="64.0"/>
+          <vert x="976.0" y="-48.0"/>
+          <vert x="960.0" y="144.0"/>
+        </container>
+        <container cl="-2667991" closed="true" data="kill" fill="0" type="poly">
+          <vert x="576.0" y="-240.0"/>
+          <vert x="832.0" y="-528.0"/>
+          <vert x="704.0" y="-240.0"/>
+        </container>
+        <container cl="-2667991" closed="true" data="kill" fill="0" type="poly">
+          <vert x="1952.0" y="-928.0"/>
+          <vert x="2048.0" y="-528.0"/>
+          <vert x="1888.0" y="-752.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1200.0" y="-1008.0"/>
+          <vert x="1552.0" y="-912.0"/>
+          <vert x="1072.0" y="-896.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="576.0" y="-240.0"/>
+          <vert x="576.0" y="-880.0"/>
+          <vert x="800.0" y="-880.0"/>
+          <vert x="832.0" y="-528.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1072.0" y="-896.0"/>
+          <vert x="1552.0" y="-912.0"/>
+          <vert x="1632.0" y="-752.0"/>
+          <vert x="1552.0" y="-528.0"/>
+          <vert x="1072.0" y="-464.0"/>
+        </container>
+        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
+          <vert x="224.0" y="336.0"/>
+          <vert x="80.0" y="544.0"/>
+          <vert x="80.0" y="400.0"/>
+        </container>
+        <container cl="-2667991" closed="true" data="kill" fill="0" type="poly">
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="2800.0" y="-192.0"/>
+          <vert x="2480.0" y="-144.0"/>
+        </container>
+        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
+          <vert x="7040.0" y="-592.0"/>
+          <vert x="7168.0" y="-848.0"/>
+          <vert x="7152.0" y="-704.0"/>
+        </container>
+        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
+          <vert x="6624.0" y="-800.0"/>
+          <vert x="6528.0" y="-1136.0"/>
+          <vert x="6592.0" y="-1296.0"/>
+        </container>
+        <container cl="-6400" closed="true" data="bounce" fill="2" type="poly">
+          <vert x="4832.0" y="192.0"/>
+          <vert x="4960.0" y="0.0"/>
+          <vert x="4944.0" y="144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1072.0" y="-464.0"/>
+          <vert x="1552.0" y="-528.0"/>
+          <vert x="1664.0" y="-320.0"/>
+          <vert x="1552.0" y="48.0"/>
+          <vert x="976.0" y="-48.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1696.0" y="-1456.0"/>
+          <vert x="2208.0" y="-1456.0"/>
+          <vert x="2208.0" y="-1152.0"/>
+          <vert x="1840.0" y="-1136.0"/>
+          <vert x="1696.0" y="-1152.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1840.0" y="-1136.0"/>
+          <vert x="2208.0" y="-1152.0"/>
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="1952.0" y="-928.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="2048.0" y="-528.0"/>
+          <vert x="1952.0" y="-928.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="2064.0" y="80.0"/>
+          <vert x="2000.0" y="-336.0"/>
+          <vert x="2048.0" y="-528.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="976.0" y="-48.0"/>
+          <vert x="1552.0" y="48.0"/>
+          <vert x="1360.0" y="320.0"/>
+          <vert x="1088.0" y="464.0"/>
+          <vert x="960.0" y="144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="480.0" y="32.0"/>
+          <vert x="768.0" y="64.0"/>
+          <vert x="960.0" y="144.0"/>
+          <vert x="1088.0" y="464.0"/>
+          <vert x="912.0" y="480.0"/>
+          <vert x="608.0" y="384.0"/>
+          <vert x="400.0" y="288.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="480.0" y="32.0"/>
+          <vert x="400.0" y="288.0"/>
+          <vert x="224.0" y="336.0"/>
+          <vert x="176.0" y="64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-192.0" y="-64.0"/>
+          <vert x="-16.0" y="-16.0"/>
+          <vert x="224.0" y="336.0"/>
+          <vert x="80.0" y="400.0"/>
+          <vert x="-192.0" y="64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="80.0" y="400.0"/>
+          <vert x="-544.0" y="64.0"/>
+          <vert x="-192.0" y="64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="64.0"/>
+          <vert x="80.0" y="400.0"/>
+          <vert x="-544.0" y="512.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="512.0"/>
+          <vert x="80.0" y="400.0"/>
+          <vert x="80.0" y="544.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="-480.0"/>
+          <vert x="-544.0" y="-1456.0"/>
+          <vert x="576.0" y="-1456.0"/>
+          <vert x="576.0" y="-480.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1008.0" y="896.0"/>
+          <vert x="752.0" y="992.0"/>
+          <vert x="512.0" y="736.0"/>
+          <vert x="528.0" y="704.0"/>
+        </container>
+        <container cl="-15323649" data="mag" fill="3" type="circle">
+          <vert x="496.0" y="704.0"/>
+          <vert x="480.0" y="704.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="752.0" y="992.0"/>
+          <vert x="1008.0" y="896.0"/>
+          <vert x="1536.0" y="768.0"/>
+          <vert x="1456.0" y="944.0"/>
+          <vert x="1088.0" y="1024.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="512.0"/>
+          <vert x="80.0" y="544.0"/>
+          <vert x="208.0" y="816.0"/>
+          <vert x="352.0" y="1168.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="512.0"/>
+          <vert x="352.0" y="1168.0"/>
+          <vert x="-544.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1536.0" y="768.0"/>
+          <vert x="2192.0" y="960.0"/>
+          <vert x="1840.0" y="1104.0"/>
+          <vert x="1456.0" y="944.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2064.0" y="80.0"/>
+          <vert x="2368.0" y="256.0"/>
+          <vert x="2400.0" y="528.0"/>
+          <vert x="2048.0" y="336.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="256.0"/>
+          <vert x="2064.0" y="80.0"/>
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="2480.0" y="-144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="2480.0" y="-144.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="2368.0" y="-592.0"/>
+          <vert x="2208.0" y="-1152.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2208.0" y="-1456.0"/>
+          <vert x="3088.0" y="-1456.0"/>
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="2208.0" y="-1152.0"/>
+        </container>
+        <container cl="-2667991" closed="true" data="kill" fill="0" type="poly">
+          <vert x="352.0" y="1168.0"/>
+          <vert x="640.0" y="1376.0"/>
+          <vert x="416.0" y="1344.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="352.0" y="1168.0"/>
+          <vert x="416.0" y="1344.0"/>
+          <vert x="-544.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="1200.0"/>
+          <vert x="416.0" y="1344.0"/>
+          <vert x="-544.0" y="1504.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="1504.0"/>
+          <vert x="416.0" y="1344.0"/>
+          <vert x="640.0" y="1376.0"/>
+          <vert x="832.0" y="1504.0"/>
+        </container>
+        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+          <vert x="1072.0" y="1328.0"/>
+          <vert x="1456.0" y="1376.0"/>
+          <vert x="1856.0" y="1504.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="832.0" y="1504.0"/>
+          <vert x="640.0" y="1376.0"/>
+          <vert x="1072.0" y="1328.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="832.0" y="1504.0"/>
+          <vert x="1072.0" y="1328.0"/>
+          <vert x="1856.0" y="1504.0"/>
+          <vert x="1856.0" y="1584.0"/>
+          <vert x="832.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="1504.0"/>
+          <vert x="832.0" y="1504.0"/>
+          <vert x="832.0" y="1584.0"/>
+          <vert x="-544.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2976.0" y="0.0"/>
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="2896.0" y="320.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1856.0" y="1584.0"/>
+          <vert x="1856.0" y="1504.0"/>
+          <vert x="2304.0" y="1328.0"/>
+          <vert x="2368.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2304.0" y="1328.0"/>
+          <vert x="2672.0" y="1056.0"/>
+          <vert x="2912.0" y="1072.0"/>
+          <vert x="2912.0" y="1584.0"/>
+          <vert x="2368.0" y="1584.0"/>
+        </container>
+        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+          <vert x="2672.0" y="1056.0"/>
+          <vert x="2896.0" y="320.0"/>
+          <vert x="2912.0" y="752.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3808.0" y="-448.0"/>
+          <vert x="4256.0" y="-400.0"/>
+          <vert x="4416.0" y="-240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="3088.0" y="-1456.0"/>
+          <vert x="3344.0" y="-384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3088.0" y="-1456.0"/>
+          <vert x="3920.0" y="-1456.0"/>
+          <vert x="3808.0" y="-448.0"/>
+          <vert x="3344.0" y="-384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4256.0" y="-400.0"/>
+          <vert x="3808.0" y="-448.0"/>
+          <vert x="3920.0" y="-1456.0"/>
+          <vert x="4240.0" y="-672.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3920.0" y="-1456.0"/>
+          <vert x="4624.0" y="-1456.0"/>
+          <vert x="4528.0" y="-848.0"/>
+          <vert x="4240.0" y="-672.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4624.0" y="-1456.0"/>
+          <vert x="5232.0" y="-928.0"/>
+          <vert x="4816.0" y="-736.0"/>
+          <vert x="4528.0" y="-848.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4624.0" y="-1456.0"/>
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="5232.0" y="-928.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5232.0" y="-928.0"/>
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="5568.0" y="-800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6624.0" y="-800.0"/>
+          <vert x="5568.0" y="-800.0"/>
+          <vert x="6528.0" y="-1136.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="6528.0" y="-1136.0"/>
+          <vert x="5568.0" y="-800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="6592.0" y="-1296.0"/>
+          <vert x="6528.0" y="-1136.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="6976.0" y="-1616.0"/>
+          <vert x="6592.0" y="-1296.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6976.0" y="-1616.0"/>
+          <vert x="7232.0" y="-1856.0"/>
+          <vert x="7376.0" y="-1536.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7232.0" y="-1856.0"/>
+          <vert x="6976.0" y="-1616.0"/>
+          <vert x="5824.0" y="-1456.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="5824.0" y="-1856.0"/>
+          <vert x="7232.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4960.0" y="0.0"/>
+          <vert x="4864.0" y="-272.0"/>
+          <vert x="4896.0" y="-512.0"/>
+          <vert x="5184.0" y="-416.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5184.0" y="-416.0"/>
+          <vert x="5440.0" y="-32.0"/>
+          <vert x="4944.0" y="144.0"/>
+          <vert x="4960.0" y="0.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5184.0" y="-416.0"/>
+          <vert x="5568.0" y="-512.0"/>
+          <vert x="5440.0" y="-32.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2912.0" y="1584.0"/>
+          <vert x="2912.0" y="1072.0"/>
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="3440.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3440.0" y="1072.0"/>
+          <vert x="3568.0" y="1584.0"/>
+          <vert x="2912.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7232.0" y="-1856.0"/>
+          <vert x="7920.0" y="-1856.0"/>
+          <vert x="7984.0" y="-1568.0"/>
+          <vert x="7808.0" y="-1504.0"/>
+          <vert x="7376.0" y="-1536.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7920.0" y="-1856.0"/>
+          <vert x="8368.0" y="-1856.0"/>
+          <vert x="8256.0" y="-1568.0"/>
+          <vert x="7984.0" y="-1568.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8256.0" y="-1568.0"/>
+          <vert x="8368.0" y="-1856.0"/>
+          <vert x="8736.0" y="-1856.0"/>
+          <vert x="8736.0" y="-1392.0"/>
+          <vert x="8448.0" y="-1440.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8448.0" y="-1440.0"/>
+          <vert x="8736.0" y="-1392.0"/>
+          <vert x="8736.0" y="-1088.0"/>
+          <vert x="8448.0" y="-1216.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8736.0" y="-1088.0"/>
+          <vert x="8336.0" y="-848.0"/>
+          <vert x="8272.0" y="-1120.0"/>
+          <vert x="8448.0" y="-1216.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8272.0" y="-1120.0"/>
+          <vert x="8336.0" y="-848.0"/>
+          <vert x="7904.0" y="-832.0"/>
+          <vert x="7920.0" y="-1104.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7920.0" y="-1104.0"/>
+          <vert x="7904.0" y="-832.0"/>
+          <vert x="7584.0" y="-848.0"/>
+          <vert x="7776.0" y="-1216.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7776.0" y="-1216.0"/>
+          <vert x="7584.0" y="-848.0"/>
+          <vert x="7136.0" y="-1056.0"/>
+          <vert x="7088.0" y="-1136.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7168.0" y="-848.0"/>
+          <vert x="7136.0" y="-1056.0"/>
+          <vert x="7584.0" y="-848.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5440.0" y="-32.0"/>
+          <vert x="5568.0" y="-512.0"/>
+          <vert x="6240.0" y="-64.0"/>
+        </container>
+        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+          <vert x="5568.0" y="-512.0"/>
+          <vert x="6624.0" y="-512.0"/>
+          <vert x="6080.0" y="-464.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6080.0" y="-464.0"/>
+          <vert x="6240.0" y="-64.0"/>
+          <vert x="5568.0" y="-512.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6080.0" y="-464.0"/>
+          <vert x="6624.0" y="-512.0"/>
+          <vert x="6240.0" y="-64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6240.0" y="-64.0"/>
+          <vert x="6624.0" y="-512.0"/>
+          <vert x="7040.0" y="-592.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4288.0" y="160.0"/>
+          <vert x="4512.0" y="256.0"/>
+          <vert x="3440.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4512.0" y="256.0"/>
+          <vert x="4496.0" y="624.0"/>
+          <vert x="3440.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4512.0" y="256.0"/>
+          <vert x="4832.0" y="192.0"/>
+          <vert x="4864.0" y="592.0"/>
+          <vert x="4496.0" y="624.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4832.0" y="192.0"/>
+          <vert x="4944.0" y="144.0"/>
+          <vert x="5104.0" y="560.0"/>
+          <vert x="4864.0" y="592.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4944.0" y="144.0"/>
+          <vert x="5440.0" y="-32.0"/>
+          <vert x="5104.0" y="560.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1856.0"/>
+          <vert x="5824.0" y="-1456.0"/>
+          <vert x="4912.0" y="-1456.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5824.0" y="-1856.0"/>
+          <vert x="4912.0" y="-1456.0"/>
+          <vert x="4624.0" y="-1456.0"/>
+          <vert x="4320.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4320.0" y="-1856.0"/>
+          <vert x="4624.0" y="-1456.0"/>
+          <vert x="2864.0" y="-1456.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4320.0" y="-1856.0"/>
+          <vert x="2864.0" y="-1456.0"/>
+          <vert x="2608.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8736.0" y="-1088.0"/>
+          <vert x="8736.0" y="-288.0"/>
+          <vert x="8336.0" y="-848.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7904.0" y="-832.0"/>
+          <vert x="8336.0" y="-848.0"/>
+          <vert x="8736.0" y="-288.0"/>
+          <vert x="7856.0" y="-112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3440.0" y="1072.0"/>
+          <vert x="4496.0" y="624.0"/>
+          <vert x="4608.0" y="1584.0"/>
+          <vert x="3568.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4608.0" y="1584.0"/>
+          <vert x="4496.0" y="624.0"/>
+          <vert x="4864.0" y="592.0"/>
+          <vert x="5152.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4864.0" y="592.0"/>
+          <vert x="5104.0" y="560.0"/>
+          <vert x="5568.0" y="1584.0"/>
+          <vert x="5152.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5104.0" y="560.0"/>
+          <vert x="5440.0" y="-32.0"/>
+          <vert x="5872.0" y="496.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5104.0" y="560.0"/>
+          <vert x="5872.0" y="496.0"/>
+          <vert x="5568.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5440.0" y="-32.0"/>
+          <vert x="6240.0" y="-64.0"/>
+          <vert x="5872.0" y="496.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7168.0" y="-848.0"/>
+          <vert x="7584.0" y="-848.0"/>
+          <vert x="7152.0" y="-704.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7152.0" y="-704.0"/>
+          <vert x="7584.0" y="-848.0"/>
+          <vert x="7904.0" y="-832.0"/>
+          <vert x="7856.0" y="-112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7152.0" y="-704.0"/>
+          <vert x="7856.0" y="-112.0"/>
+          <vert x="7040.0" y="-592.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7040.0" y="-592.0"/>
+          <vert x="7856.0" y="-112.0"/>
+          <vert x="6240.0" y="-64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2608.0" y="-1856.0"/>
+          <vert x="2864.0" y="-1456.0"/>
+          <vert x="1552.0" y="-1456.0"/>
+          <vert x="1424.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1424.0" y="-1856.0"/>
+          <vert x="1552.0" y="-1456.0"/>
+          <vert x="720.0" y="-1456.0"/>
+          <vert x="352.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="352.0" y="-1856.0"/>
+          <vert x="720.0" y="-1456.0"/>
+          <vert x="-544.0" y="-1456.0"/>
+          <vert x="-544.0" y="-1856.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5568.0" y="1584.0"/>
+          <vert x="5872.0" y="496.0"/>
+          <vert x="6432.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6240.0" y="-64.0"/>
+          <vert x="6720.0" y="800.0"/>
+          <vert x="5872.0" y="496.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6432.0" y="1584.0"/>
+          <vert x="5872.0" y="496.0"/>
+          <vert x="6720.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7856.0" y="-112.0"/>
+          <vert x="6720.0" y="800.0"/>
+          <vert x="6240.0" y="-64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8736.0" y="-288.0"/>
+          <vert x="8736.0" y="496.0"/>
+          <vert x="7856.0" y="-112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8736.0" y="496.0"/>
+          <vert x="7760.0" y="576.0"/>
+          <vert x="7856.0" y="-112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7856.0" y="-112.0"/>
+          <vert x="7760.0" y="576.0"/>
+          <vert x="6720.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7760.0" y="576.0"/>
+          <vert x="7120.0" y="1088.0"/>
+          <vert x="6720.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6720.0" y="800.0"/>
+          <vert x="7120.0" y="1088.0"/>
+          <vert x="6432.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6432.0" y="1584.0"/>
+          <vert x="7120.0" y="1088.0"/>
+          <vert x="7360.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7120.0" y="1088.0"/>
+          <vert x="7760.0" y="1008.0"/>
+          <vert x="7360.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7760.0" y="576.0"/>
+          <vert x="7760.0" y="1008.0"/>
+          <vert x="7120.0" y="1088.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7760.0" y="576.0"/>
+          <vert x="8736.0" y="496.0"/>
+          <vert x="8736.0" y="992.0"/>
+          <vert x="8096.0" y="1120.0"/>
+          <vert x="7760.0" y="1008.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="8736.0" y="992.0"/>
+          <vert x="8736.0" y="1536.0"/>
+          <vert x="8096.0" y="1120.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="7760.0" y="1008.0"/>
+          <vert x="8096.0" y="1120.0"/>
+          <vert x="8736.0" y="1536.0"/>
+          <vert x="8736.0" y="1584.0"/>
+          <vert x="7360.0" y="1584.0"/>
+        </container>
+        <container data="start" type="marker">
+          <vert x="-288.0" y="-224.0"/>
         </container>
         <container cl="-16777216" data="finish" fill="16" type="circle">
-          <vert x="3952.0" y="272.0"/>
-          <vert x="3904.0" y="272.0"/>
+          <vert x="8192.0" y="-1328.0"/>
+          <vert x="8304.0" y="-1328.0"/>
+        </container>
+        <container data="tl" type="marker">
+          <vert x="-544.0" y="-1856.0"/>
         </container>
         <container data="br" type="marker">
-          <vert x="4288.0" y="576.0"/>
+          <vert x="8736.0" y="1584.0"/>
+        </container>
+        <container data="score" type="marker">
+          <vert x="8848.0" y="-1344.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1536.0" y="768.0"/>
+          <vert x="1840.0" y="592.0"/>
+          <vert x="2192.0" y="960.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1840.0" y="592.0"/>
+          <vert x="2048.0" y="336.0"/>
+          <vert x="2400.0" y="528.0"/>
+          <vert x="2192.0" y="960.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-16.0" y="-16.0"/>
+          <vert x="176.0" y="64.0"/>
+          <vert x="224.0" y="336.0"/>
+        </container>
+        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+          <vert x="-16.0" y="-16.0"/>
+          <vert x="480.0" y="32.0"/>
+          <vert x="176.0" y="64.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2672.0" y="1056.0"/>
+          <vert x="2912.0" y="752.0"/>
+          <vert x="2912.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2912.0" y="752.0"/>
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="2912.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2896.0" y="320.0"/>
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="2912.0" y="752.0"/>
+        </container>
+        <container cl="-13839284" closed="true" data="boost" fill="1" type="poly">
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="4288.0" y="160.0"/>
+          <vert x="3728.0" y="112.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="3728.0" y="112.0"/>
+          <vert x="3440.0" y="1072.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4288.0" y="160.0"/>
+          <vert x="3440.0" y="1072.0"/>
+          <vert x="3728.0" y="112.0"/>
         </container>
       </layer>
-      <layer data="overlay" disable="true" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
+          <vert x="-176.0" y="-320.0"/>
+          <vert x="-192.0" y="-64.0"/>
+          <vert x="-304.0" y="-64.0"/>
+          <vert x="-384.0" y="-80.0"/>
+          <vert x="-448.0" y="-160.0"/>
+          <vert x="-464.0" y="-272.0"/>
+          <vert x="-384.0" y="-352.0"/>
+          <vert x="-272.0" y="-368.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
+          <vert x="-176.0" y="-320.0"/>
+          <vert x="16.0" y="-352.0"/>
+          <vert x="128.0" y="-304.0"/>
+          <vert x="160.0" y="0.0"/>
+          <vert x="-16.0" y="-16.0"/>
+          <vert x="-192.0" y="-64.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="128.0" y="-304.0"/>
+          <vert x="400.0" y="-320.0"/>
+          <vert x="576.0" y="-240.0"/>
+          <vert x="480.0" y="32.0"/>
+          <vert x="160.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="576.0" y="-240.0"/>
+          <vert x="704.0" y="-240.0"/>
+          <vert x="976.0" y="-48.0"/>
+          <vert x="768.0" y="64.0"/>
+          <vert x="480.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="704.0" y="-240.0"/>
+          <vert x="832.0" y="-528.0"/>
+          <vert x="1072.0" y="-464.0"/>
+          <vert x="976.0" y="-48.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+          <vert x="1072.0" y="-464.0"/>
+          <vert x="832.0" y="-528.0"/>
+          <vert x="800.0" y="-880.0"/>
+          <vert x="1072.0" y="-896.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+          <vert x="800.0" y="-880.0"/>
+          <vert x="816.0" y="-1248.0"/>
+          <vert x="976.0" y="-1360.0"/>
+          <vert x="1248.0" y="-1360.0"/>
+          <vert x="1200.0" y="-1008.0"/>
+          <vert x="1072.0" y="-896.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+          <vert x="1248.0" y="-1360.0"/>
+          <vert x="1696.0" y="-1152.0"/>
+          <vert x="1552.0" y="-912.0"/>
+          <vert x="1200.0" y="-1008.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
+          <vert x="1696.0" y="-1152.0"/>
+          <vert x="1840.0" y="-1136.0"/>
+          <vert x="1952.0" y="-928.0"/>
+          <vert x="1888.0" y="-752.0"/>
+          <vert x="1632.0" y="-752.0"/>
+          <vert x="1552.0" y="-912.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+          <vert x="1632.0" y="-752.0"/>
+          <vert x="1888.0" y="-752.0"/>
+          <vert x="2048.0" y="-528.0"/>
+          <vert x="2000.0" y="-336.0"/>
+          <vert x="1664.0" y="-320.0"/>
+          <vert x="1552.0" y="-528.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+          <vert x="1664.0" y="-320.0"/>
+          <vert x="2000.0" y="-336.0"/>
+          <vert x="2064.0" y="80.0"/>
+          <vert x="1552.0" y="48.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="2064.0" y="80.0"/>
+          <vert x="2048.0" y="336.0"/>
+          <vert x="1840.0" y="592.0"/>
+          <vert x="1360.0" y="320.0"/>
+          <vert x="1552.0" y="48.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+          <vert x="1840.0" y="592.0"/>
+          <vert x="1536.0" y="768.0"/>
+          <vert x="1088.0" y="464.0"/>
+          <vert x="1360.0" y="320.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+          <vert x="1536.0" y="768.0"/>
+          <vert x="1008.0" y="896.0"/>
+          <vert x="912.0" y="480.0"/>
+          <vert x="1088.0" y="464.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
+          <vert x="912.0" y="480.0"/>
+          <vert x="1008.0" y="896.0"/>
+          <vert x="496.0" y="704.0"/>
+          <vert x="608.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
+          <vert x="608.0" y="384.0"/>
+          <vert x="496.0" y="704.0"/>
+          <vert x="208.0" y="816.0"/>
+          <vert x="80.0" y="544.0"/>
+          <vert x="224.0" y="336.0"/>
+          <vert x="400.0" y="288.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
+          <vert x="496.0" y="704.0"/>
+          <vert x="784.0" y="960.0"/>
+          <vert x="352.0" y="1168.0"/>
+          <vert x="208.0" y="816.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+          <vert x="352.0" y="1168.0"/>
+          <vert x="784.0" y="960.0"/>
+          <vert x="1088.0" y="1024.0"/>
+          <vert x="1072.0" y="1328.0"/>
+          <vert x="640.0" y="1376.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
+          <vert x="1088.0" y="1024.0"/>
+          <vert x="1456.0" y="944.0"/>
+          <vert x="1456.0" y="1376.0"/>
+          <vert x="1072.0" y="1328.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
+          <vert x="1456.0" y="944.0"/>
+          <vert x="1840.0" y="1104.0"/>
+          <vert x="1856.0" y="1504.0"/>
+          <vert x="1456.0" y="1376.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
+          <vert x="1856.0" y="1504.0"/>
+          <vert x="1840.0" y="1104.0"/>
+          <vert x="2192.0" y="960.0"/>
+          <vert x="2304.0" y="1328.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
+          <vert x="2192.0" y="960.0"/>
+          <vert x="2400.0" y="528.0"/>
+          <vert x="2784.0" y="688.0"/>
+          <vert x="2672.0" y="1056.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
+          <vert x="2192.0" y="960.0"/>
+          <vert x="2672.0" y="1056.0"/>
+          <vert x="2304.0" y="1328.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
+          <vert x="2400.0" y="528.0"/>
+          <vert x="2368.0" y="256.0"/>
+          <vert x="2896.0" y="320.0"/>
+          <vert x="2784.0" y="688.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="25" fill="16" type="poly">
+          <vert x="2368.0" y="256.0"/>
+          <vert x="2480.0" y="-144.0"/>
+          <vert x="2800.0" y="-192.0"/>
+          <vert x="2976.0" y="0.0"/>
+          <vert x="2896.0" y="320.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="26" fill="16" type="poly">
+          <vert x="2800.0" y="-192.0"/>
+          <vert x="2880.0" y="-416.0"/>
+          <vert x="3344.0" y="-384.0"/>
+          <vert x="3360.0" y="-64.0"/>
+          <vert x="2976.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="27" fill="16" type="poly">
+          <vert x="3344.0" y="-384.0"/>
+          <vert x="3808.0" y="-448.0"/>
+          <vert x="3760.0" y="32.0"/>
+          <vert x="3360.0" y="-64.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="28" fill="16" type="poly">
+          <vert x="3808.0" y="-448.0"/>
+          <vert x="4416.0" y="-240.0"/>
+          <vert x="4288.0" y="160.0"/>
+          <vert x="3760.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="29" fill="16" type="poly">
+          <vert x="4288.0" y="160.0"/>
+          <vert x="4416.0" y="-240.0"/>
+          <vert x="4864.0" y="-272.0"/>
+          <vert x="4960.0" y="0.0"/>
+          <vert x="4832.0" y="192.0"/>
+          <vert x="4512.0" y="256.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="31" fill="16" type="poly">
+          <vert x="4416.0" y="-240.0"/>
+          <vert x="4256.0" y="-400.0"/>
+          <vert x="4240.0" y="-672.0"/>
+          <vert x="4528.0" y="-848.0"/>
+          <vert x="4816.0" y="-736.0"/>
+          <vert x="4896.0" y="-512.0"/>
+          <vert x="4864.0" y="-272.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="32" fill="16" type="poly">
+          <vert x="4816.0" y="-736.0"/>
+          <vert x="5232.0" y="-928.0"/>
+          <vert x="5568.0" y="-800.0"/>
+          <vert x="5568.0" y="-512.0"/>
+          <vert x="5184.0" y="-416.0"/>
+          <vert x="4896.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="33" fill="16" type="poly">
+          <vert x="5568.0" y="-512.0"/>
+          <vert x="5568.0" y="-800.0"/>
+          <vert x="6624.0" y="-800.0"/>
+          <vert x="6624.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="34" fill="16" type="poly">
+          <vert x="6624.0" y="-800.0"/>
+          <vert x="7136.0" y="-1056.0"/>
+          <vert x="7168.0" y="-848.0"/>
+          <vert x="7040.0" y="-592.0"/>
+          <vert x="6624.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="35" fill="16" type="poly">
+          <vert x="6624.0" y="-800.0"/>
+          <vert x="6592.0" y="-1296.0"/>
+          <vert x="7088.0" y="-1136.0"/>
+          <vert x="7136.0" y="-1056.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="36" fill="16" type="poly">
+          <vert x="6592.0" y="-1296.0"/>
+          <vert x="6976.0" y="-1616.0"/>
+          <vert x="7376.0" y="-1536.0"/>
+          <vert x="7088.0" y="-1136.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="37" fill="16" type="poly">
+          <vert x="7088.0" y="-1136.0"/>
+          <vert x="7376.0" y="-1536.0"/>
+          <vert x="7808.0" y="-1504.0"/>
+          <vert x="7776.0" y="-1216.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="38" fill="16" type="poly">
+          <vert x="7776.0" y="-1216.0"/>
+          <vert x="7808.0" y="-1504.0"/>
+          <vert x="7984.0" y="-1568.0"/>
+          <vert x="8256.0" y="-1568.0"/>
+          <vert x="8448.0" y="-1440.0"/>
+          <vert x="8448.0" y="-1216.0"/>
+          <vert x="8272.0" y="-1120.0"/>
+          <vert x="7920.0" y="-1104.0"/>
+        </container>
+      </layer>
     </map>
     <map bg="6" bgcl="-9342607" data="006_a" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" fade="0.85" paralax="0.0" type="layer"/>
@@ -571,11 +1550,11 @@
           <vert x="560.0" y="128.0"/>
           <vert x="-144.0" y="128.0"/>
         </container>
-        <container cl="-14929409" data="mag" fill="3" type="circle">
+        <container cl="-15323649" data="mag" fill="3" type="circle">
           <vert x="-176.0" y="112.0"/>
           <vert x="-192.0" y="112.0"/>
         </container>
-        <container cl="-14929409" data="mag" fill="3" type="circle">
+        <container cl="-15323649" data="mag" fill="3" type="circle">
           <vert x="592.0" y="112.0"/>
           <vert x="608.0" y="112.0"/>
         </container>
@@ -594,6 +1573,1136 @@
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
+    </map>
+    <map bg="6" bgcl="-9342607" data="008_long" fg="4" fgcl="-1" split="HHT" type="map">
+      <layer data="fixed" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="paralax1" fade="0.8" paralax="0.8" type="layer">
+        <container cl="-7500403" data="solid" fill="4" type="circle">
+          <vert x="16.0" y="-16.0"/>
+          <vert x="144.0" y="-16.0"/>
+        </container>
+        <container cl="-7500403" data="solid" fill="4" type="circle">
+          <vert x="1072.0" y="-128.0"/>
+          <vert x="1104.0" y="-32.0"/>
+        </container>
+      </layer>
+      <layer data="paralax2" fade="0.6" paralax="0.6" type="layer">
+        <container cl="-5658199" data="solid" fill="4" type="circle">
+          <vert x="608.0" y="-80.0"/>
+          <vert x="576.0" y="-64.0"/>
+        </container>
+        <container cl="-5658199" data="solid" fill="4" type="circle">
+          <vert x="848.0" y="240.0"/>
+          <vert x="768.0" y="240.0"/>
+        </container>
+        <container cl="-5658199" data="solid" fill="4" type="circle">
+          <vert x="1120.0" y="624.0"/>
+          <vert x="1152.0" y="592.0"/>
+        </container>
+        <container cl="-5658199" data="solid" fill="4" type="circle">
+          <vert x="2224.0" y="512.0"/>
+          <vert x="2256.0" y="560.0"/>
+        </container>
+      </layer>
+      <layer data="paralax3" fade="0.4" paralax="0.4" type="layer">
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="1344.0" y="-144.0"/>
+          <vert x="1344.0" y="-192.0"/>
+        </container>
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="1632.0" y="368.0"/>
+          <vert x="1680.0" y="368.0"/>
+        </container>
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="448.0" y="336.0"/>
+          <vert x="432.0" y="336.0"/>
+        </container>
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="1520.0" y="960.0"/>
+          <vert x="1536.0" y="960.0"/>
+        </container>
+        <container cl="-3750202" data="solid" fill="4" type="circle">
+          <vert x="2832.0" y="352.0"/>
+          <vert x="2800.0" y="352.0"/>
+        </container>
+      </layer>
+      <layer data="background" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="game" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-288.0" y="32.0"/>
+          <vert x="-288.0" y="96.0"/>
+          <vert x="-416.0" y="96.0"/>
+          <vert x="-416.0" y="0.0"/>
+          <vert x="-320.0" y="0.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-320.0" y="0.0"/>
+          <vert x="-416.0" y="0.0"/>
+          <vert x="-416.0" y="-160.0"/>
+          <vert x="-320.0" y="-160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-320.0" y="-160.0"/>
+          <vert x="-416.0" y="-160.0"/>
+          <vert x="-416.0" y="-288.0"/>
+          <vert x="-288.0" y="-288.0"/>
+          <vert x="-288.0" y="-192.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-288.0" y="-288.0"/>
+          <vert x="1888.0" y="-288.0"/>
+          <vert x="1888.0" y="-192.0"/>
+          <vert x="-288.0" y="-192.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1888.0" y="-288.0"/>
+          <vert x="2112.0" y="-288.0"/>
+          <vert x="2112.0" y="-112.0"/>
+          <vert x="2000.0" y="-112.0"/>
+          <vert x="1888.0" y="-192.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2000.0" y="-112.0"/>
+          <vert x="2112.0" y="-112.0"/>
+          <vert x="2112.0" y="432.0"/>
+          <vert x="2000.0" y="432.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2000.0" y="432.0"/>
+          <vert x="2320.0" y="432.0"/>
+          <vert x="2320.0" y="656.0"/>
+          <vert x="2208.0" y="656.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-288.0" y="32.0"/>
+          <vert x="1712.0" y="32.0"/>
+          <vert x="1712.0" y="384.0"/>
+          <vert x="-288.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1712.0" y="32.0"/>
+          <vert x="1744.0" y="64.0"/>
+          <vert x="1744.0" y="384.0"/>
+          <vert x="1712.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1744.0" y="384.0"/>
+          <vert x="1792.0" y="432.0"/>
+          <vert x="1792.0" y="656.0"/>
+          <vert x="1744.0" y="656.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1744.0" y="656.0"/>
+          <vert x="1792.0" y="656.0"/>
+          <vert x="1968.0" y="832.0"/>
+          <vert x="1744.0" y="832.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2320.0" y="432.0"/>
+          <vert x="2608.0" y="432.0"/>
+          <vert x="2608.0" y="656.0"/>
+          <vert x="2320.0" y="656.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2496.0" y="656.0"/>
+          <vert x="2608.0" y="656.0"/>
+          <vert x="2608.0" y="768.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2608.0" y="432.0"/>
+          <vert x="2688.0" y="432.0"/>
+          <vert x="2688.0" y="832.0"/>
+          <vert x="2608.0" y="832.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1744.0" y="832.0"/>
+          <vert x="2304.0" y="832.0"/>
+          <vert x="2336.0" y="864.0"/>
+          <vert x="2336.0" y="912.0"/>
+          <vert x="2304.0" y="944.0"/>
+          <vert x="1744.0" y="944.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1600.0" y="384.0"/>
+          <vert x="1744.0" y="384.0"/>
+          <vert x="1744.0" y="512.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2608.0" y="832.0"/>
+          <vert x="2688.0" y="832.0"/>
+          <vert x="2688.0" y="1200.0"/>
+          <vert x="2608.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2688.0" y="1200.0"/>
+          <vert x="2688.0" y="1360.0"/>
+          <vert x="1520.0" y="1360.0"/>
+          <vert x="1472.0" y="1328.0"/>
+          <vert x="1472.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2608.0" y="1120.0"/>
+          <vert x="2608.0" y="1200.0"/>
+          <vert x="2544.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1472.0" y="1328.0"/>
+          <vert x="1344.0" y="1248.0"/>
+          <vert x="1344.0" y="640.0"/>
+          <vert x="1408.0" y="624.0"/>
+          <vert x="1472.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1472.0" y="1104.0"/>
+          <vert x="1568.0" y="1200.0"/>
+          <vert x="1472.0" y="1200.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1344.0" y="640.0"/>
+          <vert x="1344.0" y="1168.0"/>
+          <vert x="1216.0" y="1168.0"/>
+          <vert x="944.0" y="912.0"/>
+          <vert x="944.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1216.0" y="1168.0"/>
+          <vert x="1344.0" y="1168.0"/>
+          <vert x="1344.0" y="1248.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="672.0" y="384.0"/>
+          <vert x="672.0" y="912.0"/>
+          <vert x="448.0" y="912.0"/>
+          <vert x="448.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="784.0" y="384.0"/>
+          <vert x="672.0" y="496.0"/>
+          <vert x="672.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="672.0" y="912.0"/>
+          <vert x="800.0" y="1312.0"/>
+          <vert x="448.0" y="1312.0"/>
+          <vert x="448.0" y="912.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="448.0" y="1312.0"/>
+          <vert x="800.0" y="1312.0"/>
+          <vert x="1264.0" y="1632.0"/>
+          <vert x="448.0" y="1632.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1856.0" y="1680.0"/>
+          <vert x="1856.0" y="1920.0"/>
+          <vert x="448.0" y="1920.0"/>
+          <vert x="448.0" y="1632.0"/>
+          <vert x="1264.0" y="1632.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1856.0" y="1680.0"/>
+          <vert x="3056.0" y="1680.0"/>
+          <vert x="3056.0" y="1920.0"/>
+          <vert x="1856.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3056.0" y="1680.0"/>
+          <vert x="3472.0" y="1472.0"/>
+          <vert x="3472.0" y="1920.0"/>
+          <vert x="3056.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3472.0" y="1472.0"/>
+          <vert x="3808.0" y="1312.0"/>
+          <vert x="3808.0" y="1920.0"/>
+          <vert x="3472.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3808.0" y="1312.0"/>
+          <vert x="4128.0" y="1264.0"/>
+          <vert x="4128.0" y="1920.0"/>
+          <vert x="3808.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4128.0" y="1264.0"/>
+          <vert x="4496.0" y="1264.0"/>
+          <vert x="4496.0" y="1920.0"/>
+          <vert x="4128.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4496.0" y="1264.0"/>
+          <vert x="4768.0" y="1248.0"/>
+          <vert x="4768.0" y="1920.0"/>
+          <vert x="4496.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4768.0" y="1248.0"/>
+          <vert x="5184.0" y="1264.0"/>
+          <vert x="5184.0" y="1920.0"/>
+          <vert x="4768.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5184.0" y="1264.0"/>
+          <vert x="5568.0" y="1248.0"/>
+          <vert x="5568.0" y="1536.0"/>
+          <vert x="5184.0" y="1536.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5568.0" y="1248.0"/>
+          <vert x="5776.0" y="1280.0"/>
+          <vert x="5776.0" y="1536.0"/>
+          <vert x="5568.0" y="1536.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5776.0" y="1280.0"/>
+          <vert x="5904.0" y="1232.0"/>
+          <vert x="5904.0" y="1536.0"/>
+          <vert x="5776.0" y="1536.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5904.0" y="1232.0"/>
+          <vert x="5952.0" y="1120.0"/>
+          <vert x="6112.0" y="1120.0"/>
+          <vert x="6112.0" y="1232.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5904.0" y="1008.0"/>
+          <vert x="6112.0" y="1008.0"/>
+          <vert x="6112.0" y="1120.0"/>
+          <vert x="5952.0" y="1120.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5776.0" y="928.0"/>
+          <vert x="6112.0" y="928.0"/>
+          <vert x="6112.0" y="1008.0"/>
+          <vert x="5904.0" y="1008.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6112.0" y="1232.0"/>
+          <vert x="6112.0" y="1536.0"/>
+          <vert x="5904.0" y="1536.0"/>
+          <vert x="5904.0" y="1232.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="6112.0" y="928.0"/>
+          <vert x="5552.0" y="928.0"/>
+          <vert x="5552.0" y="800.0"/>
+          <vert x="6112.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5552.0" y="800.0"/>
+          <vert x="5552.0" y="928.0"/>
+          <vert x="5184.0" y="1040.0"/>
+          <vert x="5184.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5184.0" y="800.0"/>
+          <vert x="5184.0" y="1040.0"/>
+          <vert x="4880.0" y="880.0"/>
+          <vert x="4880.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4512.0" y="688.0"/>
+          <vert x="4512.0" y="640.0"/>
+          <vert x="4880.0" y="640.0"/>
+          <vert x="4880.0" y="880.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4512.0" y="640.0"/>
+          <vert x="4512.0" y="688.0"/>
+          <vert x="4096.0" y="688.0"/>
+          <vert x="4096.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4096.0" y="640.0"/>
+          <vert x="4096.0" y="688.0"/>
+          <vert x="3616.0" y="768.0"/>
+          <vert x="3616.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3616.0" y="768.0"/>
+          <vert x="3328.0" y="1120.0"/>
+          <vert x="3328.0" y="640.0"/>
+          <vert x="3616.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3328.0" y="640.0"/>
+          <vert x="3328.0" y="1120.0"/>
+          <vert x="3056.0" y="1360.0"/>
+          <vert x="2688.0" y="1360.0"/>
+          <vert x="2688.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2112.0" y="-288.0"/>
+          <vert x="2688.0" y="-288.0"/>
+          <vert x="2688.0" y="432.0"/>
+          <vert x="2112.0" y="432.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2688.0" y="240.0"/>
+          <vert x="3712.0" y="240.0"/>
+          <vert x="3712.0" y="640.0"/>
+          <vert x="2688.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3712.0" y="240.0"/>
+          <vert x="4880.0" y="240.0"/>
+          <vert x="4880.0" y="640.0"/>
+          <vert x="3712.0" y="640.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="4880.0" y="240.0"/>
+          <vert x="6112.0" y="240.0"/>
+          <vert x="6112.0" y="800.0"/>
+          <vert x="4880.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2688.0" y="-288.0"/>
+          <vert x="3776.0" y="-288.0"/>
+          <vert x="3776.0" y="240.0"/>
+          <vert x="2688.0" y="240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3776.0" y="-288.0"/>
+          <vert x="5024.0" y="-288.0"/>
+          <vert x="5024.0" y="240.0"/>
+          <vert x="3776.0" y="240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5024.0" y="-288.0"/>
+          <vert x="6112.0" y="-288.0"/>
+          <vert x="6112.0" y="240.0"/>
+          <vert x="5024.0" y="240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="5184.0" y="1536.0"/>
+          <vert x="6112.0" y="1536.0"/>
+          <vert x="6112.0" y="1920.0"/>
+          <vert x="5184.0" y="1920.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-416.0" y="96.0"/>
+          <vert x="-288.0" y="96.0"/>
+          <vert x="-288.0" y="384.0"/>
+          <vert x="-416.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-416.0" y="384.0"/>
+          <vert x="448.0" y="384.0"/>
+          <vert x="448.0" y="896.0"/>
+          <vert x="-416.0" y="896.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-416.0" y="896.0"/>
+          <vert x="448.0" y="896.0"/>
+          <vert x="448.0" y="1584.0"/>
+          <vert x="-416.0" y="1584.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-416.0" y="1584.0"/>
+          <vert x="448.0" y="1584.0"/>
+          <vert x="448.0" y="1920.0"/>
+          <vert x="-416.0" y="1920.0"/>
+        </container>
+        <container data="tl" type="marker">
+          <vert x="-416.0" y="-288.0"/>
+        </container>
+        <container data="br" type="marker">
+          <vert x="6112.0" y="1920.0"/>
+        </container>
+        <container data="start" type="marker">
+          <vert x="-224.0" y="-80.0"/>
+        </container>
+        <container cl="-16777216" data="finish" fill="16" type="circle">
+          <vert x="5776.0" y="1104.0"/>
+          <vert x="5696.0" y="1104.0"/>
+        </container>
+        <container data="score" type="marker">
+          <vert x="6288.0" y="1088.0"/>
+        </container>
+      </layer>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
+          <vert x="-80.0" y="-192.0"/>
+          <vert x="-80.0" y="32.0"/>
+          <vert x="-288.0" y="32.0"/>
+          <vert x="-320.0" y="0.0"/>
+          <vert x="-320.0" y="-160.0"/>
+          <vert x="-288.0" y="-192.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
+          <vert x="-80.0" y="-192.0"/>
+          <vert x="144.0" y="-192.0"/>
+          <vert x="144.0" y="32.0"/>
+          <vert x="-80.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="144.0" y="-192.0"/>
+          <vert x="400.0" y="-192.0"/>
+          <vert x="400.0" y="32.0"/>
+          <vert x="144.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="400.0" y="-192.0"/>
+          <vert x="656.0" y="-192.0"/>
+          <vert x="656.0" y="32.0"/>
+          <vert x="400.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="656.0" y="-192.0"/>
+          <vert x="912.0" y="-192.0"/>
+          <vert x="912.0" y="32.0"/>
+          <vert x="656.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+          <vert x="912.0" y="-192.0"/>
+          <vert x="1168.0" y="-192.0"/>
+          <vert x="1168.0" y="32.0"/>
+          <vert x="912.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+          <vert x="1168.0" y="-192.0"/>
+          <vert x="1440.0" y="-192.0"/>
+          <vert x="1440.0" y="32.0"/>
+          <vert x="1168.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+          <vert x="1440.0" y="-192.0"/>
+          <vert x="1712.0" y="-192.0"/>
+          <vert x="1712.0" y="32.0"/>
+          <vert x="1440.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
+          <vert x="1712.0" y="32.0"/>
+          <vert x="1712.0" y="-192.0"/>
+          <vert x="1888.0" y="-192.0"/>
+          <vert x="2000.0" y="-112.0"/>
+          <vert x="2000.0" y="64.0"/>
+          <vert x="1744.0" y="64.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+          <vert x="1744.0" y="64.0"/>
+          <vert x="2000.0" y="64.0"/>
+          <vert x="2000.0" y="208.0"/>
+          <vert x="1744.0" y="208.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+          <vert x="1744.0" y="208.0"/>
+          <vert x="2000.0" y="208.0"/>
+          <vert x="2000.0" y="432.0"/>
+          <vert x="1792.0" y="432.0"/>
+          <vert x="1744.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="1792.0" y="432.0"/>
+          <vert x="2000.0" y="432.0"/>
+          <vert x="2208.0" y="656.0"/>
+          <vert x="1792.0" y="656.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+          <vert x="1792.0" y="656.0"/>
+          <vert x="2208.0" y="656.0"/>
+          <vert x="2208.0" y="832.0"/>
+          <vert x="1968.0" y="832.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+          <vert x="2208.0" y="656.0"/>
+          <vert x="2608.0" y="656.0"/>
+          <vert x="2608.0" y="832.0"/>
+          <vert x="2208.0" y="832.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
+          <vert x="2304.0" y="832.0"/>
+          <vert x="2608.0" y="832.0"/>
+          <vert x="2608.0" y="944.0"/>
+          <vert x="2304.0" y="944.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
+          <vert x="2608.0" y="944.0"/>
+          <vert x="2608.0" y="1200.0"/>
+          <vert x="2304.0" y="1200.0"/>
+          <vert x="2304.0" y="944.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
+          <vert x="2048.0" y="944.0"/>
+          <vert x="2304.0" y="944.0"/>
+          <vert x="2304.0" y="1200.0"/>
+          <vert x="2048.0" y="1200.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+          <vert x="1744.0" y="944.0"/>
+          <vert x="2048.0" y="944.0"/>
+          <vert x="2048.0" y="1200.0"/>
+          <vert x="1744.0" y="1200.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
+          <vert x="1744.0" y="1200.0"/>
+          <vert x="1472.0" y="1200.0"/>
+          <vert x="1472.0" y="944.0"/>
+          <vert x="1744.0" y="944.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
+          <vert x="1744.0" y="688.0"/>
+          <vert x="1744.0" y="944.0"/>
+          <vert x="1472.0" y="944.0"/>
+          <vert x="1472.0" y="688.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
+          <vert x="1744.0" y="688.0"/>
+          <vert x="1472.0" y="688.0"/>
+          <vert x="1472.0" y="384.0"/>
+          <vert x="1600.0" y="384.0"/>
+          <vert x="1744.0" y="512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
+          <vert x="1472.0" y="384.0"/>
+          <vert x="1472.0" y="640.0"/>
+          <vert x="1216.0" y="640.0"/>
+          <vert x="1216.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
+          <vert x="1216.0" y="384.0"/>
+          <vert x="1216.0" y="640.0"/>
+          <vert x="944.0" y="640.0"/>
+          <vert x="944.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
+          <vert x="944.0" y="640.0"/>
+          <vert x="672.0" y="640.0"/>
+          <vert x="672.0" y="384.0"/>
+          <vert x="944.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="25" fill="16" type="poly">
+          <vert x="944.0" y="640.0"/>
+          <vert x="944.0" y="912.0"/>
+          <vert x="672.0" y="912.0"/>
+          <vert x="672.0" y="640.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="26" fill="16" type="poly">
+          <vert x="672.0" y="912.0"/>
+          <vert x="944.0" y="912.0"/>
+          <vert x="1216.0" y="1168.0"/>
+          <vert x="800.0" y="1312.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="27" fill="16" type="poly">
+          <vert x="800.0" y="1312.0"/>
+          <vert x="1216.0" y="1168.0"/>
+          <vert x="1520.0" y="1360.0"/>
+          <vert x="1264.0" y="1632.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="28" fill="16" type="poly">
+          <vert x="1264.0" y="1632.0"/>
+          <vert x="1520.0" y="1360.0"/>
+          <vert x="1856.0" y="1360.0"/>
+          <vert x="1856.0" y="1680.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="29" fill="16" type="poly">
+          <vert x="1856.0" y="1360.0"/>
+          <vert x="2160.0" y="1360.0"/>
+          <vert x="2160.0" y="1680.0"/>
+          <vert x="1856.0" y="1680.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="30" fill="16" type="poly">
+          <vert x="2160.0" y="1360.0"/>
+          <vert x="2608.0" y="1360.0"/>
+          <vert x="2608.0" y="1680.0"/>
+          <vert x="2160.0" y="1680.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="31" fill="16" type="poly">
+          <vert x="2608.0" y="1360.0"/>
+          <vert x="3056.0" y="1360.0"/>
+          <vert x="3056.0" y="1680.0"/>
+          <vert x="2608.0" y="1680.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="32" fill="16" type="poly">
+          <vert x="3056.0" y="1360.0"/>
+          <vert x="3328.0" y="1120.0"/>
+          <vert x="3472.0" y="1472.0"/>
+          <vert x="3056.0" y="1680.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="33" fill="16" type="poly">
+          <vert x="3328.0" y="1120.0"/>
+          <vert x="3616.0" y="768.0"/>
+          <vert x="3808.0" y="1312.0"/>
+          <vert x="3472.0" y="1472.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="34" fill="16" type="poly">
+          <vert x="3616.0" y="768.0"/>
+          <vert x="4096.0" y="688.0"/>
+          <vert x="4128.0" y="1264.0"/>
+          <vert x="3808.0" y="1312.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="35" fill="16" type="poly">
+          <vert x="4096.0" y="688.0"/>
+          <vert x="4512.0" y="688.0"/>
+          <vert x="4496.0" y="1264.0"/>
+          <vert x="4128.0" y="1264.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="36" fill="16" type="poly">
+          <vert x="4496.0" y="1264.0"/>
+          <vert x="4512.0" y="688.0"/>
+          <vert x="4880.0" y="880.0"/>
+          <vert x="4768.0" y="1248.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="37" fill="16" type="poly">
+          <vert x="4768.0" y="1248.0"/>
+          <vert x="4880.0" y="880.0"/>
+          <vert x="5184.0" y="1040.0"/>
+          <vert x="5184.0" y="1264.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="38" fill="16" type="poly">
+          <vert x="5184.0" y="1040.0"/>
+          <vert x="5552.0" y="928.0"/>
+          <vert x="5568.0" y="1248.0"/>
+          <vert x="5184.0" y="1264.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="39" fill="16" type="poly">
+          <vert x="5552.0" y="928.0"/>
+          <vert x="5776.0" y="928.0"/>
+          <vert x="5904.0" y="1008.0"/>
+          <vert x="5952.0" y="1120.0"/>
+          <vert x="5904.0" y="1232.0"/>
+          <vert x="5776.0" y="1280.0"/>
+          <vert x="5568.0" y="1248.0"/>
+        </container>
+      </layer>
+    </map>
+    <map bg="6" bgcl="-9342607" data="010_first" fg="4" fgcl="-1" split="HHT" type="map">
+      <layer data="fixed" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="paralax1" fade="0.8" paralax="0.8" type="layer"/>
+      <layer data="paralax2" fade="0.6" paralax="0.6" type="layer"/>
+      <layer data="paralax3" fade="0.4" paralax="0.4" type="layer"/>
+      <layer data="background" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="game" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-384.0" y="-128.0"/>
+          <vert x="-448.0" y="-128.0"/>
+          <vert x="-448.0" y="-224.0"/>
+          <vert x="-352.0" y="-224.0"/>
+          <vert x="-352.0" y="-160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="-128.0"/>
+          <vert x="-384.0" y="-128.0"/>
+          <vert x="-384.0" y="0.0"/>
+          <vert x="-448.0" y="0.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="0.0"/>
+          <vert x="-384.0" y="0.0"/>
+          <vert x="-352.0" y="32.0"/>
+          <vert x="-352.0" y="96.0"/>
+          <vert x="-448.0" y="96.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-352.0" y="32.0"/>
+          <vert x="512.0" y="32.0"/>
+          <vert x="544.0" y="64.0"/>
+          <vert x="544.0" y="96.0"/>
+          <vert x="-352.0" y="96.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-352.0" y="-224.0"/>
+          <vert x="576.0" y="-224.0"/>
+          <vert x="576.0" y="-160.0"/>
+          <vert x="-352.0" y="-160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="576.0" y="-224.0"/>
+          <vert x="800.0" y="-224.0"/>
+          <vert x="800.0" y="0.0"/>
+          <vert x="736.0" y="0.0"/>
+          <vert x="576.0" y="-160.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="736.0" y="0.0"/>
+          <vert x="1120.0" y="0.0"/>
+          <vert x="1120.0" y="192.0"/>
+          <vert x="928.0" y="384.0"/>
+          <vert x="736.0" y="192.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1120.0" y="0.0"/>
+          <vert x="2272.0" y="0.0"/>
+          <vert x="2272.0" y="160.0"/>
+          <vert x="2240.0" y="192.0"/>
+          <vert x="1120.0" y="192.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-448.0" y="96.0"/>
+          <vert x="544.0" y="96.0"/>
+          <vert x="544.0" y="384.0"/>
+          <vert x="-448.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2272.0" y="-608.0"/>
+          <vert x="2272.0" y="0.0"/>
+          <vert x="2112.0" y="0.0"/>
+          <vert x="2112.0" y="-608.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2112.0" y="-608.0"/>
+          <vert x="2112.0" y="-768.0"/>
+          <vert x="2368.0" y="-768.0"/>
+          <vert x="2368.0" y="-704.0"/>
+          <vert x="2272.0" y="-608.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="-768.0"/>
+          <vert x="3104.0" y="-768.0"/>
+          <vert x="3104.0" y="-704.0"/>
+          <vert x="2368.0" y="-704.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3104.0" y="-768.0"/>
+          <vert x="3264.0" y="-768.0"/>
+          <vert x="3264.0" y="-608.0"/>
+          <vert x="3200.0" y="-608.0"/>
+          <vert x="3104.0" y="-704.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3200.0" y="-608.0"/>
+          <vert x="3264.0" y="-608.0"/>
+          <vert x="3264.0" y="-224.0"/>
+          <vert x="3200.0" y="-224.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3200.0" y="-224.0"/>
+          <vert x="3264.0" y="-224.0"/>
+          <vert x="3264.0" y="-32.0"/>
+          <vert x="3072.0" y="-32.0"/>
+          <vert x="3072.0" y="-96.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3072.0" y="-96.0"/>
+          <vert x="3072.0" y="-32.0"/>
+          <vert x="2752.0" y="-32.0"/>
+          <vert x="2752.0" y="-64.0"/>
+          <vert x="2784.0" y="-96.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2464.0" y="-480.0"/>
+          <vert x="2496.0" y="-512.0"/>
+          <vert x="2976.0" y="-512.0"/>
+          <vert x="3008.0" y="-480.0"/>
+          <vert x="3008.0" y="-320.0"/>
+          <vert x="2976.0" y="-288.0"/>
+          <vert x="2464.0" y="-288.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2688.0" y="-288.0"/>
+          <vert x="2560.0" y="-160.0"/>
+          <vert x="2464.0" y="-160.0"/>
+          <vert x="2464.0" y="-288.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2464.0" y="-160.0"/>
+          <vert x="2560.0" y="-160.0"/>
+          <vert x="2560.0" y="512.0"/>
+          <vert x="2464.0" y="512.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2752.0" y="-32.0"/>
+          <vert x="3264.0" y="-32.0"/>
+          <vert x="3264.0" y="512.0"/>
+          <vert x="2752.0" y="512.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2112.0" y="-768.0"/>
+          <vert x="2112.0" y="0.0"/>
+          <vert x="800.0" y="0.0"/>
+          <vert x="800.0" y="-768.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="800.0" y="-768.0"/>
+          <vert x="800.0" y="-224.0"/>
+          <vert x="-448.0" y="-224.0"/>
+          <vert x="-448.0" y="-768.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2464.0" y="512.0"/>
+          <vert x="2560.0" y="512.0"/>
+          <vert x="2464.0" y="608.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2752.0" y="512.0"/>
+          <vert x="3264.0" y="512.0"/>
+          <vert x="3264.0" y="608.0"/>
+          <vert x="2848.0" y="608.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2848.0" y="608.0"/>
+          <vert x="3264.0" y="608.0"/>
+          <vert x="3264.0" y="800.0"/>
+          <vert x="2848.0" y="800.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2752.0" y="896.0"/>
+          <vert x="2848.0" y="800.0"/>
+          <vert x="3264.0" y="800.0"/>
+          <vert x="3264.0" y="896.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2464.0" y="800.0"/>
+          <vert x="2560.0" y="896.0"/>
+          <vert x="2464.0" y="896.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="3264.0" y="896.0"/>
+          <vert x="3264.0" y="992.0"/>
+          <vert x="2464.0" y="992.0"/>
+          <vert x="2464.0" y="896.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2464.0" y="288.0"/>
+          <vert x="2464.0" y="992.0"/>
+          <vert x="2368.0" y="992.0"/>
+          <vert x="2368.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="2368.0" y="384.0"/>
+          <vert x="2368.0" y="992.0"/>
+          <vert x="1312.0" y="992.0"/>
+          <vert x="1312.0" y="384.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1312.0" y="384.0"/>
+          <vert x="1312.0" y="992.0"/>
+          <vert x="1120.0" y="992.0"/>
+          <vert x="1120.0" y="576.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1120.0" y="576.0"/>
+          <vert x="1120.0" y="992.0"/>
+          <vert x="736.0" y="992.0"/>
+          <vert x="736.0" y="576.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="544.0" y="384.0"/>
+          <vert x="736.0" y="576.0"/>
+          <vert x="736.0" y="992.0"/>
+          <vert x="544.0" y="992.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="544.0" y="384.0"/>
+          <vert x="544.0" y="992.0"/>
+          <vert x="-448.0" y="992.0"/>
+          <vert x="-448.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" data="finish" fill="16" type="circle">
+          <vert x="2656.0" y="704.0"/>
+          <vert x="2656.0" y="800.0"/>
+        </container>
+        <container data="br" type="marker">
+          <vert x="3264.0" y="992.0"/>
+        </container>
+        <container data="tl" type="marker">
+          <vert x="-448.0" y="-768.0"/>
+        </container>
+        <container data="start" type="marker">
+          <vert x="-256.0" y="-64.0"/>
+        </container>
+        <container data="score" type="marker">
+          <vert x="3088.0" y="704.0"/>
+        </container>
+      </layer>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
+          <vert x="-160.0" y="-160.0"/>
+          <vert x="-160.0" y="32.0"/>
+          <vert x="-352.0" y="32.0"/>
+          <vert x="-384.0" y="0.0"/>
+          <vert x="-384.0" y="-128.0"/>
+          <vert x="-352.0" y="-160.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
+          <vert x="-160.0" y="-160.0"/>
+          <vert x="32.0" y="-160.0"/>
+          <vert x="32.0" y="32.0"/>
+          <vert x="-160.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="32.0" y="32.0"/>
+          <vert x="32.0" y="-160.0"/>
+          <vert x="256.0" y="-160.0"/>
+          <vert x="256.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="256.0" y="-160.0"/>
+          <vert x="512.0" y="-160.0"/>
+          <vert x="512.0" y="32.0"/>
+          <vert x="256.0" y="32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="512.0" y="32.0"/>
+          <vert x="512.0" y="-160.0"/>
+          <vert x="576.0" y="-160.0"/>
+          <vert x="736.0" y="0.0"/>
+          <vert x="736.0" y="64.0"/>
+          <vert x="544.0" y="64.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+          <vert x="544.0" y="64.0"/>
+          <vert x="736.0" y="64.0"/>
+          <vert x="736.0" y="192.0"/>
+          <vert x="544.0" y="192.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+          <vert x="544.0" y="192.0"/>
+          <vert x="736.0" y="192.0"/>
+          <vert x="544.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+          <vert x="544.0" y="384.0"/>
+          <vert x="736.0" y="192.0"/>
+          <vert x="928.0" y="384.0"/>
+          <vert x="736.0" y="576.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
+          <vert x="736.0" y="576.0"/>
+          <vert x="928.0" y="384.0"/>
+          <vert x="1120.0" y="576.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+          <vert x="928.0" y="384.0"/>
+          <vert x="1120.0" y="192.0"/>
+          <vert x="1312.0" y="384.0"/>
+          <vert x="1120.0" y="576.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+          <vert x="1120.0" y="192.0"/>
+          <vert x="1312.0" y="192.0"/>
+          <vert x="1312.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="1312.0" y="192.0"/>
+          <vert x="1632.0" y="192.0"/>
+          <vert x="1632.0" y="384.0"/>
+          <vert x="1312.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+          <vert x="1632.0" y="192.0"/>
+          <vert x="1920.0" y="192.0"/>
+          <vert x="1920.0" y="384.0"/>
+          <vert x="1632.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+          <vert x="1920.0" y="192.0"/>
+          <vert x="2240.0" y="192.0"/>
+          <vert x="2240.0" y="384.0"/>
+          <vert x="1920.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
+          <vert x="2240.0" y="192.0"/>
+          <vert x="2272.0" y="160.0"/>
+          <vert x="2464.0" y="160.0"/>
+          <vert x="2464.0" y="288.0"/>
+          <vert x="2368.0" y="384.0"/>
+          <vert x="2240.0" y="384.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
+          <vert x="2272.0" y="160.0"/>
+          <vert x="2272.0" y="-32.0"/>
+          <vert x="2464.0" y="-32.0"/>
+          <vert x="2464.0" y="160.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
+          <vert x="2272.0" y="-32.0"/>
+          <vert x="2272.0" y="-256.0"/>
+          <vert x="2464.0" y="-256.0"/>
+          <vert x="2464.0" y="-32.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+          <vert x="2272.0" y="-256.0"/>
+          <vert x="2272.0" y="-480.0"/>
+          <vert x="2464.0" y="-480.0"/>
+          <vert x="2464.0" y="-256.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
+          <vert x="2464.0" y="-480.0"/>
+          <vert x="2272.0" y="-480.0"/>
+          <vert x="2272.0" y="-608.0"/>
+          <vert x="2368.0" y="-704.0"/>
+          <vert x="2496.0" y="-704.0"/>
+          <vert x="2496.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
+          <vert x="2496.0" y="-704.0"/>
+          <vert x="2720.0" y="-704.0"/>
+          <vert x="2720.0" y="-512.0"/>
+          <vert x="2496.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
+          <vert x="2720.0" y="-704.0"/>
+          <vert x="2976.0" y="-704.0"/>
+          <vert x="2976.0" y="-512.0"/>
+          <vert x="2720.0" y="-512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
+          <vert x="2976.0" y="-512.0"/>
+          <vert x="2976.0" y="-704.0"/>
+          <vert x="3104.0" y="-704.0"/>
+          <vert x="3200.0" y="-608.0"/>
+          <vert x="3200.0" y="-480.0"/>
+          <vert x="3008.0" y="-480.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
+          <vert x="3008.0" y="-480.0"/>
+          <vert x="3200.0" y="-480.0"/>
+          <vert x="3200.0" y="-320.0"/>
+          <vert x="3008.0" y="-320.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
+          <vert x="3008.0" y="-320.0"/>
+          <vert x="3200.0" y="-320.0"/>
+          <vert x="3200.0" y="-224.0"/>
+          <vert x="3072.0" y="-96.0"/>
+          <vert x="2976.0" y="-96.0"/>
+          <vert x="2976.0" y="-288.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="25" fill="16" type="poly">
+          <vert x="2976.0" y="-288.0"/>
+          <vert x="2976.0" y="-96.0"/>
+          <vert x="2784.0" y="-96.0"/>
+          <vert x="2784.0" y="-288.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="26" fill="16" type="poly">
+          <vert x="2784.0" y="-96.0"/>
+          <vert x="2752.0" y="-64.0"/>
+          <vert x="2560.0" y="-64.0"/>
+          <vert x="2560.0" y="-160.0"/>
+          <vert x="2688.0" y="-288.0"/>
+          <vert x="2784.0" y="-288.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="27" fill="16" type="poly">
+          <vert x="2560.0" y="-64.0"/>
+          <vert x="2752.0" y="-64.0"/>
+          <vert x="2752.0" y="128.0"/>
+          <vert x="2560.0" y="128.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="28" fill="16" type="poly">
+          <vert x="2560.0" y="128.0"/>
+          <vert x="2752.0" y="128.0"/>
+          <vert x="2752.0" y="288.0"/>
+          <vert x="2560.0" y="288.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="29" fill="16" type="poly">
+          <vert x="2560.0" y="288.0"/>
+          <vert x="2752.0" y="288.0"/>
+          <vert x="2752.0" y="512.0"/>
+          <vert x="2560.0" y="512.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="30" fill="16" type="poly">
+          <vert x="2560.0" y="512.0"/>
+          <vert x="2752.0" y="512.0"/>
+          <vert x="2848.0" y="608.0"/>
+          <vert x="2848.0" y="800.0"/>
+          <vert x="2752.0" y="896.0"/>
+          <vert x="2560.0" y="896.0"/>
+          <vert x="2464.0" y="800.0"/>
+          <vert x="2464.0" y="608.0"/>
+        </container>
+      </layer>
     </map>
     <map bg="6" bgcl="-9342607" data="003_small test" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
@@ -1017,7 +3126,168 @@
           <vert x="-144.0" y="-5088.0"/>
         </container>
       </layer>
-      <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
+          <vert x="-240.0" y="-176.0"/>
+          <vert x="112.0" y="-176.0"/>
+          <vert x="112.0" y="16.0"/>
+          <vert x="80.0" y="48.0"/>
+          <vert x="-208.0" y="48.0"/>
+          <vert x="-240.0" y="16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
+          <vert x="-240.0" y="-176.0"/>
+          <vert x="-240.0" y="-400.0"/>
+          <vert x="112.0" y="-400.0"/>
+          <vert x="112.0" y="-176.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="-240.0" y="-400.0"/>
+          <vert x="-240.0" y="-624.0"/>
+          <vert x="112.0" y="-624.0"/>
+          <vert x="112.0" y="-400.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="-240.0" y="-832.0"/>
+          <vert x="112.0" y="-832.0"/>
+          <vert x="112.0" y="-624.0"/>
+          <vert x="-240.0" y="-624.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="-240.0" y="-832.0"/>
+          <vert x="-240.0" y="-1056.0"/>
+          <vert x="112.0" y="-1056.0"/>
+          <vert x="112.0" y="-832.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+          <vert x="-240.0" y="-1248.0"/>
+          <vert x="112.0" y="-1248.0"/>
+          <vert x="112.0" y="-1056.0"/>
+          <vert x="-240.0" y="-1056.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+          <vert x="-176.0" y="-1392.0"/>
+          <vert x="48.0" y="-1392.0"/>
+          <vert x="112.0" y="-1328.0"/>
+          <vert x="112.0" y="-1248.0"/>
+          <vert x="-240.0" y="-1248.0"/>
+          <vert x="-240.0" y="-1328.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+          <vert x="-240.0" y="-1632.0"/>
+          <vert x="112.0" y="-1632.0"/>
+          <vert x="112.0" y="-1456.0"/>
+          <vert x="48.0" y="-1392.0"/>
+          <vert x="-176.0" y="-1392.0"/>
+          <vert x="-240.0" y="-1456.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
+          <vert x="-240.0" y="-1872.0"/>
+          <vert x="112.0" y="-1872.0"/>
+          <vert x="112.0" y="-1632.0"/>
+          <vert x="-240.0" y="-1632.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+          <vert x="-240.0" y="-2112.0"/>
+          <vert x="112.0" y="-2112.0"/>
+          <vert x="112.0" y="-1872.0"/>
+          <vert x="-240.0" y="-1872.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="-240.0" y="-2384.0"/>
+          <vert x="112.0" y="-2384.0"/>
+          <vert x="112.0" y="-2112.0"/>
+          <vert x="-240.0" y="-2112.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="-208.0" y="-2592.0"/>
+          <vert x="80.0" y="-2592.0"/>
+          <vert x="112.0" y="-2560.0"/>
+          <vert x="112.0" y="-2384.0"/>
+          <vert x="-240.0" y="-2384.0"/>
+          <vert x="-240.0" y="-2560.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+          <vert x="-160.0" y="-2848.0"/>
+          <vert x="32.0" y="-2848.0"/>
+          <vert x="112.0" y="-2784.0"/>
+          <vert x="112.0" y="-2624.0"/>
+          <vert x="80.0" y="-2592.0"/>
+          <vert x="-208.0" y="-2592.0"/>
+          <vert x="-240.0" y="-2624.0"/>
+          <vert x="-240.0" y="-2784.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+          <vert x="-176.0" y="-3056.0"/>
+          <vert x="48.0" y="-3056.0"/>
+          <vert x="32.0" y="-2848.0"/>
+          <vert x="-160.0" y="-2848.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
+          <vert x="-240.0" y="-3344.0"/>
+          <vert x="112.0" y="-3344.0"/>
+          <vert x="112.0" y="-3056.0"/>
+          <vert x="-240.0" y="-3056.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
+          <vert x="-240.0" y="-3344.0"/>
+          <vert x="-240.0" y="-3600.0"/>
+          <vert x="112.0" y="-3600.0"/>
+          <vert x="112.0" y="-3344.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
+          <vert x="-240.0" y="-3856.0"/>
+          <vert x="112.0" y="-3856.0"/>
+          <vert x="112.0" y="-3600.0"/>
+          <vert x="-240.0" y="-3600.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+          <vert x="-240.0" y="-4112.0"/>
+          <vert x="112.0" y="-4112.0"/>
+          <vert x="112.0" y="-3856.0"/>
+          <vert x="-240.0" y="-3856.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
+          <vert x="-240.0" y="-4368.0"/>
+          <vert x="112.0" y="-4368.0"/>
+          <vert x="112.0" y="-4112.0"/>
+          <vert x="-240.0" y="-4112.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
+          <vert x="-240.0" y="-4368.0"/>
+          <vert x="-192.0" y="-4736.0"/>
+          <vert x="64.0" y="-4736.0"/>
+          <vert x="112.0" y="-4368.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
+          <vert x="-144.0" y="-5088.0"/>
+          <vert x="16.0" y="-5088.0"/>
+          <vert x="64.0" y="-4736.0"/>
+          <vert x="-192.0" y="-4736.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
+          <vert x="-240.0" y="-5376.0"/>
+          <vert x="112.0" y="-5376.0"/>
+          <vert x="112.0" y="-5152.0"/>
+          <vert x="16.0" y="-5088.0"/>
+          <vert x="-144.0" y="-5088.0"/>
+          <vert x="-240.0" y="-5152.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
+          <vert x="-240.0" y="-5648.0"/>
+          <vert x="112.0" y="-5648.0"/>
+          <vert x="112.0" y="-5376.0"/>
+          <vert x="-240.0" y="-5376.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
+          <vert x="-160.0" y="-6032.0"/>
+          <vert x="32.0" y="-6032.0"/>
+          <vert x="112.0" y="-5952.0"/>
+          <vert x="112.0" y="-5648.0"/>
+          <vert x="-240.0" y="-5648.0"/>
+          <vert x="-240.0" y="-5952.0"/>
+        </container>
+      </layer>
     </map>
     <map bg="6" bgcl="-9342607" data="001_rails" fg="4" fgcl="-1" split="HHT" type="map">
       <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
@@ -1478,131 +3748,131 @@
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
         <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
           <vert x="-544.0" y="-192.0"/>
-          <vert x="-64.0" y="-192.0"/>
-          <vert x="-64.0" y="0.0"/>
+          <vert x="-400.0" y="-192.0"/>
+          <vert x="-400.0" y="0.0"/>
           <vert x="-544.0" y="0.0"/>
           <vert x="-576.0" y="-32.0"/>
           <vert x="-576.0" y="-160.0"/>
         </container>
         <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
-          <vert x="-64.0" y="-192.0"/>
-          <vert x="320.0" y="-192.0"/>
-          <vert x="288.0" y="0.0"/>
-          <vert x="-64.0" y="0.0"/>
+          <vert x="-400.0" y="-192.0"/>
+          <vert x="-240.0" y="-192.0"/>
+          <vert x="-240.0" y="0.0"/>
+          <vert x="-400.0" y="0.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
           <vert x="288.0" y="0.0"/>
           <vert x="320.0" y="-192.0"/>
           <vert x="512.0" y="0.0"/>
           <vert x="320.0" y="32.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
           <vert x="320.0" y="32.0"/>
           <vert x="512.0" y="0.0"/>
           <vert x="512.0" y="64.0"/>
           <vert x="320.0" y="192.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
           <vert x="320.0" y="192.0"/>
           <vert x="512.0" y="64.0"/>
           <vert x="544.0" y="96.0"/>
           <vert x="496.0" y="224.0"/>
           <vert x="352.0" y="224.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
           <vert x="544.0" y="96.0"/>
           <vert x="576.0" y="96.0"/>
           <vert x="624.0" y="224.0"/>
           <vert x="496.0" y="224.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
           <vert x="576.0" y="96.0"/>
           <vert x="608.0" y="64.0"/>
           <vert x="736.0" y="192.0"/>
           <vert x="704.0" y="224.0"/>
           <vert x="624.0" y="224.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
           <vert x="608.0" y="64.0"/>
-          <vert x="608.0" y="-160.0"/>
-          <vert x="736.0" y="-160.0"/>
+          <vert x="608.0" y="0.0"/>
+          <vert x="736.0" y="0.0"/>
           <vert x="736.0" y="192.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
-          <vert x="608.0" y="-160.0"/>
-          <vert x="608.0" y="-320.0"/>
-          <vert x="736.0" y="-320.0"/>
-          <vert x="736.0" y="-160.0"/>
+        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+          <vert x="608.0" y="-112.0"/>
+          <vert x="608.0" y="-208.0"/>
+          <vert x="736.0" y="-208.0"/>
+          <vert x="736.0" y="-112.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
           <vert x="736.0" y="-320.0"/>
           <vert x="608.0" y="-320.0"/>
           <vert x="608.0" y="-416.0"/>
           <vert x="736.0" y="-400.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
           <vert x="736.0" y="-400.0"/>
           <vert x="608.0" y="-416.0"/>
           <vert x="736.0" y="-544.0"/>
           <vert x="768.0" y="-432.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
           <vert x="736.0" y="-400.0"/>
           <vert x="816.0" y="-320.0"/>
           <vert x="816.0" y="-240.0"/>
           <vert x="736.0" y="-320.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
           <vert x="736.0" y="-544.0"/>
-          <vert x="1056.0" y="-544.0"/>
-          <vert x="1024.0" y="-432.0"/>
+          <vert x="896.0" y="-544.0"/>
+          <vert x="896.0" y="-432.0"/>
           <vert x="768.0" y="-432.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="13" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
           <vert x="1024.0" y="-432.0"/>
           <vert x="1056.0" y="-544.0"/>
           <vert x="1184.0" y="-416.0"/>
           <vert x="1184.0" y="-352.0"/>
           <vert x="1056.0" y="-400.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
           <vert x="1056.0" y="-400.0"/>
           <vert x="1184.0" y="-352.0"/>
           <vert x="1056.0" y="-224.0"/>
           <vert x="896.0" y="-240.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="12&gt;15" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="17&gt;21" fill="16" type="poly">
           <vert x="816.0" y="-320.0"/>
           <vert x="896.0" y="-240.0"/>
           <vert x="896.0" y="-160.0"/>
           <vert x="816.0" y="-240.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="15" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
           <vert x="896.0" y="-240.0"/>
           <vert x="1056.0" y="-224.0"/>
           <vert x="1056.0" y="-160.0"/>
           <vert x="976.0" y="-80.0"/>
           <vert x="896.0" y="-160.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="16" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
           <vert x="976.0" y="-80.0"/>
           <vert x="1056.0" y="-160.0"/>
           <vert x="1184.0" y="-32.0"/>
           <vert x="1056.0" y="0.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="17" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
           <vert x="1056.0" y="0.0"/>
           <vert x="1184.0" y="-32.0"/>
           <vert x="1184.0" y="32.0"/>
           <vert x="1136.0" y="80.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
           <vert x="1056.0" y="160.0"/>
           <vert x="976.0" y="80.0"/>
           <vert x="1056.0" y="0.0"/>
           <vert x="1136.0" y="80.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="19" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="25" fill="16" type="poly">
           <vert x="1056.0" y="160.0"/>
           <vert x="1056.0" y="224.0"/>
           <vert x="896.0" y="416.0"/>
@@ -1610,46 +3880,46 @@
           <vert x="832.0" y="224.0"/>
           <vert x="976.0" y="80.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="20" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="26" fill="16" type="poly">
           <vert x="896.0" y="416.0"/>
           <vert x="1056.0" y="224.0"/>
           <vert x="1120.0" y="224.0"/>
           <vert x="1120.0" y="416.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="21" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="27" fill="16" type="poly">
           <vert x="1120.0" y="224.0"/>
           <vert x="1152.0" y="192.0"/>
           <vert x="1440.0" y="192.0"/>
           <vert x="1440.0" y="416.0"/>
           <vert x="1120.0" y="416.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="22" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="28" fill="16" type="poly">
           <vert x="1440.0" y="192.0"/>
           <vert x="1760.0" y="128.0"/>
           <vert x="1760.0" y="416.0"/>
           <vert x="1440.0" y="416.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="23" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="29" fill="16" type="poly">
           <vert x="1760.0" y="128.0"/>
           <vert x="1952.0" y="144.0"/>
           <vert x="1904.0" y="416.0"/>
           <vert x="1760.0" y="416.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="24" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="30" fill="16" type="poly">
           <vert x="1952.0" y="144.0"/>
           <vert x="2336.0" y="160.0"/>
           <vert x="2336.0" y="448.0"/>
           <vert x="2144.0" y="448.0"/>
           <vert x="1904.0" y="416.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="25" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="31" fill="16" type="poly">
           <vert x="2336.0" y="160.0"/>
           <vert x="2448.0" y="176.0"/>
           <vert x="2432.0" y="384.0"/>
           <vert x="2368.0" y="448.0"/>
           <vert x="2336.0" y="448.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="26" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="32" fill="16" type="poly">
           <vert x="2448.0" y="176.0"/>
           <vert x="2688.0" y="192.0"/>
           <vert x="2784.0" y="288.0"/>
@@ -1657,55 +3927,103 @@
           <vert x="2496.0" y="448.0"/>
           <vert x="2432.0" y="384.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="27" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="33" fill="16" type="poly">
           <vert x="2688.0" y="192.0"/>
           <vert x="2880.0" y="192.0"/>
           <vert x="3040.0" y="288.0"/>
           <vert x="2784.0" y="288.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="28" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="34" fill="16" type="poly">
           <vert x="2880.0" y="192.0"/>
           <vert x="2944.0" y="128.0"/>
           <vert x="3168.0" y="160.0"/>
           <vert x="3040.0" y="288.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="29" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="35" fill="16" type="poly">
           <vert x="2944.0" y="128.0"/>
           <vert x="2848.0" y="0.0"/>
           <vert x="3008.0" y="0.0"/>
           <vert x="3168.0" y="160.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="30" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="36" fill="16" type="poly">
           <vert x="2848.0" y="0.0"/>
           <vert x="2848.0" y="-128.0"/>
           <vert x="3008.0" y="-128.0"/>
           <vert x="3008.0" y="0.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="31" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="37" fill="16" type="poly">
           <vert x="2848.0" y="-128.0"/>
           <vert x="3040.0" y="-320.0"/>
           <vert x="3040.0" y="-160.0"/>
           <vert x="3008.0" y="-128.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="32" fill="16" type="poly">
+        <container cl="-16777216" closed="true" data="38" fill="16" type="poly">
           <vert x="3040.0" y="-320.0"/>
-          <vert x="3456.0" y="-320.0"/>
-          <vert x="3456.0" y="-160.0"/>
+          <vert x="3216.0" y="-320.0"/>
+          <vert x="3216.0" y="-160.0"/>
           <vert x="3040.0" y="-160.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="33" fill="16" type="poly">
-          <vert x="3456.0" y="-320.0"/>
-          <vert x="3872.0" y="-320.0"/>
-          <vert x="3872.0" y="-160.0"/>
-          <vert x="3456.0" y="-160.0"/>
+        <container cl="-16777216" closed="true" data="39" fill="16" type="poly">
+          <vert x="3216.0" y="-320.0"/>
+          <vert x="3392.0" y="-320.0"/>
+          <vert x="3392.0" y="-160.0"/>
+          <vert x="3216.0" y="-160.0"/>
         </container>
-        <container cl="-16777216" closed="true" data="34" fill="16" type="poly">
-          <vert x="3872.0" y="-320.0"/>
+        <container cl="-16777216" closed="true" data="42" fill="16" type="poly">
+          <vert x="3776.0" y="-320.0"/>
           <vert x="3968.0" y="-320.0"/>
           <vert x="4000.0" y="-288.0"/>
           <vert x="4000.0" y="-192.0"/>
           <vert x="3968.0" y="-160.0"/>
-          <vert x="3872.0" y="-160.0"/>
+          <vert x="3776.0" y="-160.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="-240.0" y="-192.0"/>
+          <vert x="-64.0" y="-192.0"/>
+          <vert x="-64.0" y="0.0"/>
+          <vert x="-240.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="-64.0" y="-192.0"/>
+          <vert x="112.0" y="-192.0"/>
+          <vert x="112.0" y="0.0"/>
+          <vert x="-64.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="112.0" y="-192.0"/>
+          <vert x="320.0" y="-192.0"/>
+          <vert x="288.0" y="0.0"/>
+          <vert x="112.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="12" fill="16" type="poly">
+          <vert x="608.0" y="0.0"/>
+          <vert x="608.0" y="-112.0"/>
+          <vert x="736.0" y="-112.0"/>
+          <vert x="736.0" y="0.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="14" fill="16" type="poly">
+          <vert x="608.0" y="-320.0"/>
+          <vert x="736.0" y="-320.0"/>
+          <vert x="736.0" y="-208.0"/>
+          <vert x="608.0" y="-208.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="18" fill="16" type="poly">
+          <vert x="896.0" y="-544.0"/>
+          <vert x="1056.0" y="-544.0"/>
+          <vert x="1024.0" y="-432.0"/>
+          <vert x="896.0" y="-432.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="40" fill="16" type="poly">
+          <vert x="3392.0" y="-320.0"/>
+          <vert x="3568.0" y="-320.0"/>
+          <vert x="3568.0" y="-160.0"/>
+          <vert x="3392.0" y="-160.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="41" fill="16" type="poly">
+          <vert x="3568.0" y="-320.0"/>
+          <vert x="3776.0" y="-320.0"/>
+          <vert x="3776.0" y="-160.0"/>
+          <vert x="3568.0" y="-160.0"/>
         </container>
       </layer>
     </map>
@@ -1780,6 +4098,306 @@
         </container>
       </layer>
       <layer data="overlay" fade="0.0" paralax="0.0" type="layer"/>
+    </map>
+    <map bg="6" bgcl="-9342607" data="000_test" fg="4" fgcl="-1" split="HHT" type="map">
+      <layer data="fixed" disable="true" fade="0.0" paralax="0.0" type="layer"/>
+      <layer data="paralax1" fade="0.9" paralax="0.6" type="layer">
+        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
+          <vert x="64.0" y="-112.0"/>
+          <vert x="96.0" y="-80.0"/>
+          <vert x="64.0" y="-32.0"/>
+          <vert x="32.0" y="-80.0"/>
+        </container>
+        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
+          <vert x="432.0" y="-480.0"/>
+          <vert x="448.0" y="-464.0"/>
+          <vert x="432.0" y="-432.0"/>
+          <vert x="416.0" y="-464.0"/>
+        </container>
+        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
+          <vert x="1344.0" y="-32.0"/>
+          <vert x="1376.0" y="0.0"/>
+          <vert x="1344.0" y="64.0"/>
+          <vert x="1312.0" y="0.0"/>
+        </container>
+        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
+          <vert x="1408.0" y="-416.0"/>
+          <vert x="1504.0" y="-352.0"/>
+          <vert x="1408.0" y="-176.0"/>
+          <vert x="1312.0" y="-352.0"/>
+        </container>
+        <container cl="-8421505" closed="true" data="" fill="4" type="poly">
+          <vert x="592.0" y="16.0"/>
+          <vert x="624.0" y="48.0"/>
+          <vert x="592.0" y="112.0"/>
+          <vert x="560.0" y="48.0"/>
+        </container>
+      </layer>
+      <layer data="paralax2" fade="0.8" paralax="0.4" type="layer">
+        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
+          <vert x="-384.0" y="-144.0"/>
+          <vert x="-352.0" y="-112.0"/>
+          <vert x="-384.0" y="-48.0"/>
+          <vert x="-416.0" y="-112.0"/>
+        </container>
+        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
+          <vert x="160.0" y="0.0"/>
+          <vert x="192.0" y="32.0"/>
+          <vert x="160.0" y="96.0"/>
+          <vert x="128.0" y="32.0"/>
+        </container>
+        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
+          <vert x="448.0" y="256.0"/>
+          <vert x="480.0" y="288.0"/>
+          <vert x="448.0" y="352.0"/>
+          <vert x="416.0" y="288.0"/>
+        </container>
+        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
+          <vert x="1152.0" y="160.0"/>
+          <vert x="1168.0" y="176.0"/>
+          <vert x="1152.0" y="224.0"/>
+          <vert x="1136.0" y="176.0"/>
+        </container>
+        <container cl="-7500403" closed="true" data="" fill="4" type="poly">
+          <vert x="1952.0" y="-352.0"/>
+          <vert x="1968.0" y="-336.0"/>
+          <vert x="1952.0" y="-304.0"/>
+          <vert x="1936.0" y="-336.0"/>
+        </container>
+      </layer>
+      <layer data="paralax3" fade="0.6" paralax="0.2" type="layer">
+        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
+          <vert x="64.0" y="-192.0"/>
+          <vert x="96.0" y="-160.0"/>
+          <vert x="64.0" y="-96.0"/>
+          <vert x="32.0" y="-160.0"/>
+        </container>
+        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
+          <vert x="608.0" y="-288.0"/>
+          <vert x="624.0" y="-272.0"/>
+          <vert x="608.0" y="-224.0"/>
+          <vert x="592.0" y="-272.0"/>
+        </container>
+        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
+          <vert x="1568.0" y="64.0"/>
+          <vert x="1600.0" y="96.0"/>
+          <vert x="1568.0" y="192.0"/>
+          <vert x="1536.0" y="96.0"/>
+        </container>
+        <container cl="-5658199" closed="true" data="" fill="4" type="poly">
+          <vert x="2528.0" y="64.0"/>
+          <vert x="2592.0" y="96.0"/>
+          <vert x="2528.0" y="240.0"/>
+          <vert x="2464.0" y="96.0"/>
+        </container>
+      </layer>
+      <layer data="background" disable="true" fade="0.35" paralax="0.0" type="layer"/>
+      <layer data="game" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-1" data="solid" fill="4" type="poly">
+          <vert x="2144.0" y="576.0"/>
+        </container>
+        <container cl="-1" data="solid" fill="4" type="poly">
+          <vert x="2432.0" y="576.0"/>
+        </container>
+        <container cl="-16777216" data="finish" fill="16" type="circle">
+          <vert x="3952.0" y="272.0"/>
+          <vert x="3904.0" y="272.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-592.0" y="-192.0"/>
+          <vert x="-640.0" y="-192.0"/>
+          <vert x="-640.0" y="-432.0"/>
+          <vert x="-544.0" y="-432.0"/>
+          <vert x="-544.0" y="-240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="592.0" y="-368.0"/>
+          <vert x="592.0" y="-432.0"/>
+          <vert x="800.0" y="-432.0"/>
+          <vert x="800.0" y="-368.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="592.0" y="112.0"/>
+          <vert x="800.0" y="112.0"/>
+          <vert x="800.0" y="176.0"/>
+          <vert x="592.0" y="176.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="464.0" y="-16.0"/>
+          <vert x="592.0" y="112.0"/>
+          <vert x="592.0" y="176.0"/>
+          <vert x="464.0" y="176.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="800.0" y="176.0"/>
+          <vert x="800.0" y="112.0"/>
+          <vert x="928.0" y="-16.0"/>
+          <vert x="928.0" y="176.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="800.0" y="-432.0"/>
+          <vert x="928.0" y="-432.0"/>
+          <vert x="928.0" y="-240.0"/>
+          <vert x="800.0" y="-368.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="592.0" y="-432.0"/>
+          <vert x="592.0" y="-368.0"/>
+          <vert x="464.0" y="-240.0"/>
+          <vert x="464.0" y="-432.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="928.0" y="-432.0"/>
+          <vert x="1584.0" y="-432.0"/>
+          <vert x="1584.0" y="-240.0"/>
+          <vert x="928.0" y="-240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1584.0" y="-432.0"/>
+          <vert x="1664.0" y="-432.0"/>
+          <vert x="1664.0" y="-208.0"/>
+          <vert x="1616.0" y="-208.0"/>
+          <vert x="1584.0" y="-240.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1616.0" y="-208.0"/>
+          <vert x="1664.0" y="-208.0"/>
+          <vert x="1664.0" y="-48.0"/>
+          <vert x="1616.0" y="-48.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="1584.0" y="-16.0"/>
+          <vert x="1616.0" y="-48.0"/>
+          <vert x="1664.0" y="-48.0"/>
+          <vert x="1664.0" y="176.0"/>
+          <vert x="1584.0" y="176.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="928.0" y="-16.0"/>
+          <vert x="1584.0" y="-16.0"/>
+          <vert x="1584.0" y="176.0"/>
+          <vert x="928.0" y="176.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="464.0" y="-432.0"/>
+          <vert x="464.0" y="-240.0"/>
+          <vert x="-544.0" y="-240.0"/>
+          <vert x="-544.0" y="-432.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="464.0" y="-16.0"/>
+          <vert x="464.0" y="176.0"/>
+          <vert x="-544.0" y="176.0"/>
+          <vert x="-544.0" y="-16.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-544.0" y="176.0"/>
+          <vert x="-640.0" y="176.0"/>
+          <vert x="-640.0" y="-64.0"/>
+          <vert x="-592.0" y="-64.0"/>
+          <vert x="-544.0" y="-16.0"/>
+        </container>
+        <container cl="-1" closed="true" data="solid" fill="4" type="poly">
+          <vert x="-640.0" y="-192.0"/>
+          <vert x="-592.0" y="-192.0"/>
+          <vert x="-592.0" y="-64.0"/>
+          <vert x="-640.0" y="-64.0"/>
+        </container>
+        <container cl="-16777216" data="finish" fill="16" type="circle">
+          <vert x="1504.0" y="-128.0"/>
+          <vert x="1442.0" y="-128.0"/>
+        </container>
+        <container data="start" type="marker">
+          <vert x="-485.0" y="-126.0"/>
+        </container>
+        <container data="tl" type="marker">
+          <vert x="-640.0" y="-432.0"/>
+        </container>
+        <container data="br" type="marker">
+          <vert x="1664.0" y="176.0"/>
+        </container>
+        <container data="score" type="marker">
+          <vert x="1904.0" y="-144.0"/>
+        </container>
+        <container data="spinner" rt="120" rto="0" type="instance">
+          <vert x="448.0" y="-128.0"/>
+        </container>
+        <container data="spinner" rt="-120" rto="15" type="instance">
+          <vert x="944.0" y="-128.0"/>
+        </container>
+      </layer>
+      <layer data="overlay" fade="0.0" paralax="0.0" type="layer">
+        <container cl="-16777216" closed="true" data="1" fill="16" type="poly">
+          <vert x="-400.0" y="-240.0"/>
+          <vert x="-400.0" y="-16.0"/>
+          <vert x="-544.0" y="-16.0"/>
+          <vert x="-592.0" y="-64.0"/>
+          <vert x="-592.0" y="-192.0"/>
+          <vert x="-544.0" y="-240.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="2" fill="16" type="poly">
+          <vert x="-400.0" y="-240.0"/>
+          <vert x="-240.0" y="-240.0"/>
+          <vert x="-240.0" y="-16.0"/>
+          <vert x="-400.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="3" fill="16" type="poly">
+          <vert x="-240.0" y="-240.0"/>
+          <vert x="-48.0" y="-240.0"/>
+          <vert x="-48.0" y="-16.0"/>
+          <vert x="-240.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="4" fill="16" type="poly">
+          <vert x="-48.0" y="-240.0"/>
+          <vert x="192.0" y="-240.0"/>
+          <vert x="192.0" y="-16.0"/>
+          <vert x="-48.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="5" fill="16" type="poly">
+          <vert x="192.0" y="-240.0"/>
+          <vert x="464.0" y="-240.0"/>
+          <vert x="464.0" y="-16.0"/>
+          <vert x="192.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="6" fill="16" type="poly">
+          <vert x="464.0" y="-240.0"/>
+          <vert x="592.0" y="-368.0"/>
+          <vert x="592.0" y="112.0"/>
+          <vert x="464.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="7" fill="16" type="poly">
+          <vert x="592.0" y="-368.0"/>
+          <vert x="800.0" y="-368.0"/>
+          <vert x="800.0" y="112.0"/>
+          <vert x="592.0" y="112.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="8" fill="16" type="poly">
+          <vert x="800.0" y="-368.0"/>
+          <vert x="928.0" y="-240.0"/>
+          <vert x="928.0" y="-16.0"/>
+          <vert x="800.0" y="112.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="9" fill="16" type="poly">
+          <vert x="928.0" y="-240.0"/>
+          <vert x="1120.0" y="-240.0"/>
+          <vert x="1120.0" y="-16.0"/>
+          <vert x="928.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="10" fill="16" type="poly">
+          <vert x="1120.0" y="-240.0"/>
+          <vert x="1344.0" y="-240.0"/>
+          <vert x="1344.0" y="-16.0"/>
+          <vert x="1120.0" y="-16.0"/>
+        </container>
+        <container cl="-16777216" closed="true" data="11" fill="16" type="poly">
+          <vert x="1344.0" y="-240.0"/>
+          <vert x="1584.0" y="-240.0"/>
+          <vert x="1616.0" y="-208.0"/>
+          <vert x="1616.0" y="-48.0"/>
+          <vert x="1584.0" y="-16.0"/>
+          <vert x="1344.0" y="-16.0"/>
+        </container>
+      </layer>
     </map>
   </maps>
 </pack>

@@ -1,6 +1,6 @@
 package delta;
 
-import java.io.File;
+//import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -170,7 +170,6 @@ public class World2D {
 			game = map.getLayer(5);
 			region = map.getLayer(6);
 			buildMap();
-			System.out.println(fileName);
 			String[] fileSplit = fileName.split("\\.");
 			leaderboard = new LeaderBoard(pA, this, pack, fileSplit[0], name);
 		}
@@ -184,7 +183,12 @@ public class World2D {
 				FixtureDef fd = pc.getFixtureDef(false);
 				String[] d = pc.getData().split(">");
 				if (d != null) {
-					int tr = Integer.valueOf(d[0]);
+					int tr;
+					if (d[0].equals("")) {
+						tr = 0;
+					} else {
+						tr = Integer.valueOf(d[0]);
+					}
 					int nr;
 					if (d.length > 1) {
 						nr = Integer.valueOf(d[1]);
@@ -399,13 +403,28 @@ public class World2D {
 				}
 			}
 		}
-		// test
+	}
+
+	public void addAllGhosts() {
 		for (int i = 1; i < 11; i++) {
 			Ghost gh = leaderboard.getGhost(i);
 			if (gh != null)
 				ghosts.add(gh);
 		}
+	}
 
+	public void addGhostList(ArrayList<Integer> _list) {
+		for (int i : _list) {
+			Ghost gh = leaderboard.getGhost(i);
+			if (gh != null)
+				ghosts.add(gh);
+		}
+	}
+
+	public void addGhost(int _place) {
+		Ghost gh = leaderboard.getGhost(_place);
+		if (gh != null)
+			ghosts.add(gh);
 	}
 
 	public String[] getRegion(Vec2 in) {
@@ -554,10 +573,10 @@ public class World2D {
 					p.finish();
 					if (leaderboard.check(p.recorder.time) > 0) {
 						leaderboard.place(p.recorder);
-						
+
 					}
-					if(p.training){
-						p.ai.saveTrainingFile(DeltaMain.userDir+"\\data\\ai\\train\\"+mapName);
+					if (p.training) {
+						p.ai.saveTrainingFile(DeltaMain.userDir + "\\data\\ai\\train\\" + mapName);
 					}
 				}
 			}
@@ -612,7 +631,6 @@ public class World2D {
 				p.addBoostContact(_contact);
 			} else if (cO.data.equals("kill")) {
 				p.addKillContact(_contact);
-				p.killFactor = 0;
 			} else if (cO.data.equals("finish")) {
 				if (!p.finished) {
 					p.setFinishTime(FRAMES + 2, getTime());

@@ -1,5 +1,6 @@
 package delta;
 
+import beads.Add;
 import beads.AudioContext;
 import beads.BiquadFilter;
 import beads.Buffer;
@@ -78,6 +79,17 @@ public class PlayerSound {
 	OnePoleFilter boost_friction_smooth;
 	BiquadFilter boost_friction_BP;
 	Gain boost_friction_gain;
+	
+	//mag synth
+	WavePlayer mag_sine1, mag_sine2, mag_sine3;
+	Glide mag_dist,mag_toggle;
+	Gain mag_gain, mag_input;
+	Add mag_am,mag_fm;
+	
+	//ship power
+	WavePlayer power_sine;
+	Gain power_gain;
+	Glide power_freq, power_amp;
 
 	PlayerSound(AudioContext _ac, Plug _out) {
 
@@ -210,7 +222,35 @@ public class PlayerSound {
 		boost_friction_gain = new Gain(ac, 1, boost_friction_smooth);
 		boost_friction_gain.addInput(boost_friction_BP);
 		master.addInput(boost_friction_gain);
+		
+		//mag
+		mag_dist=new Glide(ac,0,1);
+		mag_dist.setValueImmediately(0);
+		mag_toggle=new Glide(ac,0,5);
+		mag_toggle.setValueImmediately(0);
+		mag_sine1=new WavePlayer(ac,34f,Buffer.SINE);
+		mag_input=new Gain(ac,1,mag_dist);
+		mag_input.addInput(mag_sine1);
+		Gain mag_mid=new Gain(ac,1,mag_input);
+		mag_sine2=new WavePlayer(ac,mag_input,Buffer.SINE);
+		mag_mid.addInput(mag_sine2);
+		mag_am=new Add(ac,mag_input,mag_mid);
+		mag_sine3=new WavePlayer(ac,mag_am,Buffer.SINE);
+		mag_gain=new Gain(ac,1,mag_toggle);		
+		mag_gain.addInput(mag_sine3);
+		master.addInput(mag_gain);
+		
+		//ship power indicator
+		
+		power_freq=new Glide(ac,0,600f);
+		power_amp=new Glide(ac,0,600f);
+		power_sine = new WavePlayer(ac, power_freq, Buffer.SINE);
+		power_gain=new Gain(ac,1,power_amp);
+		power_gain.addInput(power_sine);
+		master.addInput(power_gain);
+		
 
+				
 	}
 
 	void setPower(float _power) {
@@ -307,7 +347,23 @@ public class PlayerSound {
 		boost_speed.setValue(50f);
 	}
 	
-
-
+	public void magToggle(boolean mag){
+		if(mag){
+			mag_toggle.setValue(0.04f);
+		}else{
+			mag_toggle.setValue(0.0f);
+		}
+	}
+	public void setMagDist(float dist){
+		mag_dist.setValue(200f*dist);
+	}
+	
+	public void powerDrop(float factor){
+		power_freq.setValueImmediately(factor*200f);
+		power_freq.setValue(0);		
+		power_amp.setValueImmediately(factor*0.02f);
+		power_amp.setValue(0);	
+		
+	}
 
 }
