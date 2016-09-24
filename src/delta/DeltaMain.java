@@ -39,7 +39,7 @@ public class DeltaMain extends PApplet {
 	PFont font;
 	float frameRate = 60f;
 	int counter = 0;
-	boolean tether=false;
+	boolean tether = false;
 
 	public static void main(String[] args) {
 		String[] a = { "MAIN" };
@@ -92,8 +92,9 @@ public class DeltaMain extends PApplet {
 		XML pack = loadXML(files[0].getAbsolutePath());
 		String name = files[0].getName();
 		println(name);
-		//world.loadfromXML(pack, packFolder, name, "010_first");
-		world.loadfromXML(pack, packFolder, name, "009_freeform");
+		//world.loadfromXML(pack, packFolder, name, "001_rails");
+		 world.loadfromXML(pack, packFolder, name, "011_mag");
+		// world.loadfromXML(pack, packFolder, name, "010_first");
 		world.font = font;
 		world.addAllGhosts();
 		player = new Player(world, 0);
@@ -103,35 +104,36 @@ public class DeltaMain extends PApplet {
 		// player.setTraining();
 		player2 = new Player(world, 1);
 		player2.attachInput(p[1]);
-		//player2.attachAi(new File(userDir+"\\data\\ai\\85_feedForward_256_64_16.eg"));
+		// player2.attachAi(new
+		// File(userDir+"\\data\\ai\\85_feedForward_256_64_16.eg"));
 		// Player player3 = new Player(world, p[2], 2);
 		// Player player4 = new Player(world, p[3], 3);
-		if(tether){
-		vp = new Viewport(this, world, 0, 0, width, height);
-		//vp = new Viewport(this, world, 0, 0, width, height / 2);
-		vp.loadShader(loadShader("vcr.glsl"));
-		ArrayList<Player> test = new ArrayList<Player>();
-		 test.add(player);
-		 test.add(player2);
-		 world.tether(test);
-		 vp.attachTarget(test);
-		
-		}
-		else{
+		if (tether) {
+			vp = new Viewport(this, world, 0, 0, width, height);
+			// vp = new Viewport(this, world, 0, 0, width, height / 2);
+			vp.loadShader(loadShader("vcr.glsl"));
+			ArrayList<Player> test = new ArrayList<Player>();
+			test.add(player);
+			test.add(player2);
+			world.tether(test);
+			vp.attachTarget(test);
+
+		} else {
 			vp = new Viewport(this, world, 0, 0, width, height);
 			vp.loadShader(loadShader("vcr.glsl"));
-			//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-			//vp2.loadShader(loadShader("vcr.glsl"));
+			// vp2 = new Viewport(this, world, 0, height / 2, width, height /
+			// 2);
+			// vp2.loadShader(loadShader("vcr.glsl"));
 			vp.attachTarget(player);
 			vp.attachTarget(player2);
 			vp.setTrackMode(1);
 		}
 		// player3.createShip();
 		// player4.createShip();
-		 
+
 		// test.add(player3);
 		// test.add(player4);
-		 
+
 		// test = new ArrayList<Player>();
 		// test.add(player3);
 		// test.add(player4);
@@ -141,10 +143,10 @@ public class DeltaMain extends PApplet {
 		// player3.connectAudio(ac, out);
 		// player4.connectAudio(ac, out);
 
-		//vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-		//vp2.loadShader(loadShader("vcr.glsl"));
+		// vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
+		// vp2.loadShader(loadShader("vcr.glsl"));
 
-		//vp2.attachTarget(player2);
+		// vp2.attachTarget(player2);
 		frameTimer = System.nanoTime();
 	}
 
@@ -164,23 +166,22 @@ public class DeltaMain extends PApplet {
 
 				world.step();
 				vp.setFade(1f);
-				if(vp2!=null){
-				vp2.setFade(1f);
+				if (vp2 != null) {
+					vp2.setFade(1f);
 				}
 
 			} else {
 				vp.setFade(0.2f);
-				if(vp2!=null){
+				if (vp2 != null) {
 					vp2.setFade(0.2f);
-					}
+				}
 			}
 			vp.update();
 			image(vp.pg, vp.pos.x, vp.pos.y);
-			if(!tether){
-				//vp2.update();
-				//image(vp2.pg, vp2.pos.x, vp2.pos.y);
+			if (!tether) {
+				// vp2.update();
+				// image(vp2.pg, vp2.pos.x, vp2.pos.y);
 			}
-			
 
 			if (frameCounter >= 10) {
 				frameCounter = 0;

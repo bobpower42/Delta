@@ -164,7 +164,7 @@ public class Viewport {
 	public void loadShader(PShader _glsl) {
 		filter = _glsl;
 		hasShader = true;
-		filter.set("scanlinesNum", dim.y * 1.5f);
+		//filter.set("scanlinesNum", dim.y * 1.5f);
 	}
 
 	public void setColorHit(Vec2 _sep) {
