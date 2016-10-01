@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 //import java.util.ArrayList;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.encog.Encog;
 
@@ -27,23 +28,53 @@ public class DeltaMain extends PApplet {
 	public int frame = 0;
 	public boolean pause = false;
 	private String packFolder;
+	XML packData;
+	String[] packs;
 	static String userDir;
-	public World2D world;
-	Viewport vp, vp2;
+	World2D world;
+	ArrayList<Player> players;
+	Viewport[] views = new Viewport[4];
+	int nov = 1;
+	HashMap<String, MenuPage> menus = new HashMap<String, MenuPage>();
+	MenuPage page;
+	int nop = 1;
+	int mode = 0;
+	int type = 0;
+	String pack, map;
+
+	int actionTimer = 0;
+	int att = 18;
+
+	
 	AudioContext ac;
 	Gain master;
 	Plug out;
 	long frameTimer;
 	int frameCounter = 0;
 	float fps = 0;
-	PFont font;
+	public PFont font;
 	float frameRate = 60f;
 	int counter = 0;
-	boolean tether = false;
+	static private int aa = 1;
 
 	public static void main(String[] args) {
+		for (String arg : args) {
+			if (arg.equalsIgnoreCase("aa0"))
+				aa = 0;
+			if (arg.equalsIgnoreCase("aa1"))
+				aa = 1;
+			if (arg.equalsIgnoreCase("aa2"))
+				aa = 2;
+			if (arg.equalsIgnoreCase("aa4"))
+				aa = 4;
+			if (arg.equalsIgnoreCase("aa8"))
+				aa = 8;
+
+		}
+		p = new PlayerInput[4];
 		String[] a = { "MAIN" };
 		PApplet.runSketch(a, new DeltaMain());
+
 	}
 
 	static boolean is64bit() {
@@ -51,138 +82,147 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void settings() {
-		userDir = System.getProperty("user.dir");
-		p = new PlayerInput[4];
 		for (int i = 0; i < 4; i++) {
 			p[i] = new PlayerInput(this, i + 1);
 		}
+		userDir = System.getProperty("user.dir");
 		fullScreen(P2D); // openGl
 		PJOGL.setIcon(userDir + "\\data\\icon.png");
-		smooth(1); // turn off anti-aliasing
+		smooth(8);
+
 	}
 
 	public void setup() {
 		surface.setTitle("delta 1.0");
-
 		font = loadFont("Avant-GardeBoldT.-48.vlw");
 		textFont(font, 24);
 		textAlign(LEFT, TOP);
-		ac = new AudioContext();
+		ac = new AudioContext(256);
+		println("default buffer: " + ac.getBufferSize());
 		out = new Plug(ac);
 		master = new Gain(ac, 1, 3.0f);
 		master.addInput(out);
 		ac.out.addInput(master);
 		ac.start();
 		noCursor();
-		frameRate(frameRate);
-		world = new World2D(this, frameRate, out);
-		world.setScale(60f);
-		packFolder = System.getProperty("user.dir") + "\\packs";
-		File folder = new File(packFolder);
 
-		File[] files = folder.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String filename) {
-				return filename.endsWith(".xml");
+		frameRate(120f);
+
+		packFolder = userDir + "\\packs";
+		try {
+			File folder = new File(packFolder);
+			File[] files = folder.listFiles(new FilenameFilter() {
+				public boolean accept(File dir, String filename) {
+					return filename.endsWith(".xml");
+				}
+			});
+			packs = new String[files.length];
+			int i = 0;
+			for (File f : files) {
+				packs[i] = f.getName().split("\\.")[0];
+				i++;
 			}
-		});
-		for (int i = 0; i < files.length; i++) {
-			println(files[i].getName());
+		} catch (Exception ex) {
+			System.out.println("packs failed to load");
 		}
-		// XML pack=loadXML("C:/Users/Bob/4PG/Delta/packs/WhiteMap1.xml");
-		XML pack = loadXML(files[0].getAbsolutePath());
-		String name = files[0].getName();
-		println(name);
-		//world.loadfromXML(pack, packFolder, name, "001_rails");
-		 world.loadfromXML(pack, packFolder, name, "011_mag");
-		// world.loadfromXML(pack, packFolder, name, "010_first");
-		world.font = font;
-		world.addAllGhosts();
-		player = new Player(world, 0);
-		player.attachInput(p[0]);
-		// player.attachAi(new
-		// File(userDir+"\\data\\ai\\85_feedForward_256_64_16.eg"));
-		// player.setTraining();
-		player2 = new Player(world, 1);
-		player2.attachInput(p[1]);
-		// player2.attachAi(new
-		// File(userDir+"\\data\\ai\\85_feedForward_256_64_16.eg"));
-		// Player player3 = new Player(world, p[2], 2);
-		// Player player4 = new Player(world, p[3], 3);
-		if (tether) {
-			vp = new Viewport(this, world, 0, 0, width, height);
-			// vp = new Viewport(this, world, 0, 0, width, height / 2);
-			vp.loadShader(loadShader("vcr.glsl"));
-			ArrayList<Player> test = new ArrayList<Player>();
-			test.add(player);
-			test.add(player2);
-			world.tether(test);
-			vp.attachTarget(test);
-
-		} else {
-			vp = new Viewport(this, world, 0, 0, width, height);
-			vp.loadShader(loadShader("vcr.glsl"));
-			// vp2 = new Viewport(this, world, 0, height / 2, width, height /
-			// 2);
-			// vp2.loadShader(loadShader("vcr.glsl"));
-			vp.attachTarget(player);
-			vp.attachTarget(player2);
-			vp.setTrackMode(1);
+		MenuPage tm = new MenuPage("players", "select number of players");
+		tm.addItem("single player", "nop=1.packs");
+		tm.addItem("2 player", "nop=2.types");
+		tm.addItem("3 player", "nop=3.types");
+		tm.addItem("4 player", "nop=4.types");
+		menus.put("players", tm);
+		page = tm;
+		MenuPage tm2 = new MenuPage("packs", "select pack");
+		for (String p : packs) {
+			tm2.addItem(p, "pack=" + p + ".maps");
 		}
-		// player3.createShip();
-		// player4.createShip();
+		menus.put("packs", tm2);
+		MenuPage tm3 = new MenuPage("modes", "select game mode");
+		tm3.addItem("split screen", "mode=0.packs");
+		tm3.addItem("elimination", "mode=1.packs");
+		menus.put("modes", tm3);
 
-		// test.add(player3);
-		// test.add(player4);
+	}
 
-		// test = new ArrayList<Player>();
-		// test.add(player3);
-		// test.add(player4);
-		// world.tether(test);
-		world.prepare();
+	public void mapMenu() {
+		packData = loadXML(packFolder + "\\" + pack + ".xml");
+		XML mapData = packData.getChild("maps");
+		XML[] maps = mapData.getChildren("map");
+		MenuPage tm = new MenuPage("maps", "select map");
+		for (XML m : maps) {
+			String mapName = m.getString("data");
+			tm.addItem(mapName, "map=" + mapName + ".go");
+		}
+		menus.put("maps", tm);
 
-		// player3.connectAudio(ac, out);
-		// player4.connectAudio(ac, out);
+	}
 
-		// vp2 = new Viewport(this, world, 0, height / 2, width, height / 2);
-		// vp2.loadShader(loadShader("vcr.glsl"));
+	public void typesMenu() {
+		MenuPage tm = new MenuPage("types", "select game type");
+		if (nop == 1) {
+			tm.addItem("race", "type=0.packs");
+		} else if (nop == 2 || nop == 3) {
+			tm.addItem("race", "type=0.modes");
+			tm.addItem("tethered", "type=1.packs");
+		} else if (nop == 4) {
+			tm.addItem("race", "type=0.modes");
+			tm.addItem("tethered", "type=1.packs");
+			tm.addItem("2v2 tethered", "type=2.modes");
+		}
+		menus.put("types", tm);
+	}
 
-		// vp2.attachTarget(player2);
-		frameTimer = System.nanoTime();
+	public void drawMenuPage() {
+		textAlign(0, 3);
+		fill(255);
+		textFont(font, 36);
+		text(page.title, 400, 400);
+		for (int i = 0; i < page.items.size(); i++) {
+			if (i == page.selected) {
+				textFont(font, 48);
+			} else {
+				textFont(font, 36);
+			}
+			text(page.items.get(i).getText(), 400, 500 + 50 * i);
+		}
 	}
 
 	public void draw() {
 		if (state == splashState) {
 			background(0);
-			counter++;
-			if (counter == 50) {
-				state = menuState;
-			}
+			state = menuState;
 
 		} else if (state == menuState) {
-			state = gameState;
+			if (actionTimer > 0)
+				actionTimer--;
+			background(0);
+			if (actionTimer == 0) {
+				for (PlayerInput tpi : p) {
+					if (tpi.connected) {
+						if (tpi.butA) {
+							select();
+							actionTimer = att;
+						} else if (tpi.butB) {
+							back();
+							actionTimer = att;
+						} else if (tpi.mag > 0.5f) {
+							System.out.println(tpi.ang);
+							if (tpi.ang > 90 && tpi.ang < 270) {
+								page.down();
+								actionTimer = att;
+							} else {
+								page.up();
+								actionTimer = att;
+							}
+						}
+
+					}
+				}
+			}
+			drawMenuPage();
 
 		} else if (state == gameState) {
-			if (!pause) {
-
-				world.step();
-				vp.setFade(1f);
-				if (vp2 != null) {
-					vp2.setFade(1f);
-				}
-
-			} else {
-				vp.setFade(0.2f);
-				if (vp2 != null) {
-					vp2.setFade(0.2f);
-				}
-			}
-			vp.update();
-			image(vp.pg, vp.pos.x, vp.pos.y);
-			if (!tether) {
-				// vp2.update();
-				// image(vp2.pg, vp2.pos.x, vp2.pos.y);
-			}
-
+			// background(0);
 			if (frameCounter >= 10) {
 				frameCounter = 0;
 				fps = 10000000 / (float) (System.nanoTime() - frameTimer);
@@ -192,17 +232,204 @@ public class DeltaMain extends PApplet {
 			} else {
 				frameCounter++;
 			}
-			fill(0);
-			// text("FPS: " + fps, 10, 10);
+
+			world.step();
+
+			for (int i = 0; i < nov; i++) {
+				views[i].setFade(1f);
+				views[i].update();
+				image(views[i].pg, views[i].pos.x, views[i].pos.y);
+			}
+
+			fill(255);
+			text("FPS: " + fps, 10, 10);
 
 		}
+	}
+
+	public void select() {
+		String[] action = page.getSelectedAction().split("\\.");
+		System.out.println(page.getSelectedAction());
+		System.out.println(action[0]);
+		System.out.println(action.length);
+		String[] assign = action[0].split("\\=");
+		int start = 0;
+		if (assign.length == 2) {
+			start = 1;
+			String var = assign[0];
+			String val = assign[1];
+			if (var.equals("nop")) {
+				nop = Integer.valueOf(val);
+			} else if (var.equals("mode")) {
+				mode = Integer.valueOf(val);
+			} else if (var.equals("type")) {
+				type = Integer.valueOf(val);
+			} else if (var.equals("pack")) {
+				pack = val;
+			} else if (var.equals("map")) {
+				map = val;
+			}
+		}
+		for (int i = start; i < action.length; i++) {
+			String act = action[i];
+			if (act.equals("maps")) {
+				mapMenu();
+			} else if (act.equals("types")) {
+				typesMenu();
+			}
+
+			if (act.equals("maps") || act.equals("types") || act.equals("packs") || act.equals("modes")) {
+				String thisPage = page.name;
+				page = menus.get(act);
+				page.setBack(thisPage);
+			} else if (act.equals("go")) {
+				startGame();
+			}
+		}
+
+	}
+
+	public void back() {
+		if (!page.back.equals("")) {
+			page = menus.get(page.back);
+		}
+	}
+
+	public void startGame() {
+		world = new World2D(this, frameRate, out);
+		world.loadfromXML(packData, packFolder, pack, map);
+		world.font = font;
+		Level thisMap = world.map;
+		String split = thisMap.split;
+
+		if (nop == 1) {
+			world.addAllGhosts();
+		}
+		players = new ArrayList<Player>();
+		for (int i = 0; i < nop; i++) {
+			Player pl = new Player(world, i);
+			pl.attachInput(p[i]);
+			pl.createShip();
+			players.add(pl);
+		}
+		views = new Viewport[4];
+		if (mode == 1 || nop == 1 || type == 1) {
+			Viewport vp = new Viewport(this, world, 0, 0, width, height);
+			vp.attachTarget(players);
+			vp.setTrackMode(mode);
+			if (type == 1) {
+				world.tether(players);
+			}
+			views[0] = vp;
+			nov = 1;
+		} else {
+			if (nop == 2) {
+				if (split.charAt(0) == 'H') {
+					views[0] = new Viewport(this, world, 0, 0, width, height / 2);
+					views[1] = new Viewport(this, world, 0, height / 2, width, height / 2);
+					views[0].attachTarget(players.get(0));
+					views[1].attachTarget(players.get(1));
+				} else {
+					views[0] = new Viewport(this, world, 0, 0, width / 2, height);
+					views[1] = new Viewport(this, world, width / 2, 0, width / 2, height);
+					views[0].attachTarget(players.get(0));
+					views[1].attachTarget(players.get(1));
+				}
+				nov = 2;
+			} else if (nop == 3) {
+				if (split.charAt(1) == 'H') {
+					views[0] = new Viewport(this, world, 0, 0, width, height / 3);
+					views[1] = new Viewport(this, world, 0, height / 3, width, height / 3);
+					views[2] = new Viewport(this, world, 0, 2 * height / 3, width, height / 3);
+					views[0].attachTarget(players.get(0));
+					views[1].attachTarget(players.get(1));
+					views[2].attachTarget(players.get(2));
+				} else {
+					views[0] = new Viewport(this, world, 0, 0, width / 3, height);
+					views[1] = new Viewport(this, world, width / 3, 0, width / 3, height);
+					views[2] = new Viewport(this, world, 2 * width / 3, 0, width / 3, height);
+					views[0].attachTarget(players.get(0));
+					views[1].attachTarget(players.get(1));
+					views[2].attachTarget(players.get(2));
+				}
+				nov = 3;
+			} else if (nop == 4) {
+				if (type == 0) {
+					if (split.charAt(2) == 'H') {
+						views[0] = new Viewport(this, world, 0, 0, width, height / 4);
+						views[1] = new Viewport(this, world, 0, height / 4, width, height / 4);
+						views[2] = new Viewport(this, world, 0, 2 * height / 4, width, height / 4);
+						views[3] = new Viewport(this, world, 0, 3 * height / 4, width, height / 4);
+						views[0].attachTarget(players.get(0));
+						views[1].attachTarget(players.get(1));
+						views[2].attachTarget(players.get(2));
+						views[3].attachTarget(players.get(3));
+					} else if (split.charAt(2) == 'V') {
+						views[0] = new Viewport(this, world, 0, 0, width / 4, height);
+						views[1] = new Viewport(this, world, width / 4, 0, width / 4, height);
+						views[2] = new Viewport(this, world, 2 * width / 4, 0, width / 4, height);
+						views[3] = new Viewport(this, world, 3 * width / 4, 0, width / 4, height);
+						views[0].attachTarget(players.get(0));
+						views[1].attachTarget(players.get(1));
+						views[2].attachTarget(players.get(2));
+						views[3].attachTarget(players.get(3));
+					} else {
+						views[0] = new Viewport(this, world, 0, 0, width / 2, height / 2);
+						views[1] = new Viewport(this, world, width / 2, 0, width / 2, height / 2);
+						views[2] = new Viewport(this, world, 0, height / 2, width / 2, height / 2);
+						views[3] = new Viewport(this, world, width / 2, height / 2, width / 2, height / 2);
+						views[0].attachTarget(players.get(0));
+						views[1].attachTarget(players.get(1));
+						views[2].attachTarget(players.get(2));
+						views[3].attachTarget(players.get(3));
+					}
+					nov = 4;
+				} else {
+					ArrayList<Player> gp1 = new ArrayList<Player>();
+					gp1.add(players.get(0));
+					gp1.add(players.get(1));
+					world.tether(gp1);
+					ArrayList<Player> gp2 = new ArrayList<Player>();
+					gp2.add(players.get(2));
+					gp2.add(players.get(3));
+					world.tether(gp2);
+					if (split.charAt(0) == 'H') {
+						views[0] = new Viewport(this, world, 0, 0, width, height / 2);
+						views[1] = new Viewport(this, world, 0, height / 2, width, height / 2);
+						views[0].attachTarget(gp1);
+						views[1].attachTarget(gp2);
+					} else {
+						views[0] = new Viewport(this, world, 0, 0, width / 2, height);
+						views[1] = new Viewport(this, world, width / 2, 0, width / 2, height);
+						views[0].attachTarget(gp1);
+						views[1].attachTarget(gp2);
+					}
+					nov = 2;
+				}
+			}
+
+		}
+		for (Player pl : players) {
+			// pl.createShip();
+			pl.connectAudio(ac, out);
+		}
+		for (Viewport vp : views) {
+			try {
+				//vp.loadShader(loadShader("vcr.glsl"));
+			} catch (Exception ex) {
+				//
+			}
+
+		}
+		world.prepare();
+		state = gameState;
 	}
 
 	public void pause() {
 		if (state == gameState) {
 
 			pause = !pause;
-			vp.setPause(pause);
+			//vp.setPause(pause);
 		}
 	}
 

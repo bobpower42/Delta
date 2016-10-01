@@ -707,6 +707,7 @@ class Level extends Container {
 	Container[] layer;
 	int bg = -1;
 	int fg = -1;
+	String split="HHT";
 
 	Level(World2D _world, XML xml) {
 		world = _world;
@@ -718,6 +719,8 @@ class Level extends Container {
 			bg = xml.getInt("bgcl");
 		if (xml.hasAttribute("fgcl"))
 			fg = xml.getInt("fgcl");
+		if (xml.hasAttribute("split"))
+			split = xml.getString("split");
 		XML[] child = xml.getChildren("layer");
 		if (child.length == 7) {
 			for (int i = 0; i < 7; i++) {

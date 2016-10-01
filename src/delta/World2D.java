@@ -85,6 +85,7 @@ public class World2D {
 		tethersRemove = new ArrayList<Tether>();
 		ghosts = new ArrayList<Ghost>();
 		lastFrameTimer = System.nanoTime();
+		scale=60f;
 		world.setContactListener(new ContactListener() {
 
 			public void beginContact(Contact contact) {

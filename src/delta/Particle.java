@@ -68,7 +68,7 @@ class SmokeParticle extends Particle {
 
 		Vec2 pp = world.getBodyPixelCoord(body);
 		pG.rectMode(PConstants.CORNERS);
-		pG.fill(80);
+		pG.fill(60);
 		pG.noStroke();
 		float sz = (life / 20f);
 		pG.rect(pp.x - sz, pp.y - sz, pp.x + sz, pp.y + sz);
