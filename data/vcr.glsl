@@ -27,5 +27,5 @@ void main(void) {
 	float blue = texture2D(texture,uvB).b;	
 	vec3 color = vec3(red,green,blue);	
 	color = color*fade;	
-	gl_FragColor = vec4(color,0.8);
+	gl_FragColor = vec4(color,0.7);
 }

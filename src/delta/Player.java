@@ -351,7 +351,7 @@ public class Player extends Container {
 			// calculate power
 			float pwr = 0;
 			if (getAButton()) {
-				//sound.toggle(1);
+				sound.toggle(1);
 				if (boost.size() == 0) {
 					pwr = 0.1f + (rocketFactor * rocketFactor) / 2f;
 				} else {
@@ -359,14 +359,14 @@ public class Player extends Container {
 					pwr = 0.9f;
 				}
 			} else {
-				//sound.toggle(0);
+				sound.toggle(0);
 			}
 			pwr *= killFactor;
 			if(getBButton()){
 				pwr*=10f;
 			}
-			//sound.setPower(pwr);
-			//sound.setVol((float) killFactor / powerMax);
+			sound.setPower(pwr);
+			sound.setVol((float) killFactor / powerMax);
 			// Generate smoke particles
 
 			if (pwr > 0) {

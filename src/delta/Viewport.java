@@ -32,7 +32,6 @@ public class Viewport {
 		separation = new Vec2(0, 0);
 		separation_smooth = new Vec2(0, 0);
 		pg = pA.createGraphics(_w, _h, PConstants.P2D);
-
 		cam = new Vec2(0, 0);
 		damp = new Vec2(0, 0);
 		f_damp = new Vec2(0, 0);

@@ -56,6 +56,8 @@ public class DeltaMain extends PApplet {
 	float frameRate = 60f;
 	int counter = 0;
 	static private int aa = 1;
+	
+	boolean running=true;
 
 	public static void main(String[] args) {
 		for (String arg : args) {
@@ -88,7 +90,7 @@ public class DeltaMain extends PApplet {
 		userDir = System.getProperty("user.dir");
 		fullScreen(P2D); // openGl
 		PJOGL.setIcon(userDir + "\\data\\icon.png");
-		smooth(8);
+		smooth(4);
 
 	}
 
@@ -97,7 +99,7 @@ public class DeltaMain extends PApplet {
 		font = loadFont("Avant-GardeBoldT.-48.vlw");
 		textFont(font, 24);
 		textAlign(LEFT, TOP);
-		ac = new AudioContext(256);
+		ac = new AudioContext();
 		println("default buffer: " + ac.getBufferSize());
 		out = new Plug(ac);
 		master = new Gain(ac, 1, 3.0f);
@@ -106,7 +108,7 @@ public class DeltaMain extends PApplet {
 		ac.start();
 		noCursor();
 
-		frameRate(120f);
+		frameRate(frameRate);
 
 		packFolder = userDir + "\\packs";
 		try {
@@ -141,6 +143,8 @@ public class DeltaMain extends PApplet {
 		tm3.addItem("split screen", "mode=0.packs");
 		tm3.addItem("elimination", "mode=1.packs");
 		menus.put("modes", tm3);
+		//n0oLoop();
+		//thread("frameClock");
 
 	}
 
@@ -188,6 +192,16 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void draw() {
+		//frameRate(60f);
+		if (frameCounter >= 10) {
+			frameCounter = 0;
+			fps = 10000000 / (float) (System.nanoTime() - frameTimer);
+			fps *= 1000;
+			frameTimer = System.nanoTime();
+
+		} else {
+			frameCounter++;
+		}
 		if (state == splashState) {
 			background(0);
 			state = menuState;
@@ -223,15 +237,7 @@ public class DeltaMain extends PApplet {
 
 		} else if (state == gameState) {
 			// background(0);
-			if (frameCounter >= 10) {
-				frameCounter = 0;
-				fps = 10000000 / (float) (System.nanoTime() - frameTimer);
-				fps *= 1000;
-				frameTimer = System.nanoTime();
-
-			} else {
-				frameCounter++;
-			}
+			
 
 			world.step();
 
@@ -408,14 +414,10 @@ public class DeltaMain extends PApplet {
 				}
 			}
 
-		}
-		for (Player pl : players) {
-			// pl.createShip();
-			pl.connectAudio(ac, out);
-		}
+		}		
 		for (Viewport vp : views) {
 			try {
-				//vp.loadShader(loadShader("vcr.glsl"));
+				vp.loadShader(loadShader("vcr.glsl"));
 			} catch (Exception ex) {
 				//
 			}
@@ -436,8 +438,30 @@ public class DeltaMain extends PApplet {
 	public boolean isPaused() {
 		return pause;
 	}
+	
+	public void frameClock(){
+		long lastTime = System.nanoTime();
+		double nsPerTick = 1000000000D/60.0;
+		//long lastTimer = System.currentTimeMillis();
+		double delta = 0;
+		
+		while (running){
+			long now = System.nanoTime();
+			delta += (now - lastTime) / nsPerTick;
+			lastTime = now;			
+			while(delta >= 1)
+			{				
+				redraw();
+				delta -= 1;				
+			}	
+			
+			
+		}
+		
+	}
 
 	public void exit() {
+		running=false;
 		for (PlayerInput pi : p) {
 			pi.release();
 		}
