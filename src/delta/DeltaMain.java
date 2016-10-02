@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 //import java.util.ArrayList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-
 import org.encog.Encog;
-
 import beads.AudioContext;
 import beads.Gain;
 import beads.Plug;
@@ -37,15 +36,15 @@ public class DeltaMain extends PApplet {
 	int nov = 1;
 	HashMap<String, MenuPage> menus = new HashMap<String, MenuPage>();
 	MenuPage page;
+	MenuPage pauseMenu;
 	int nop = 1;
 	int mode = 0;
 	int type = 0;
 	String pack, map;
 
 	int actionTimer = 0;
-	int att = 18;
+	int att = 12;
 
-	
 	AudioContext ac;
 	Gain master;
 	Plug out;
@@ -55,9 +54,7 @@ public class DeltaMain extends PApplet {
 	public PFont font;
 	float frameRate = 60f;
 	int counter = 0;
-	static private int aa = 1;
-	
-	boolean running=true;
+	static private int aa = 4;
 
 	public static void main(String[] args) {
 		for (String arg : args) {
@@ -90,7 +87,7 @@ public class DeltaMain extends PApplet {
 		userDir = System.getProperty("user.dir");
 		fullScreen(P2D); // openGl
 		PJOGL.setIcon(userDir + "\\data\\icon.png");
-		smooth(4);
+		smooth(aa);
 
 	}
 
@@ -143,19 +140,27 @@ public class DeltaMain extends PApplet {
 		tm3.addItem("split screen", "mode=0.packs");
 		tm3.addItem("elimination", "mode=1.packs");
 		menus.put("modes", tm3);
-		//n0oLoop();
-		//thread("frameClock");
 
+		pauseMenu = new MenuPage("pause", "");
+		pauseMenu.addItem("continue", "cont");
+		pauseMenu.addItem("exit to menu", "menu");
+		pauseMenu.addItem("exit", "quit");
+		menus.put("pause", pauseMenu);
 	}
 
 	public void mapMenu() {
 		packData = loadXML(packFolder + "\\" + pack + ".xml");
 		XML mapData = packData.getChild("maps");
 		XML[] maps = mapData.getChildren("map");
+		ArrayList<String> mapList=new ArrayList<String>();
 		MenuPage tm = new MenuPage("maps", "select map");
 		for (XML m : maps) {
 			String mapName = m.getString("data");
-			tm.addItem(mapName, "map=" + mapName + ".go");
+			mapList.add(mapName);			
+		}
+		Collections.sort(mapList);
+		for(String mn:mapList){
+			tm.addItem(mn, "map="+mn+".go");
 		}
 		menus.put("maps", tm);
 
@@ -177,6 +182,34 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void drawMenuPage() {
+		if (actionTimer > 0)
+			actionTimer--;
+		if (state == menuState) {
+			background(0);
+		}
+		if (actionTimer == 0) {
+			for (PlayerInput tpi : p) {
+				if (tpi.connected) {
+					if (tpi.butA) {
+						select();
+						actionTimer = att;
+					} else if (tpi.butB) {
+						back();
+						actionTimer = att;
+					} else if (tpi.mag > 0.5f) {
+						System.out.println(tpi.ang);
+						if (tpi.ang > 90 && tpi.ang < 270) {
+							page.down();
+							actionTimer = att;
+						} else {
+							page.up();
+							actionTimer = att;
+						}
+					}
+
+				}
+			}
+		}
 		textAlign(0, 3);
 		fill(255);
 		textFont(font, 36);
@@ -192,7 +225,7 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void draw() {
-		//frameRate(60f);
+
 		if (frameCounter >= 10) {
 			frameCounter = 0;
 			fps = 10000000 / (float) (System.nanoTime() - frameTimer);
@@ -207,48 +240,25 @@ public class DeltaMain extends PApplet {
 			state = menuState;
 
 		} else if (state == menuState) {
-			if (actionTimer > 0)
-				actionTimer--;
-			background(0);
-			if (actionTimer == 0) {
-				for (PlayerInput tpi : p) {
-					if (tpi.connected) {
-						if (tpi.butA) {
-							select();
-							actionTimer = att;
-						} else if (tpi.butB) {
-							back();
-							actionTimer = att;
-						} else if (tpi.mag > 0.5f) {
-							System.out.println(tpi.ang);
-							if (tpi.ang > 90 && tpi.ang < 270) {
-								page.down();
-								actionTimer = att;
-							} else {
-								page.up();
-								actionTimer = att;
-							}
-						}
 
-					}
-				}
-			}
 			drawMenuPage();
 
 		} else if (state == gameState) {
 			// background(0);
-			
-
-			world.step();
-
+			if (!pause) {
+				world.step();
+			}
 			for (int i = 0; i < nov; i++) {
-				views[i].setFade(1f);
+				views[i].setPause(pause);
 				views[i].update();
 				image(views[i].pg, views[i].pos.x, views[i].pos.y);
 			}
+			if (pause) {
+				drawMenuPage();
+			}
 
-			fill(255);
-			text("FPS: " + fps, 10, 10);
+			// fill(255);
+			// text("FPS: " + fps, 10, 10);
 
 		}
 	}
@@ -289,7 +299,16 @@ public class DeltaMain extends PApplet {
 				page = menus.get(act);
 				page.setBack(thisPage);
 			} else if (act.equals("go")) {
+				pauseMenu.setBack(page.name);
 				startGame();
+				
+			} else if (act.equals("cont")) {
+				pause = false;
+			} else if (act.equals("menu")) {
+				state = menuState;
+				back();
+			} else if (act.equals("quit")) {
+				exit();
 			}
 		}
 
@@ -302,6 +321,13 @@ public class DeltaMain extends PApplet {
 	}
 
 	public void startGame() {
+		ac = new AudioContext();
+		
+		out = new Plug(ac);
+		master = new Gain(ac, 1, 3.0f);
+		master.addInput(out);
+		ac.out.addInput(master);
+		
 		world = new World2D(this, frameRate, out);
 		world.loadfromXML(packData, packFolder, pack, map);
 		world.font = font;
@@ -318,6 +344,7 @@ public class DeltaMain extends PApplet {
 			pl.createShip();
 			players.add(pl);
 		}
+
 		views = new Viewport[4];
 		if (mode == 1 || nop == 1 || type == 1) {
 			Viewport vp = new Viewport(this, world, 0, 0, width, height);
@@ -325,6 +352,16 @@ public class DeltaMain extends PApplet {
 			vp.setTrackMode(mode);
 			if (type == 1) {
 				world.tether(players);
+			}
+			if (nop == 4 && type == 2) {
+				ArrayList<Player> gp1 = new ArrayList<Player>();
+				gp1.add(players.get(0));
+				gp1.add(players.get(1));
+				world.tether(gp1);
+				ArrayList<Player> gp2 = new ArrayList<Player>();
+				gp2.add(players.get(2));
+				gp2.add(players.get(3));
+				world.tether(gp2);
 			}
 			views[0] = vp;
 			nov = 1;
@@ -413,8 +450,9 @@ public class DeltaMain extends PApplet {
 					nov = 2;
 				}
 			}
+			
 
-		}		
+		}
 		for (Viewport vp : views) {
 			try {
 				vp.loadShader(loadShader("vcr.glsl"));
@@ -425,43 +463,31 @@ public class DeltaMain extends PApplet {
 		}
 		world.prepare();
 		state = gameState;
+		pause=false;
+		ac.start();
 	}
 
 	public void pause() {
 		if (state == gameState) {
-
-			pause = !pause;
-			//vp.setPause(pause);
+			page = menus.get("pause");
+			pause = !pause;		
 		}
 	}
 
 	public boolean isPaused() {
 		return pause;
 	}
-	
-	public void frameClock(){
-		long lastTime = System.nanoTime();
-		double nsPerTick = 1000000000D/60.0;
-		//long lastTimer = System.currentTimeMillis();
-		double delta = 0;
-		
-		while (running){
-			long now = System.nanoTime();
-			delta += (now - lastTime) / nsPerTick;
-			lastTime = now;			
-			while(delta >= 1)
-			{				
-				redraw();
-				delta -= 1;				
-			}	
-			
-			
+
+	public void keyPressed() {
+		if (key == 'r' || key == 'R') {
+			for (Player pl : players) {
+				pl.report();
+			}
 		}
-		
+
 	}
 
 	public void exit() {
-		running=false;
 		for (PlayerInput pi : p) {
 			pi.release();
 		}

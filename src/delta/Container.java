@@ -10,8 +10,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
-
-import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.data.XML;
@@ -338,9 +336,9 @@ class Marker extends Container {
 
 					}
 				} else if (data.equals("score")) {
-					pG.fill(180);
-					pG.textFont(world.font,48);
-					pG.text(PApplet.nfc(world.getTime(),2), v[0].x, v[0].y);
+					//pG.fill(180);
+					//pG.textFont(world.font,48);
+					//pG.text(PApplet.nfc(world.getTime(),2), v[0].x, v[0].y);
 
 				}
 			}

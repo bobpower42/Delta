@@ -7,7 +7,7 @@ precision mediump int;
 
 uniform sampler2D texture;
 uniform vec2 texOffset;
-uniform float rgbOffset = 0.0004;
+uniform float rgbOffset = 0.0006;
 uniform float fade=0.0;
 uniform float magX=1.0;
 uniform float magY=1.0;
@@ -27,5 +27,5 @@ void main(void) {
 	float blue = texture2D(texture,uvB).b;	
 	vec3 color = vec3(red,green,blue);	
 	color = color*fade;	
-	gl_FragColor = vec4(color,0.7);
+	gl_FragColor = vec4(color,0.8);
 }

@@ -100,8 +100,7 @@ public class Player extends Container {
 		maxVelocity = 0;
 		collisionCount = 0;
 		worldMagRadius = world.scalarPixelsToWorld(magRadius);
-		training = false;
-		createShip();
+		training = false;		
 	}
 
 	public void attachInput(PlayerInput _input) {
@@ -567,6 +566,11 @@ public class Player extends Container {
 		if (v[0].x >= tl.x - r && v[0].y > tl.y - r && v[0].x < br.x + r && v[0].y < br.y + r)
 			return true;
 		return false;
+	}
+	
+	public void report(){
+		System.out.println("report player "+index);
+		
 	}
 
 }

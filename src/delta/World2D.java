@@ -1,6 +1,6 @@
 package delta;
 
-//import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +85,7 @@ public class World2D {
 		tethersRemove = new ArrayList<Tether>();
 		ghosts = new ArrayList<Ghost>();
 		lastFrameTimer = System.nanoTime();
-		scale=60f;
+		scale = 60f;
 		world.setContactListener(new ContactListener() {
 
 			public void beginContact(Contact contact) {
@@ -100,8 +100,6 @@ public class World2D {
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
 				float totalImpulse = impulse.normalImpulses[0];
-				// float totalTangent = impulse.tangentImpulses[0];
-
 				Fixture fA = contact.getFixtureA();
 				Fixture fB = contact.getFixtureB();
 				Container cA = (Container) fA.getUserData();

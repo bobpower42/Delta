@@ -12,7 +12,7 @@ public class PlayerInput {
 	public float ang;
 	public float mag;
 	public boolean butA, butB, butX, butY;
-	int leftVibrate=0, rightVibrate=0;
+	int leftVibrate = 0, rightVibrate = 0;
 	XboxControllerAdapter test;
 
 	PlayerInput(PApplet _pA, int _index) {
@@ -28,7 +28,7 @@ public class PlayerInput {
 		xc.setLeftThumbDeadZone(30);
 		xc.addXboxControllerListener(new XboxControllerAdapter() {
 			public void back(boolean state) {
-				//System.out.println("back "+state);
+				// System.out.println("back "+state);
 				if (state) {
 					if (active) {
 						active = false;
@@ -37,13 +37,10 @@ public class PlayerInput {
 			}
 
 			public void start(boolean state) {
-				//System.out.println("start "+state);
+				// System.out.println("start "+state);
 				if (state) {
-					if (!active) {
-						active = true;
-					} else {
-						parent.pause();
-					}
+					parent.pause();
+
 				}
 			}
 
@@ -64,23 +61,23 @@ public class PlayerInput {
 			}
 
 			public void leftThumbDirection(double value) {
-				//System.out.println("leftDir "+value);
+				// System.out.println("leftDir "+value);
 				if (mag != 0) {
 					ang = (float) value;
 				} else {
 					ang = 0;
 				}
-				//System.out.println("angle: " + ang);
+				// System.out.println("angle: " + ang);
 			}
 
 			public void leftThumbMagnitude(double value) {
-				//System.out.println("LeftMag "+value);
+				// System.out.println("LeftMag "+value);
 				if (value > 0.3) {
 					mag = (float) value;
 				} else {
 					mag = 0;
 				}
-			}			      
+			}
 		});
 	}
 
@@ -92,15 +89,18 @@ public class PlayerInput {
 		}
 		return connected;
 	}
-	public void vibrateLeft(float val){
-		leftVibrate = (int)(65535 * val * val);
+
+	public void vibrateLeft(float val) {
+		leftVibrate = (int) (65535 * val * val);
 		xc.vibrate(leftVibrate, 0);
 	}
-	public synchronized void rumbleRight(int val){
-		//xc.vibrateRight(val);
-		
+
+	public synchronized void rumbleRight(int val) {
+		// xc.vibrateRight(val);
+
 	}
-	public void release(){
+
+	public void release() {
 		xc.vibrate(0, 0);
 		xc.release();
 	}
